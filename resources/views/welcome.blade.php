@@ -65,10 +65,16 @@
     </head>
     <body>
 
+@if (session('alert'))
+    <div class="alert alert-success">
+        {{ session('alert') }}
+    </div>
+@endif
+
 <form action="/submitParticipant" method="post">
   @csrf
   <fieldset>
-   Mein Name: <input type="text" id="name" name="name" required><br/>
+   Mein Name: <input type="text" id="name" name="name" required value="{{old('name')}}"><br/>
     Es reicht der Vorname oder Nachname, aber ihr solltet von der Gemeindeleitung eindeutig an diesem Namen erkannt werden! Also z.B. Familie Schmidt, wenn es sonst keine Familie Schmidt in der Gemeinde gibt, oder MaxM wenn es sonst keinen Max mit Anfangsbuchstaben M im Nachnamen gibt.
   </fieldset>
   <fieldset>
@@ -79,16 +85,16 @@
 @php
        echo date('H:i', strtotime($service->starting_at));
 @endphp 
-       Uhr: {{$service->description}}</label>
+       Uhr: {{$service->description}}</label> Momentan: {{$service->count_adults}} große Kinder und Erwachsene und {{$service->count_children}} kleine Kinder
     <br/>
 @endforeach
   </fieldset>
 
   <fieldset>
-    <input type="number" id="quantityAdults" name="count_adults" min="1" max="9" value="1" required>
+    <input type="number" id="quantityAdults" name="count_adults" min="1" max="9" value="{{old('count_adults', 1)}}" required>
     <label for="quantityAdults">Anzahl Erwachsene und Kinder ab 5. Klasse</label>
     <br/>
-    <input type="number" id="quantityChildren" name="count_children" min="0" max="9" value="0">
+    <input type="number" id="quantityChildren" name="count_children" min="0" max="9" value="{{old('count_children', 0)}}">
     <label for="quantityChildren">Anzahl Kindergartenkinder und Grundschulkinder</label>
   </fieldset>
 

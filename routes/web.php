@@ -27,6 +27,23 @@ Route::post('/submitParticipant', function (Request $request) {
         'count_children' => 'integer',
     ]);
 
+    $count = DB::table('participants')
+                ->where('service_id', $data['service_id'])
+                ->sum('count_adults');
+    $count += DB::table('participants')
+                ->where('service_id', $data['service_id'])
+                ->sum('count_children');
+    $count += $data['count_children'] + $data['count_adults'];
+
+    if ($count > 15)
+    {
+        $service_name = date('H:i', strtotime(DB::table('services')->where('id', $data['service_id'])->value('starting_at')));
+        return redirect()
+                ->back()
+                ->withInput()
+                ->withAlert('Leider ist in dem Gottesdienst um '.$service_name.' Uhr nicht mehr genug Platz');
+    }
+
     $participant = tap(new App\Participant($data))->save();
 
     return redirect('/');
