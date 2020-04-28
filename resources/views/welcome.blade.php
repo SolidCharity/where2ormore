@@ -85,7 +85,7 @@
 @php
        echo date('H:i', strtotime($service->starting_at));
 @endphp 
-       Uhr: {{$service->description}}</label> Momentan: {{$service->count_adults}} große Kinder und Erwachsene und {{$service->count_children}} kleine Kinder
+       Uhr: {{$service->description}}</label> Momentan: {{$service->count_adults}} Erwachsene und {{$service->count_children}} kleine Kinder
     <br/>
 @endforeach
   </fieldset>
