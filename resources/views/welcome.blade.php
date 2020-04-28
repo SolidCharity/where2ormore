@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Gottesdienst Planer</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -64,37 +64,36 @@
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
+<form action="/submitParticipant" method="post">
+  @csrf
+  <fieldset>
+   Mein Name: <input type="text" id="name" name="name" required><br/>
+    Es reicht der Vorname oder Nachname, aber ihr solltet von der Gemeindeleitung eindeutig an diesem Namen erkannt werden! Also z.B. Familie Schmidt, wenn es sonst keine Familie Schmidt in der Gemeinde gibt, oder MaxM wenn es sonst keinen Max mit Anfangsbuchstaben M im Nachnamen gibt.
+  </fieldset>
+  <fieldset>
+    <p>Bitte Gottesdienst wählen:</><br/>
+@foreach ($services as $service)
+    <input type="radio" id="service-{{ $service->id }}" name="service_id" value="{{$service->id}}" required>
+    <label for="service-{{ $service->id }}">  
+@php
+       echo date('H:i', strtotime($service->starting_at));
+@endphp 
+       Uhr: {{$service->description}}</label>
+    <br/>
+@endforeach
+  </fieldset>
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
+  <fieldset>
+    <input type="number" id="quantityAdults" name="count_adults" min="1" max="9" value="1" required>
+    <label for="quantityAdults">Anzahl Erwachsene und Kinder ab 5. Klasse</label>
+    <br/>
+    <input type="number" id="quantityChildren" name="count_children" min="0" max="9" value="0">
+    <label for="quantityChildren">Anzahl Kindergartenkinder und Grundschulkinder</label>
+  </fieldset>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
-        </div>
+  <input type="submit">
+</form>
+
     </body>
 </html>

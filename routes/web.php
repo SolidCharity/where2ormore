@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $services = \App\Service::all();
+    return view('welcome', ['services' => $services]);
+});
+
+Route::post('/submitParticipant', function (Request $request) {
+    $data = $request->validate([
+        'name' => 'required|max:255',
+        'service_id' => 'required|integer',
+        'count_adults' => 'required|integer',
+        'count_children' => 'integer',
+    ]);
+
+    $participant = tap(new App\Participant($data))->save();
+
+    return redirect('/');
 });
