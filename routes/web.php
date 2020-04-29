@@ -41,7 +41,7 @@ Route::post('/submitParticipant', function (Request $request) {
         return redirect()
                 ->back()
                 ->withInput()
-                ->withAlert('Leider ist in dem Gottesdienst um '.$service_name.' Uhr nicht mehr genug Platz');
+                ->withAlert(__('messages.error_service_full', ['service_time' => $service_name]));
     }
 
     $participant = tap(new App\Participant($data))->save();
