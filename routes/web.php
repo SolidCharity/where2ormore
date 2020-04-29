@@ -49,6 +49,6 @@ Route::post('/submitParticipant', function (Request $request) {
     return redirect('/');
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
