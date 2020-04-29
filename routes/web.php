@@ -55,3 +55,4 @@ $allow_register = DB::table('users')->count() == 0;
 Auth::routes(['register' => $allow_register]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/admin', 'HomeController@index')->name('admin');

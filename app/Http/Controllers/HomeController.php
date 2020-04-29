@@ -23,7 +23,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        // get all services
+        $services = \App\Service::all();
+        $participants = \App\Participant::all();
+
+        return view('home', ['services' => $services,
+            'participants' => $participants]);
     }
 
     /**

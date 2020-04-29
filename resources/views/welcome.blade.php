@@ -28,7 +28,8 @@
 @php
        echo date('H:i', strtotime($service->starting_at));
 @endphp 
-       Uhr: {{$service->description}}</label> @lang('messages.currently_visitors', ['value' => $service->count_adults])
+       @lang('messages.oclock'): {{$service->description}}</label> 
+       @lang('messages.currently_visitors', ['value' => $service->count_adults + $service->count_children])
     <br/>
 @endforeach
   </fieldset>
