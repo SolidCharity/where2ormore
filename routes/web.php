@@ -49,6 +49,9 @@ Route::post('/submitParticipant', function (Request $request) {
     return redirect('/');
 });
 
-Auth::routes(['register' => false]);
+# only allow register if there is no user yet
+$allow_register = DB::table('users')->count() == 0;
+
+Auth::routes(['register' => $allow_register]);
 
 Route::get('/home', 'HomeController@index')->name('home');
