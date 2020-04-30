@@ -22,16 +22,16 @@
   </fieldset>
   <fieldset>
     <p>@lang('messages.select_service'):</><br/>
+    <table>
 @foreach ($services as $service)
+    <tr><td>
     <input type="radio" id="service-{{ $service->id }}" name="service_id" value="{{$service->id}}" required>
-    <label for="service-{{ $service->id }}">  
-@php
-       echo date('H:i', strtotime($service->starting_at));
-@endphp 
-       @lang('messages.oclock'): {{$service->description}}</label> 
+    <label for="service-{{ $service->id }}">{{$service->description}}</label>
+    </td><td>
        @lang('messages.currently_visitors', ['value' => $service->count_adults + $service->count_children])
-    <br/>
+    </td></tr>
 @endforeach
+    </table>
   </fieldset>
 
   <fieldset>

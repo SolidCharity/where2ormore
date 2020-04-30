@@ -14,10 +14,7 @@
      <div class="container">
      <div class="row">
          <div class="col-md-8">
-@php
-       echo date('H:i', strtotime($service->starting_at));
-@endphp
-       @lang('messages.oclock'): {{$service->description}}
+            {{$service->description}}
          </div>
      </div>
 
@@ -43,6 +40,25 @@
 
 @endforeach
 
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">@lang('messages.settings')</div>
+
+                <div class="card-body">
+                   <!-- 
+                   TODO: add or remove services
+                   TODO: max number of visitors
+                   TODO: reset button to clear all participants
+                   -->
+                   <form action="/submitServiceNames" method="post">
+@csrf
+@foreach ($services as $service)
+                       <input type="hidden" name="service[service{{$service->id}}][id]" value="{{$service->id}}"/>
+                       @lang('messages.service') {{$loop->index+1}}: <input type="text" name="service[service{{$service->id}}][name]" value="{{$service->description}}" style="width:80%"/><br/>
+@endforeach
+                       <input type="submit" value="@lang('messages.submit')"/>
+                   </form>
                 </div>
             </div>
         </div>

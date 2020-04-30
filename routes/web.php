@@ -49,6 +49,22 @@ Route::post('/submitParticipant', function (Request $request) {
     return redirect('/');
 });
 
+Route::post('/submitServiceNames', function (Request $request) {
+
+    $data = $request->validate([
+        'service.*.id' => 'required|integer',
+        'service.*.name' => 'required|string',
+    ]);
+
+    foreach($data['service'] as $key => $servicename) {
+        $service = \App\Service::find($servicename['id']);
+        $service->description = $servicename['name'];
+        $service->save();
+    }
+
+    return redirect('/admin');
+});
+
 # only allow register if there is no user yet
 $allow_register = DB::table('users')->count() == 0;
 
