@@ -13,4 +13,6 @@ return [
     'settings' => 'Einstellungen',
     'add' => 'Hinzufügen',
     'addservice' => 'Weiterer Gottesdienst',
+    'delete' => 'Löschen',
+    'error_service_delete_failed' => 'Gottesdienst kann nicht gelöscht werden, weil es noch Besucher gibt',
 ];

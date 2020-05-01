@@ -76,6 +76,28 @@ Route::post('/addService', function (Request $request) {
     return redirect('/admin');
 });
 
+// TODO: use controller instead. see https://www.techiediaries.com/laravel/php-laravel-7-6-tutorial-crud-example-app-bootstrap-4-mysql-database/
+Route::post('/delService', function (Request $request) {
+
+    $data = $request->validate([
+        'id' => 'required|integer',
+    ]);
+
+    // check for participants
+    $count = DB::table('participants')
+                ->where('service_id', $data['id'])
+                ->sum('count_adults');
+    if ($count > 0) {
+        return redirect('/admin')
+                ->withAlert(__('messages.error_service_delete_failed'));
+    }
+
+    $service = \App\Service::find($data['id']);
+    $service->delete();
+
+    return redirect('/admin');
+});
+
 # only allow register if there is no user yet
 $allow_register = false;
 if (!app()->runningInConsole()) {

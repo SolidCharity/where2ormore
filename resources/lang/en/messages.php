@@ -13,4 +13,6 @@ return [
     'settings' => 'Settings',
     'add' => 'Add',
     'addservice' => 'Add Service',
+    'delete' => 'Delete',
+    'error_service_delete_failed' => 'Service cannot be deleted because there are still visitors assigned',
 ];

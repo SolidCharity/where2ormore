@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@if (session('alert'))
+    <div class="alert alert-success">
+        {{ session('alert') }}
+    </div>
+@endif
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -51,14 +57,29 @@
                    TODO: max number of visitors
                    TODO: reset button to clear all participants
                    -->
+                   <div class="row">
+                   <div class="col-8">
                    <form action="/submitServiceNames" method="post">
 @csrf
 @foreach ($services as $service)
                        <input type="hidden" name="service[service{{$service->id}}][id]" value="{{$service->id}}"/>
-                       @lang('messages.service') {{$loop->index+1}}: <input type="text" name="service[service{{$service->id}}][name]" value="{{$service->description}}" style="width:80%"/><br/>
+                       @lang('messages.service') {{$loop->index+1}}: <input type="text" name="service[service{{$service->id}}][name]" value="{{$service->description}}" style="width:80%"/>
+                       <br/>
 @endforeach
                        <input type="submit" value="@lang('messages.submit')"/>
                    </form>
+                   </div>
+                   <div class="col-2">
+@foreach ($services as $service)
+
+                   <form action="/delService" method="post">
+                  @csrf
+                         <input type="hidden" name="id" value="{{$service->id}}"/>
+                  <button class="btn btn-danger" type="submit">@lang('messages.delete')</button><br/>
+                       </form>
+@endforeach
+                   </div>
+                   </div>
 
 		   <form action="/addService" method="post">
 @csrf
