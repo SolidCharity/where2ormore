@@ -11,4 +11,6 @@ return [
     'error_service_full' => 'Unfortunately the service at :service_time is already full!',
     'overview_visitors' => 'Current list of visitors per service',
     'settings' => 'Settings',
+    'add' => 'Add',
+    'addservice' => 'Add Service',
 ];

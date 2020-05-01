@@ -59,6 +59,12 @@
 @endforeach
                        <input type="submit" value="@lang('messages.submit')"/>
                    </form>
+
+		   <form action="/addService" method="post">
+@csrf
+                       @lang('messages.addservice'): <input type="text" name="description" style="width:60%"/>
+                       <input type="submit" value="@lang('messages.add')"/>
+                   </form>
                 </div>
             </div>
         </div>

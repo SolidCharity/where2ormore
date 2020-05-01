@@ -65,6 +65,17 @@ Route::post('/submitServiceNames', function (Request $request) {
     return redirect('/admin');
 });
 
+Route::post('/addService', function (Request $request) {
+
+    $data = $request->validate([
+        'description' => 'required|string',
+    ]);
+
+    $service = tap(new App\Service($data))->save();
+
+    return redirect('/admin');
+});
+
 # only allow register if there is no user yet
 $allow_register = false;
 if (!app()->runningInConsole()) {

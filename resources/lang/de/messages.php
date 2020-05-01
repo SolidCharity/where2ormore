@@ -11,4 +11,6 @@ return [
     'error_service_full' => 'Leider ist in dem Gottesdienst um :service_time Uhr nicht mehr genug Platz!',
     'overview_visitors' => 'Aktuelle Besucherliste',
     'settings' => 'Einstellungen',
+    'add' => 'Hinzufügen',
+    'addservice' => 'Weiterer Gottesdienst',
 ];
