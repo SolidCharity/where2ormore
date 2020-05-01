@@ -66,7 +66,11 @@ Route::post('/submitServiceNames', function (Request $request) {
 });
 
 # only allow register if there is no user yet
-$allow_register = DB::table('users')->count() == 0;
+$allow_register = false;
+if (!app()->runningInConsole()) {
+    // avoid accessing the database when running initial artisan migrate
+    $allow_register = DB::table('users')->count() == 0;
+}
 
 Auth::routes(['register' => $allow_register]);
 
