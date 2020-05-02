@@ -86,10 +86,12 @@ class ServiceController extends Controller
     {
         $data = $request->validate([
             'description' => 'required|string',
+            'max_visitors' => 'required|integer',
         ]);
 
         $service = \App\Service::find($id);
         $service->description = $data['description'];
+        $service->max_visitors = $data['max_visitors'];
         $service->save();
 
         return redirect('/admin');

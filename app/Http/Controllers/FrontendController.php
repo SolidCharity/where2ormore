@@ -50,21 +50,21 @@ class FrontendController extends Controller
                 ->sum('count_children');
         $count += $data['count_children'] + $data['count_adults'];
 
-        $service_name = \DB::table('services')->where('id', $data['service_id'])->value('description');
+        $service = \App\Service::find($data['service_id']);
 
-        if ($count > 15)
+        if ($count > $service->max_visitors)
         {
             return redirect()
                 ->back()
                 ->withInput()
-                ->withAlert(__('messages.error_service_full', ['name' => $service_name]));
+                ->withAlert(__('messages.error_service_full', ['name' => $service->description]));
         }
 
         $participant = tap(new \App\Participant($data))->save();
 
         return redirect('/')->
             withAlert(__('messages.success_participant_added', 
-                ['name' => $service_name,
+                ['name' => $service->description,
                  'count' => $data['count_children'] + $data['count_adults']]));
     }
 

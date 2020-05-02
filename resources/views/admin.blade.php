@@ -69,7 +69,6 @@
 
                 <div class="card-body">
                    <!-- 
-                   TODO: max number of visitors
                    TODO: reset button to clear all participants
                    -->
                 <table>
@@ -78,12 +77,13 @@
 <form method="post" action="{{ route('services.update', $service->id) }}">
             @method('PATCH')
             @csrf
-                       <td>
+                       <td style="width:10%">
                            @lang('messages.service') {{$loop->index+1}}:
                        </td>
                        <td style="width:70%">
                            <input type="text" name="description" value="{{$service->description}}" style="width:100%"/>
                        </td>
+                       <td style="width:10%"><input type="number" name="max_visitors" value="{{$service->max_visitors}}" style="width:100%"/></td>
                        <td>
                            <button type="submit" class="btn btn-primary">@lang('messages.save')</button>
                        </td>
