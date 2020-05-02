@@ -9,6 +9,9 @@ class Service extends Model
 {
     protected $appends = ['count_adults', 'count_children'];
 
+    // avoiding issue with MassAssignmentException
+    protected $fillable = array('description');
+
     public function getCountAdultsAttribute()
     {
         return DB::table('participants')

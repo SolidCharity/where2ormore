@@ -14,56 +14,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', function () {
-    $services = \App\Service::all();
-    return view('welcome', ['services' => $services]);
-});
 
-Route::post('/submitParticipant', function (Request $request) {
-    $data = $request->validate([
-        'name' => 'required|max:255',
-        'service_id' => 'required|integer',
-        'count_adults' => 'required|integer',
-        'count_children' => 'integer',
-    ]);
+Route::apiResource('frontend', 'FrontendController');
+Route::apiResource('services', 'ServiceController');
+Route::apiResource('participants', 'ParticipantController');
 
-    $count = DB::table('participants')
-                ->where('service_id', $data['service_id'])
-                ->sum('count_adults');
-    $count += DB::table('participants')
-                ->where('service_id', $data['service_id'])
-                ->sum('count_children');
-    $count += $data['count_children'] + $data['count_adults'];
-
-    if ($count > 15)
-    {
-        $service_name = date('H:i', strtotime(DB::table('services')->where('id', $data['service_id'])->value('starting_at')));
-        return redirect()
-                ->back()
-                ->withInput()
-                ->withAlert(__('messages.error_service_full', ['service_time' => $service_name]));
-    }
-
-    $participant = tap(new App\Participant($data))->save();
-
-    return redirect('/');
-});
-
-Route::post('/submitServiceNames', function (Request $request) {
-
-    $data = $request->validate([
-        'service.*.id' => 'required|integer',
-        'service.*.name' => 'required|string',
-    ]);
-
-    foreach($data['service'] as $key => $servicename) {
-        $service = \App\Service::find($servicename['id']);
-        $service->description = $servicename['name'];
-        $service->save();
-    }
-
-    return redirect('/admin');
-});
+Route::delete('participants', 'AdminController@dropAllParticipants')->name('dropAllParticipants');
 
 # only allow register if there is no user yet
 $allow_register = false;
@@ -74,5 +30,6 @@ if (!app()->runningInConsole()) {
 
 Auth::routes(['register' => $allow_register]);
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/admin', 'HomeController@index')->name('admin');
+Route::get('/', 'FrontendController@index')->name('frontend');
+Route::get('/home', 'AdminController@index')->name('home');
+Route::get('/admin', 'AdminController@index')->name('admin');
