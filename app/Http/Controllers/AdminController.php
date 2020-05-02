@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class AdminController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -27,7 +27,7 @@ class HomeController extends Controller
         $services = \App\Service::all();
         $participants = \App\Participant::all();
 
-        return view('home', ['services' => $services,
+        return view('admin', ['services' => $services,
             'participants' => $participants]);
     }
 

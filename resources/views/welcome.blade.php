@@ -15,7 +15,7 @@
     </div>
 @endif
 
-<form action="/submitParticipant" method="post">
+<form action="{{ route('frontend.store') }}" method="post">
   @csrf
   <fieldset>
    @lang('messages.my_name'): <input type="text" id="name" name="name" required value="{{old('name')}}"><br/>
