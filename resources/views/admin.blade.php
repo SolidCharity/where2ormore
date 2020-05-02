@@ -41,7 +41,7 @@
 <form method="post" action="{{ route('participants.destroy', $participant->id) }}">
             @method('DELETE')
             @csrf
-                         <button class="btn btn-danger" type="submit">@lang('messages.delete')</button>
+                         <button class="btn btn-danger" type="submit"  onclick="return confirm('@lang('messages.confirm_delete')')">@lang('messages.delete')</button>
 </form>
            </td>
          </tr>
@@ -62,15 +62,17 @@
 
 @endforeach
 
+<form method="post" action="{{ route('dropAllParticipants') }}">
+            @method('DELETE')
+            @csrf
+                 <button type="submit" class="btn btn-danger" onclick="return confirm('@lang('messages.confirm_delete')')">@lang('messages.delete_all_participants')</button>
+</form>
                 </div>
             </div>
             <div class="card">
                 <div class="card-header">@lang('messages.settings')</div>
 
                 <div class="card-body">
-                   <!-- 
-                   TODO: reset button to clear all participants
-                   -->
                 <table>
 @foreach ($services as $service)
                    <tr>
@@ -93,7 +95,7 @@
             @method('DELETE')
             @csrf
                        <td>
-                           <button type="submit" class="btn btn-danger">
+                           <button type="submit" class="btn btn-danger" onclick="return confirm('@lang('messages.confirm_delete')')">
                                @lang('messages.delete')
                            </button>
                        </td>

@@ -31,8 +31,17 @@ class AdminController extends Controller
             'participants' => $participants]);
     }
 
-    public function delParticipant($id)
+    /// drop all participants, as preparation for next week's Sunday!
+    public function dropAllParticipants()
     {
+        $participants = \App\Participant::all();
+
+        foreach ($participants as $participant)
+        {
+            $participant->delete();
+        }
+
+        return redirect('/admin');
     }
 
     /**

@@ -19,6 +19,8 @@ Route::apiResource('frontend', 'FrontendController');
 Route::apiResource('services', 'ServiceController');
 Route::apiResource('participants', 'ParticipantController');
 
+Route::delete('participants', 'AdminController@dropAllParticipants')->name('dropAllParticipants');
+
 # only allow register if there is no user yet
 $allow_register = false;
 if (!app()->runningInConsole()) {

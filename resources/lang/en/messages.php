@@ -15,6 +15,8 @@ return [
     'add' => 'Add',
     'addservice' => 'Add Service',
     'delete' => 'Delete',
+    'delete_all_participants' => 'Delete all participants',
+    'confirm_delete' => 'Do you really want to delete?',
     'save' => 'Save',
     'error_service_delete_failed' => 'Service cannot be deleted because there are still visitors assigned',
 ];
