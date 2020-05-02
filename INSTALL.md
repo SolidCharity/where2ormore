@@ -68,6 +68,7 @@ cp .env.example .env
 vi .env
 
 php7.2 ~/composer/composer.phar install
+php7.2 ~/composer/composer.phar require doctrine/dbal
 php7.2 artisan migrate
 php7.2 artisan key:generate
 npm install && npm run dev
