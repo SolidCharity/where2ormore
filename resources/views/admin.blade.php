@@ -69,7 +69,6 @@
 
                 <div class="card-body">
                    <!-- 
-                   TODO: add or remove services
                    TODO: max number of visitors
                    TODO: reset button to clear all participants
                    -->

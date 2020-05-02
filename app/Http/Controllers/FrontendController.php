@@ -14,7 +14,7 @@ class FrontendController extends Controller
     public function index()
     {
         $services = \App\Service::all();
-        return view('welcome', ['services' => $services]);
+        return view('frontend', ['services' => $services]);
     }
 
     /**
