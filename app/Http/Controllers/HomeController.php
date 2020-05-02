@@ -31,6 +31,10 @@ class HomeController extends Controller
             'participants' => $participants]);
     }
 
+    public function delParticipant($id)
+    {
+    }
+
     /**
      * Show the application dashboard.
      *

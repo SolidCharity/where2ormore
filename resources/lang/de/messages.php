@@ -14,5 +14,6 @@ return [
     'add' => 'Hinzufügen',
     'addservice' => 'Weiterer Gottesdienst',
     'delete' => 'Löschen',
+    'save' => 'Ändern',
     'error_service_delete_failed' => 'Gottesdienst kann nicht gelöscht werden, weil es noch Besucher gibt',
 ];

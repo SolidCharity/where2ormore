@@ -23,17 +23,33 @@
             {{$service->description}}
          </div>
      </div>
-
+     <table style="width: 100%">
     @foreach ($participants as $participant)
-         <div class="row">
-              <div class='col-md-2'></div>
     @php
          if ($participant->service_id == $service->id) {
-             echo "<div class='col-md-4'>".$participant->name . "</div><div class='col-md-4'>". ($participant->count_adults + $participant->count_children)."</div>";
+    @endphp
+         <tr>
+<form method="post" action="{{ route('participants.update', $participant->id) }}">
+            @method('PATCH')
+            @csrf
+           <td style="width: 10%"></td>
+           <td style="width: 60%"><input type="text" name="name" value="{{$participant->name}}" style="width:100%"></td>
+           <td><input type="number" name="count_adults" value="{{$participant->count_adults}}"></td>
+           <td><button type="submit" class="btn btn-primary">@lang('messages.save')</button></td>
+</form>
+           <td>
+<form method="post" action="{{ route('participants.destroy', $participant->id) }}">
+            @method('DELETE')
+            @csrf
+                         <button class="btn btn-danger" type="submit">@lang('messages.delete')</button>
+</form>
+           </td>
+         </tr>
+    @php
          }
     @endphp
-         </div>
     @endforeach
+     </table>
 
      <div class="row">
          <div class="col-md-4"></div>
@@ -57,35 +73,50 @@
                    TODO: max number of visitors
                    TODO: reset button to clear all participants
                    -->
-                   <div class="row">
-                   <div class="col-8">
-                   <form action="/submitServiceNames" method="post">
-@csrf
+                <table>
 @foreach ($services as $service)
-                       <input type="hidden" name="service[service{{$service->id}}][id]" value="{{$service->id}}"/>
-                       @lang('messages.service') {{$loop->index+1}}: <input type="text" name="service[service{{$service->id}}][name]" value="{{$service->description}}" style="width:80%"/>
-                       <br/>
-@endforeach
-                       <input type="submit" value="@lang('messages.submit')"/>
-                   </form>
-                   </div>
-                   <div class="col-2">
-@foreach ($services as $service)
+                   <tr>
+<form method="post" action="{{ route('services.update', $service->id) }}">
+            @method('PATCH')
+            @csrf
+                       <td>
+                           @lang('messages.service') {{$loop->index+1}}:
+                       </td>
+                       <td style="width:70%">
+                           <input type="text" name="description" value="{{$service->description}}" style="width:100%"/>
+                       </td>
+                       <td>
+                           <button type="submit" class="btn btn-primary">@lang('messages.save')</button>
+                       </td>
+</form>
 
-                   <form action="/delService" method="post">
-                  @csrf
-                         <input type="hidden" name="id" value="{{$service->id}}"/>
-                  <button class="btn btn-danger" type="submit">@lang('messages.delete')</button><br/>
-                       </form>
-@endforeach
-                   </div>
-                   </div>
+<form method="post" action="{{ route('services.destroy', $service->id) }}">
+            @method('DELETE')
+            @csrf
+                       <td>
+                           <button type="submit" class="btn btn-danger">
+                               @lang('messages.delete')
+                           </button>
+                       </td>
 
-		   <form action="/addService" method="post">
+</form>
+                   </tr>
+@endforeach
+                   <tr>
+		   <form action="{{ route('services.store') }}" method="post">
 @csrf
-                       @lang('messages.addservice'): <input type="text" name="description" style="width:60%"/>
-                       <input type="submit" value="@lang('messages.add')"/>
+                       <td>
+                       @lang('messages.addservice'):
+                       </td>
+                       <td>
+                            <input type="text" name="description" style="width:100%"/>
+                       </td>
+                       <td>
+                          <button type="submit" class="btn btn-primary">@lang('messages.add')</button>
+                       </td>
                    </form>
+                   </tr>
+                </table>
                 </div>
             </div>
         </div>
