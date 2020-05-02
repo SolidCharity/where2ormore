@@ -1,13 +1,13 @@
-## About Where2or15
+## About Where2orMore
 
-This is a web app written in Laravel, that has the goal to support churches to start having services of worship again after the COVID-19 lockdown. In some countries, you are allowed a maximum number of visitors per service of 15. So we needed a simple app, that allows our members and guests to register for one of several services per sunday.
+This is a web app written in Laravel, that has the goal to support churches to start having services of worship again after the COVID-19 lockdown. In some countries, you are allowed a maximum number of visitors per service. So we needed a simple app, that allows our members and guests to register for one of several services per sunday.
 
-For more information, and a hosted service, please visit https://www.wo2oder15.de
+For more information, and a hosted service, please visit https://www.wo2oderMehr.de
 
 ## Contributing
 
-Pull Requests are welcome! Also error reports are welcome at https://github.com/SolidCharity/where2or15/issues!
+Pull Requests are welcome! Also error reports are welcome at https://github.com/SolidCharity/where2ormore/issues!
 
 ## License
 
-The Where2or15 web app is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The Where2orMore web app is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
