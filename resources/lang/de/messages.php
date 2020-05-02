@@ -19,4 +19,5 @@ return [
     'confirm_delete' => 'Wollen Sie wirklich löschen?',
     'save' => 'Ändern',
     'error_service_delete_failed' => 'Gottesdienst kann nicht gelöscht werden, weil es noch Besucher gibt',
+    'print_report' => 'Druckansicht der Besucher',
 ];

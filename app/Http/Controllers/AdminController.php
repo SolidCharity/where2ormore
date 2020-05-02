@@ -31,6 +31,16 @@ class AdminController extends Controller
             'participants' => $participants]);
     }
 
+    /// print a report with the visitors for each service
+    public function report()
+    {
+        $services = \App\Service::all();
+        $participants = \App\Participant::all();
+
+        return view('report', ['services' => $services,
+            'participants' => $participants]);
+    }
+
     /// drop all participants, as preparation for next week's Sunday!
     public function dropAllParticipants()
     {

@@ -33,3 +33,4 @@ Auth::routes(['register' => $allow_register]);
 Route::get('/', 'FrontendController@index')->name('frontend');
 Route::get('/home', 'AdminController@index')->name('home');
 Route::get('/admin', 'AdminController@index')->name('admin');
+Route::get('/report', 'AdminController@report')->name('report');
