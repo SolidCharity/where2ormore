@@ -67,6 +67,8 @@
             @csrf
                  <button type="submit" class="btn btn-danger" onclick="return confirm('@lang('messages.confirm_delete')')">@lang('messages.delete_all_participants')</button>
 </form>
+
+<a href="/report" target="_blank"><button class="btn btn-primary">@lang('messages.print_report')</button></a>
                 </div>
             </div>
             <div class="card">
