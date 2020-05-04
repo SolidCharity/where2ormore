@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 
 class ParticipantController extends Controller
 {
@@ -83,7 +84,8 @@ class ParticipantController extends Controller
             'count_adults' => 'required|integer',
         ]);
 
-        $participant = \App\Participant::find($id);
+        $tenant_id = Auth::user()->tenant_id;
+        $participant = \App\Participant::where([['id', $id],['tenant_id', $tenant_id]]).first();
         $participant->name = $data['name'];
         $participant->count_adults = $data['count_adults'];
         $participant->save();
@@ -99,7 +101,8 @@ class ParticipantController extends Controller
      */
     public function destroy($id)
     {
-        $participant = \App\Participant::find($id);
+        $tenant_id = Auth::user()->tenant_id;
+        $participant = \App\Participant::where([['id', $id],['tenant_id', $tenant_id]]).first();
         $participant->delete();
 
         return redirect('/admin');

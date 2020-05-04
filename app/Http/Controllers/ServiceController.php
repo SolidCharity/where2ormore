@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 
 class ServiceController extends Controller
 {
@@ -48,6 +49,9 @@ class ServiceController extends Controller
             'description' => 'required|string',
         ]);
 
+        $tenant_id = Auth::user()->tenant_id;
+        $data['tenant_id'] = $tenant_id;
+
         $service = tap(new \App\Service($data))->save();
 
         return redirect('/admin');
@@ -89,7 +93,9 @@ class ServiceController extends Controller
             'max_visitors' => 'required|integer',
         ]);
 
-        $service = \App\Service::find($id);
+        $tenant_id = Auth::user()->tenant_id;
+        $service = \App\Service::
+            where([['id',$id],['tenant_id', $tenant_id]])->first();
         $service->description = $data['description'];
         $service->max_visitors = $data['max_visitors'];
         $service->save();
@@ -106,15 +112,18 @@ class ServiceController extends Controller
     public function destroy($id)
     {
         // check for participants
+        $tenant_id = Auth::user()->tenant_id;
         $count = \DB::table('participants')
-                ->where('service_id', $id)
+                ->where([['tenant_id', $tenant_id],
+                         ['service_id', $id]])
                 ->sum('count_adults');
         if ($count > 0) {
             return redirect('/admin')
                 ->withAlert(__('messages.error_service_delete_failed'));
         }
 
-        $service = \App\Service::find($id);
+        $service = \App\Service::
+            where([['id', $id],['tenant_id', $tenant_id]])->first();
         $service->delete();
 
         return redirect('/admin');

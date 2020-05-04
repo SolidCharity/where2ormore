@@ -20,4 +20,5 @@ return [
     'save' => 'Ändern',
     'error_service_delete_failed' => 'Gottesdienst kann nicht gelöscht werden, weil es noch Besucher gibt',
     'print_report' => 'Druckansicht der Besucher',
+    'link_for_visitors' => 'Der Link für die Besucher dieser Gemeinde',
 ];

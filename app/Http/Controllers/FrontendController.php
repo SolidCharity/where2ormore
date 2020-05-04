@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 
 class FrontendController extends Controller
 {
@@ -11,10 +12,40 @@ class FrontendController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $services = \App\Service::all();
-        return view('frontend', ['services' => $services]);
+        $data = $request->validate([
+            'uuid' => 'uuid',
+        ]);
+
+        // uuid is passed as GET parameter
+        if (!empty($data['uuid']))
+        {
+            $tenant_id = \DB::table('tenants')->where('uuid', $data['uuid'])->first()->id;
+            $uuid = $data['uuid'];
+        }
+        // admin is logged in. this might actually be confusing...
+        /*
+        else if (Auth::user() != null)
+        {
+            $tenant_id = Auth::user()->tenant_id;
+            $uuid = \DB::table('tenants')->where('id', $tenant_id)->first()->uuid;
+        }
+        */
+        // this is a single instance installation
+        else if (\DB::table('users')->where('tenant_id', "=", 1)->count() == 1)
+        {
+            $tenant_id = 1;
+            $uuid = \DB::table('tenants')->where('id', 1)->first()->uuid;
+        }
+        else
+        {
+            // no tenant has been selected
+            return redirect('https://wo2odermehr.de');
+        }
+
+        $services = \App\Service::where('tenant_id', $tenant_id)->get();
+        return view('frontend', ['services' => $services, 'uuid' => $uuid]);
     }
 
     /**
@@ -38,19 +69,22 @@ class FrontendController extends Controller
         $data = $request->validate([
             'name' => 'required|max:255',
             'service_id' => 'required|integer',
+            'uuid' => 'required|uuid',
             'count_adults' => 'required|integer',
             'count_children' => 'integer',
         ]);
 
+        $tenant_id = \DB::table('tenants')->where('uuid', $data['uuid'])->first()->id;
+        $data['tenant_id'] = $tenant_id;
         $count = \DB::table('participants')
-                ->where('service_id', $data['service_id'])
+                ->where([['service_id', $data['service_id']], ['tenant_id',$tenant_id]])
                 ->sum('count_adults');
         $count += \DB::table('participants')
-                ->where('service_id', $data['service_id'])
+                ->where([['service_id', $data['service_id']], ['tenant_id',$tenant_id]])
                 ->sum('count_children');
         $count += $data['count_children'] + $data['count_adults'];
 
-        $service = \App\Service::find($data['service_id']);
+        $service = \App\Service::where([['id',$data['service_id']], ['tenant_id',$tenant_id]])->first();
 
         if ($count > $service->max_visitors)
         {

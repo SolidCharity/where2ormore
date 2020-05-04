@@ -20,4 +20,5 @@ return [
     'save' => 'Save',
     'error_service_delete_failed' => 'Service cannot be deleted because there are still visitors assigned',
     'print_report' => 'Print Report of Visitors',
+    'link_for_visitors' => 'Link for the visitors of this church',
 ];
