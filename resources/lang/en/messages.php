@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'pagetitle' => 'Service Planer',
+    'pagetitle' => 'Service Planner',
     'my_name' => 'My name',
     'service' => 'Service',
     'select_service' => 'Please select a service',
