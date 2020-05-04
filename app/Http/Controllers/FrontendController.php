@@ -96,7 +96,13 @@ class FrontendController extends Controller
 
         $participant = tap(new \App\Participant($data))->save();
 
-        return redirect('/')->
+        $url = '/';
+        if ($tenant_id != 1)
+        {
+            $url .= '?uuid='.$data['uuid'];
+        }
+
+        return redirect($url)->
             withAlert(__('messages.success_participant_added', 
                 ['name' => $service->description,
                  'count' => $data['count_children'] + $data['count_adults']]));
