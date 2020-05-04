@@ -23,9 +23,13 @@ Route::delete('participants', 'AdminController@dropAllParticipants')->name('drop
 
 # only allow register if there is no user yet
 $allow_register = false;
+// avoid accessing the database when running initial artisan migrate
 if (!app()->runningInConsole()) {
-    // avoid accessing the database when running initial artisan migrate
-    $allow_register = DB::table('users')->count() == 0;
+    // only allow registering of users, if there is not a tenant with 1.
+    // for multi tenant, create first tenant, then delete it in the database:
+    // delete from tenants where id=1;
+    // delete from users where tenant_id=1;
+    $allow_register = DB::table('users')->where('tenant_id', "=", 1)->count() == 0;
 }
 
 Auth::routes(['register' => $allow_register]);

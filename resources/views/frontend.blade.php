@@ -17,6 +17,7 @@
 
 <form action="{{ route('frontend.store') }}" method="post">
   @csrf
+  <input type="hidden" name="uuid" value="{{$uuid}}"/>
   <fieldset>
    @lang('messages.my_name'): <input type="text" id="name" name="name" required value="{{old('name')}}"><br/>
   </fieldset>

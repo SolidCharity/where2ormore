@@ -75,6 +75,9 @@
                 <div class="card-header">@lang('messages.settings')</div>
 
                 <div class="card-body">
+
+                @lang('messages.link_for_visitors'): <a href="{{$link_visitors}}">{{$link_visitors}}</a><br/>
+
                 <table>
 @foreach ($services as $service)
                    <tr>
