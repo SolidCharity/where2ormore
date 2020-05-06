@@ -85,7 +85,7 @@ class ParticipantController extends Controller
         ]);
 
         $tenant_id = Auth::user()->tenant_id;
-        $participant = \App\Participant::where([['id', $id],['tenant_id', $tenant_id]]).first();
+        $participant = \App\Participant::where([['id', $id],['tenant_id', $tenant_id]])->first();
         $participant->name = $data['name'];
         $participant->count_adults = $data['count_adults'];
         $participant->save();
