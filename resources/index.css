@@ -1,0 +1,156 @@
+/* NOTE !!! >>>>
+Because of that maybe the background poicture be heavy in size.
+I am adding another option so that if the Background picture was heavy, a Background Color will be used instead.
+Just take the Background color out of the Comment and put Background Image in a comment or delete it. */
+
+body {
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    background-image: url(../test/cross.changed.jpg);
+    /* to get the background color working put the upper line in comments or delete it and take out the under line out of the comments */
+    /*background: repeating-linear-gradient(50deg, snow, rgba(37, 37, 37, 0.808));
+    background-size: cover;*/
+    background-position: right;
+}
+
+.form {
+    margin: auto;
+    margin-top: 60px;
+    margin-left: 50px;
+    padding: 40px;
+    width: 70%;
+    text-align: center;
+    background-color: rgba(10, 10, 10, 0.575);
+    color: snow;
+    border-radius: 50px;
+    border: none;
+    z-index: 6;
+}
+
+.name-input {
+    font-size: 25px;
+    border-radius: 45px;
+    border: none;
+    padding: 10px;
+}
+
+.field {
+    margin: 10px;
+    padding: 15px;
+    border: solid rgb(112, 111, 111) 2px;
+    border-radius: 40px;
+    font-size: 24px;
+}
+
+.persons-num-label {
+    font-size: 22px;
+}
+
+.persons-num-input {
+    font-size: 22px;
+    width: 10%;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.submit-btn {
+    margin: 20px;
+    padding: 10px;
+    width: 50%;
+    background-color: snow;
+    color: black;
+    font-size: 22px;
+    border: none;
+}
+
+.submit-btn:hover {
+    background-color: black;
+    color: snow;
+    border-radius: 55px;
+    font-weight: bolder;
+    transition: ease-in 0.6s;
+}
+
+.right-side {
+    margin: 10px;
+    float: right;
+}
+
+.left-side {
+    margin: 10px;
+    float: left;
+}
+
+.right-side {
+    margin: 10px;
+    float: right;
+}
+
+.left-side {
+    margin: 10px;
+    float: left;
+}
+
+
+/* Here i am adding The Media Querieres */
+
+
+/*This Media query will target Screens that are less than 480px in width*/
+
+@media (max-width: 480px) {
+    .form {
+        margin: auto;
+        padding: auto;
+        width: 100%;
+        background-color: rgba(10, 10, 10, 0.493);
+    }
+    .name-input {
+        font-size: 20;
+        padding: 5px;
+        width: 75%;
+    }
+    .field {
+        margin: auto;
+        margin-left: 10px;
+        display: grid;
+        grid-template-columns: 60% 40%;
+        font-size: 19px;
+        padding: 5px;
+    }
+    .persons-num-label {
+        font-size: 18px;
+    }
+    .persons-num-input {
+        font-size: 18px;
+    }
+    .submit-btn {
+        margin: 15px;
+        padding: 5px;
+        font-size: 19px;
+    }
+    .right-side {
+        margin: 5px;
+    }
+    .left-side {
+        margin: 5px;
+    }
+}
+
+
+/*This Media Query is targeting screens that are between 640px and 481px */
+
+@media (max-width: 640px) and (min-width: 481px) {
+    .form {
+        margin-top: 30px;
+        margin-left: 10px;
+        padding: 20px;
+        width: 80%;
+        background-color: rgba(10, 10, 10, 0.472);
+        color: snow;
+    }
+    .field {
+        margin: 5px;
+        padding: 5px;
+        margin-right: 20px;
+        font-size: 18px;
+    }
+}
