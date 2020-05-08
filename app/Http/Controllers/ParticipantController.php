@@ -102,7 +102,7 @@ class ParticipantController extends Controller
     public function destroy($id)
     {
         $tenant_id = Auth::user()->tenant_id;
-        $participant = \App\Participant::where([['id', $id],['tenant_id', $tenant_id]]).first();
+        $participant = \App\Participant::where([['id', $id],['tenant_id', $tenant_id]])->first();
         $participant->delete();
 
         return redirect('/admin');
