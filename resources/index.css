@@ -5,10 +5,10 @@ Just take the Background color out of the Comment and put Background Image in a 
 
 body {
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-    background-image: url(../test/cross.changed.jpg);
+    background-image: url(cross.changed.jpg);
     /* to get the background color working put the upper line in comments or delete it and take out the under line out of the comments */
-    /*background: repeating-linear-gradient(50deg, snow, rgba(37, 37, 37, 0.808));
-    background-size: cover;*/
+    /*background: repeating-linear-gradient(50deg, snow, rgba(37, 37, 37, 0.808));*/
+    background-size: cover;
     background-position: right;
 }
 
@@ -53,7 +53,7 @@ body {
 }
 
 .submit-btn {
-    margin: 20px;
+    margin: 5px;
     padding: 10px;
     width: 50%;
     background-color: snow;
@@ -97,41 +97,33 @@ body {
 /*This Media query will target Screens that are less than 480px in width*/
 
 @media (max-width: 480px) {
+    body {
+        width: 80%;
+    }
     .form {
         margin: auto;
-        padding: auto;
-        width: 100%;
-        background-color: rgba(10, 10, 10, 0.493);
+        width: 80%;
     }
     .name-input {
-        font-size: 20;
-        padding: 5px;
-        width: 75%;
+        margin: auto;
+        max-width: 75%;
+        font-size: 16px;
     }
     .field {
         margin: auto;
-        margin-left: 10px;
-        display: grid;
-        grid-template-columns: 60% 40%;
-        font-size: 19px;
-        padding: 5px;
+        max-width: 75%;
+        font-size: 12px;
     }
     .persons-num-label {
-        font-size: 18px;
+        font-size: 14px;
     }
     .persons-num-input {
-        font-size: 18px;
+        margin: auto;
+        max-width: 75%;
+        font-size: 12px;
     }
     .submit-btn {
-        margin: 15px;
-        padding: 5px;
-        font-size: 19px;
-    }
-    .right-side {
-        margin: 5px;
-    }
-    .left-side {
-        margin: 5px;
+        font-size: 18px;
     }
 }
 
