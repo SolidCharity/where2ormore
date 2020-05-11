@@ -17,58 +17,51 @@
     Maybe the (href) needs to be changed ! because now the location of the CSS file is changed so the new location or Url should be added.-->
     <link rel="stylesheet" href="index.css">
 
-    <title>Gottesdienst Planer</title>
+    <title>@lang('messages.pagetitle')</title>
 
 </head>
 
 <body>
 
+@if (session('alert'))
+    <div class="alert alert-success">
+        {{ session('alert') }}
+    </div>
+@endif
 
-    <form class="form" action="https://demo.wo2odermehr.de/frontend" method="post">
-        <input type="hidden" name="_token" value="j0zFZONqzj202eK8g2tYc2ebXnQ8DYQnCYk3O4zg"> <input type="hidden" name="uuid" value="4b858c45-4921-44fa-a154-e9cd5d07e98d" />
+    <form class="form" action="{{ route('frontend.store') }}" method="post">
+        @csrf
+        <input type="hidden" name="uuid" value="{{$uuid}}"/>
         <fieldset class="field">
             <!-- Here i added this Label tag so i can apply the styles to the text also -->
-            <label class="name-input" for="name" id="name">Mein Name:</label>
-            <input class="name-input" type="text" id="name" name="name" required value=""><br/>
+            <label class="name-input" for="name" id="name">@lang('messages.my_name'):</label>
+            <input class="name-input" type="text" id="name" name="name" required value="{{old('name')}}"><br/>
         </fieldset>
         <fieldset class="field" class="main-field">
-            <p>Bitte Gottesdienst wählen:
+            <p>@lang('messages.select_service'):
                 </><br/>
                 <table>
+@foreach ($services as $service)
                     <tr>
                         <td>
-                            <input class="left-side" type="radio" id="service-1" name="service_id" value="1" required>
-                            <label class="left-side" for="service-1">9:00 Uhr Frühgottesdienst</label>
+                            <input class="left-side" type="radio" id="service-{{ $service->id }}" name="service_id" value="{{$service->id}}" required>
+                            <label class="left-side" for="service-{{ $service->id }}">{{$service->description}}</label>
                         </td>
                         <td class="right-side">
-                            Momentan 4 Besucher </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input class="left-side" type="radio" id="service-2" name="service_id" value="2" required>
-                            <label class="left-side" for="service-2">10:30 Uhr für Familien, mit parallelem Kinderprogramm</label>
+                            @lang('messages.currently_visitors', ['value' => $service->count_adults + $service->count_children])
                         </td>
-                        <td class="right-side">
-                            Momentan 2 Besucher </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <input class="left-side" type="radio" id="service-3" name="service_id" value="3" required>
-                            <label class="left-side" for="service-3">15:00 Nachmittagsgottesdienst</label>
-                        </td>
-                        <td class="right-side">
-                            Momentan 0 Besucher </td>
-                    </tr>
+@endforeach
                 </table>
         </fieldset>
 
         <fieldset class="field">
-            <input class="persons-num-input" type="number" id="quantityAdults" name="count_adults" min="1" max="9" value="1" required>
-            <label class="persons-num-label" for="quantityAdults">Anzahl Besucher</label>
+            <input class="persons-num-input" type="number" id="quantityAdults" name="count_adults" min="1" max="9" value="{{old('count_adults', 1)}}" required>
+            <label class="persons-num-label" for="quantityAdults">@lang('messages.number_of_visitors')</label>
             <input type="hidden" id="quantityChildren" name="count_children" value="0" />
         </fieldset>
 
-        <input class="submit-btn" type="submit" value="Bestätigen">
+        <input class="submit-btn" type="submit" value="@lang('messages.submit')">
     </form>
 
 </body>
