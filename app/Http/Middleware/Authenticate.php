@@ -15,6 +15,16 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
+            // I cannot get route to work in this place with relative path
+            // return route('login', [], false);
+
+            // therefore we find the external url from the database
+            $tenant = \DB::table('tenants')->where('subdomain', $_SERVER['SERVER_NAME'])->first();
+            if ($tenant)
+            {
+                return ($tenant->external_url.'/login');
+            }
+
             return route('login');
         }
     }

@@ -24,21 +24,34 @@ class FrontendController extends Controller
             $tenant_id = \DB::table('tenants')->where('uuid', $data['uuid'])->first()->id;
             $uuid = $data['uuid'];
         }
+
+        if (empty($uuid))
+        {
+            $tenant = \DB::table('tenants')->where('subdomain', $_SERVER['SERVER_NAME'])->first();
+            if ($tenant)
+            {
+                $uuid = $tenant->uuid;
+                $tenant_id = $tenant->id;
+            }
+        }
+
         // admin is logged in. this might actually be confusing...
         /*
-        else if (Auth::user() != null)
+        if (empty($uuid) && (Auth::user() != null))
         {
             $tenant_id = Auth::user()->tenant_id;
             $uuid = \DB::table('tenants')->where('id', $tenant_id)->first()->uuid;
         }
         */
+
         // this is a single instance installation
-        else if (\DB::table('users')->where('tenant_id', "=", 1)->count() == 1)
+        if (empty($uuid) && (\DB::table('users')->where('tenant_id', "=", 1)->count() == 1))
         {
             $tenant_id = 1;
             $uuid = \DB::table('tenants')->where('id', 1)->first()->uuid;
         }
-        else
+
+        if (empty($uuid))
         {
             // no tenant has been selected
             return redirect('https://wo2odermehr.de');

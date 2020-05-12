@@ -29,7 +29,7 @@
     </div>
 @endif
 
-    <form class="form" action="{{ route('frontend.store') }}" method="post">
+    <form class="form" action="{{ route('frontend.store', [], false) }}" method="post">
         @csrf
         <input type="hidden" name="uuid" value="{{$uuid}}"/>
         <fieldset class="field">
