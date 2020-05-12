@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- I added this Link Tag in order to connect the CSS file to the HTML file.
     Maybe the (href) needs to be changed ! because now the location of the CSS file is changed so the new location or Url should be added.-->
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 
     <title>@lang('messages.pagetitle')</title>
 
@@ -40,19 +40,19 @@
         <fieldset class="field" class="main-field">
             <p>@lang('messages.select_service'):
                 </><br/>
-                <table>
 @foreach ($services as $service)
-                    <tr>
-                        <td>
-                            <input class="left-side" type="radio" id="service-{{ $service->id }}" name="service_id" value="{{$service->id}}" required>
-                            <label class="left-side" for="service-{{ $service->id }}">{{$service->description}}</label>
-                        </td>
-                        <td class="right-side">
-                            @lang('messages.currently_visitors', ['value' => $service->count_adults + $service->count_children])
-                        </td>
-                    </tr>
+                    <div class="row">
+                        <div class="col">
+                            <input class="selectservice" type="radio" id="service-{{ $service->id }}" name="service_id" value="{{$service->id}}" required>
+                            <label class="servicename" for="service-{{ $service->id }}">{{$service->description}}</label>
+                        </div>
+                        <div class="countparticipants">
+                            <label for="service-{{ $service->id }}">
+                                @lang('messages.currently_visitors', ['value' => $service->count_adults + $service->count_children])
+                            </label>
+                        </div>
+                    </div>
 @endforeach
-                </table>
         </fieldset>
 
         <fieldset class="field">

@@ -70,24 +70,21 @@ body {
     transition: ease-in 0.6s;
 }
 
-.right-side {
-    margin: 10px;
-    float: right;
-}
-
-.left-side {
-    margin: 10px;
+.selectservice {
+    margin: 10px 0px 0px 20px;
     float: left;
 }
 
-.right-side {
-    margin: 10px;
+.servicename {
+    margin: 10px 0px 0px 0px;
+    width: 80%;
+    text-align: left;
     float: right;
 }
 
-.left-side {
-    margin: 10px;
-    float: left;
+.countparticipants {
+    width: 100%;
+    float: right;
 }
 
 
@@ -107,20 +104,32 @@ body {
     .name-input {
         margin: auto;
         max-width: 75%;
-        font-size: 16px;
+        font-size: 15px;
+    }
+    .row {
     }
     .field {
         margin: auto;
         max-width: 75%;
-        font-size: 12px;
+        font-size: 15px;
     }
     .persons-num-label {
-        font-size: 14px;
+        font-size: 15px;
     }
     .persons-num-input {
         margin: auto;
-        max-width: 75%;
-        font-size: 12px;
+        max-width: 80%;
+        width: 30px;
+        font-size: 15px;
+    }
+    .selectservice {
+        margin: 10px 0px 0px 0px;
+        float: left;
+    }
+    .servicename {
+        margin: 10px 0px 0px 0px;
+        width: 80%;
+        float: right;
     }
     .submit-btn {
         font-size: 18px;
