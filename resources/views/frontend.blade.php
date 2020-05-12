@@ -15,7 +15,7 @@
     </div>
 @endif
 
-<form action="{{ route('frontend.store') }}" method="post">
+<form action="{{ route('frontend.store', [], false) }}" method="post">
   @csrf
   <input type="hidden" name="uuid" value="{{$uuid}}"/>
   <fieldset>
