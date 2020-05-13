@@ -32,6 +32,9 @@
     <form class="form" action="{{ route('frontend.store', [], false) }}" method="post">
         @csrf
         <input type="hidden" name="uuid" value="{{$uuid}}"/>
+        <div class="field{{$hidechurchname}}">
+           {{ $churchname }}
+        </div>
         <fieldset class="field">
             <!-- Here i added this Label tag so i can apply the styles to the text also -->
             <label class="name-input" for="name" id="name">@lang('messages.my_name'):</label>
@@ -48,7 +51,7 @@
                         </div>
                         <div class="countparticipants">
                             <label for="service-{{ $service->id }}">
-                                @lang('messages.currently_visitors', ['value' => $service->count_adults + $service->count_children])
+                                @lang('messages.currently_visitors', ['value' => $service->count_adults + $service->count_children, 'max' => $service->max_visitors])
                             </label>
                         </div>
                     </div>

@@ -22,6 +22,7 @@ class FrontendController extends Controller
         if (!empty($data['uuid']))
         {
             $tenant_id = \DB::table('tenants')->where('uuid', $data['uuid'])->first()->id;
+            $churchname = \DB::table('tenants')->where('uuid', $data['uuid'])->first()->name;
             $uuid = $data['uuid'];
         }
 
@@ -32,6 +33,7 @@ class FrontendController extends Controller
             {
                 $uuid = $tenant->uuid;
                 $tenant_id = $tenant->id;
+                $churchname = '';
             }
         }
 
@@ -49,6 +51,7 @@ class FrontendController extends Controller
         {
             $tenant_id = 1;
             $uuid = \DB::table('tenants')->where('id', 1)->first()->uuid;
+            $churchname = '';
         }
 
         if (empty($uuid))
@@ -58,7 +61,9 @@ class FrontendController extends Controller
         }
 
         $services = \App\Service::where('tenant_id', $tenant_id)->get();
-        return view('frontend', ['services' => $services, 'uuid' => $uuid]);
+        return view('frontend', ['services' => $services, 'uuid' => $uuid,
+             'churchname' => $churchname,
+             'hidechurchname' => strlen($churchname)==0?'hidden':'']);
     }
 
     /**

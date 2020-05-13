@@ -38,8 +38,10 @@ class AdminController extends Controller
             $visitor_link .= "/?uuid=".$tenant->uuid;
         }
 
+        $churchname = $tenant->name;
+
         return view('admin', ['services' => $services,
-            'participants' => $participants, 'link_visitors' => $visitor_link]);
+            'participants' => $participants, 'link_visitors' => $visitor_link, 'churchname' => $churchname]);
     }
 
     /// print a report with the visitors for each service
@@ -63,6 +65,27 @@ class AdminController extends Controller
         {
             $participant->delete();
         }
+
+        return redirect('/admin');
+    }
+
+    /// update the name of the current tenant
+    public function updateChurchname(Request $request)
+    {
+        $tenant_id = Auth::user()->tenant_id;
+
+        $data = $request->validate([
+            'churchname' => 'nullable|string',
+        ]);
+
+        if (empty($data['churchname'])) {
+		$data = array('churchname' => '');
+        }
+
+        $tenant = \App\Tenant::
+            where('id',$tenant_id)->first();
+        $tenant->name = $data['churchname'];
+        $tenant->save();
 
         return redirect('/admin');
     }

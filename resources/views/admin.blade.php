@@ -79,6 +79,24 @@
                 @lang('messages.link_for_visitors'): <a href="{{$link_visitors}}">{{$link_visitors}}</a><br/>
 
                 <table>
+                   <tr>
+<form method="post" action="{{ route('updateChurchName') }}">
+            @method('PATCH')
+            @csrf
+                       <td style="width:10%">
+                           @lang('messages.churchname'):
+                       </td>
+                       <td style="width:70%">
+                           <input type="text" name="churchname" value="{{$churchname}}" style="width:100%"/>
+                       </td>
+                       <td>
+                           <button type="submit" class="btn btn-primary">@lang('messages.save')</button>
+                       </td>
+</form>
+                    </tr>
+                </table>
+
+                <table>
 @foreach ($services as $service)
                    <tr>
 <form method="post" action="{{ route('services.update', $service->id) }}">
