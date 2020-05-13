@@ -5,7 +5,7 @@ return [
     'my_name' => 'Mein Name',
     'service' => 'Gottesdienst',
     'select_service' => 'Bitte Gottesdienst wählen',
-    'currently_visitors' => 'Momentan :value Besucher',
+    'currently_visitors' => 'Momentan :value von :max Besuchern',
     'number_of_visitors' => 'Anzahl Besucher',
     'submit' => 'Bestätigen',
     'error_service_full' => 'Leider ist in dem Gottesdienst ":name" nicht mehr genug Platz!',
@@ -21,4 +21,5 @@ return [
     'error_service_delete_failed' => 'Gottesdienst kann nicht gelöscht werden, weil es noch Besucher gibt',
     'print_report' => 'Druckansicht der Besucher',
     'link_for_visitors' => 'Der Link für die Besucher dieser Gemeinde',
+    'churchname' => 'Name der Gemeinde',
 ];

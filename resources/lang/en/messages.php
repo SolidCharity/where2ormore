@@ -5,7 +5,7 @@ return [
     'my_name' => 'My name',
     'service' => 'Service',
     'select_service' => 'Please select a service',
-    'currently_visitors' => 'Currently :value visitors',
+    'currently_visitors' => 'Currently :value of :max visitors',
     'number_of_visitors' => 'Number of visitors',
     'submit' => 'Submit',
     'error_service_full' => 'Unfortunately the service ":name" is already full!',
@@ -21,4 +21,5 @@ return [
     'error_service_delete_failed' => 'Service cannot be deleted because there are still visitors assigned',
     'print_report' => 'Print Report of Visitors',
     'link_for_visitors' => 'Link for the visitors of this church',
+    'churchname' => 'Name of church',
 ];

@@ -20,6 +20,7 @@ Route::apiResource('services', 'ServiceController');
 Route::apiResource('participants', 'ParticipantController');
 
 Route::delete('participants', 'AdminController@dropAllParticipants')->name('dropAllParticipants');
+Route::patch('tenants', 'AdminController@updateChurchName')->name('updateChurchName');
 
 # only allow register if there is no user yet
 $allow_register = false;

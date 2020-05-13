@@ -5,7 +5,7 @@ return [
     'my_name' => 'Mijn planner',
     'service' => 'Dienst',
     'select_service' => 'Kies een dienst',
-    'currently_visitors' => 'Huidig aantal bezoekers :value',
+    'currently_visitors' => 'Huidig aantal bezoekers :value van :max',
     'number_of_visitors' => 'Aantal bezoekers',
     'submit' => 'Verstuur',
     'error_service_full' => 'Helaas is de dienst ":name" al volgeboekt!',
@@ -21,4 +21,5 @@ return [
     'error_service_delete_failed' => 'De dienst kan niet verwijderd worden, er zijn namelijk nog bezoekers aangemeld',
     'print_report' => 'Print bezoekersrapport',
     'link_for_visitors' => 'Link voor de bezoekers van de gemeente',
+    'churchname' => 'Name van de kerk',
 ];
