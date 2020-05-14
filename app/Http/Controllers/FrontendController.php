@@ -21,9 +21,18 @@ class FrontendController extends Controller
         // uuid is passed as GET parameter
         if (!empty($data['uuid']))
         {
-            $tenant_id = \DB::table('tenants')->where('uuid', $data['uuid'])->first()->id;
-            $churchname = \DB::table('tenants')->where('uuid', $data['uuid'])->first()->name;
-            $uuid = $data['uuid'];
+            $tenant = \DB::table('tenants')->where('uuid', $data['uuid'])->first();
+            if ($tenant)
+            {
+                $tenant_id = $tenant->id;
+                $churchname = $tenant->name;
+                $uuid = $data['uuid'];
+
+                if (!empty($tenant->external_url))
+                {
+                    return redirect($tenant->external_url);
+                }
+            }
         }
 
         if (empty($uuid))
@@ -33,7 +42,7 @@ class FrontendController extends Controller
             {
                 $uuid = $tenant->uuid;
                 $tenant_id = $tenant->id;
-                $churchname = '';
+                $churchname = $tenant->name;
             }
         }
 
