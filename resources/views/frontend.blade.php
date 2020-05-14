@@ -67,6 +67,10 @@
         <input class="submit-btn" type="submit" value="@lang('messages.submit')">
     </form>
 
+    <div class="upstream">
+        <a href="https://www.wo2odermehr.de" target="_blank">wo2odermehr.de</a>
+    </div>
+
 </body>
 
 </html>

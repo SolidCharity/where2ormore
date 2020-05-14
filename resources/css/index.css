@@ -105,6 +105,13 @@ body {
     float: right;
 }
 
+.upstream {
+    margin: auto;
+    margin-left: 50px;
+    padding: 40px;
+    width: 70%;
+    text-align: center;
+}
 
 /* Here i am adding The Media Querieres */
 
@@ -121,6 +128,10 @@ body {
         font-size: 18px;
     }
     .form {
+        margin: auto;
+        width: 80%;
+    }
+    .upstream {
         margin: auto;
         width: 80%;
     }
