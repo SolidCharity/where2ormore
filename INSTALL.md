@@ -19,10 +19,10 @@ At Hostsharing, I followed these instructions for setting it up in shared hostin
 
 ```
 cd ~/doms/service.my-example-church.de/fastcgi-ssl
-cp /usr/local/src/phpstub/phpstub72 .
+cp /usr/local/src/phpstub/phpstub73 .
 vi ~/doms/service.my-example-church.de/.htaccess
-  AddType application/x-httpd-php72 .php
-  Action application/x-httpd-php72 /fastcgi-bin/phpstub72
+  AddType application/x-httpd-php73 .php
+  Action application/x-httpd-php73 /fastcgi-bin/phpstub73
 ```
 
 * https://wiki.hostsharing.net/index.php?title=Flarum_installieren#Installation_mit_Composer
