@@ -9,7 +9,7 @@ return [
     'number_of_visitors' => 'Number of visitors',
     'submit' => 'Submit',
     'error_service_full' => 'Unfortunately the service ":name" is already full!',
-    'current_registration' => 'You are signed up as ":name" with :count person(s) for the service ":service".',
+    'current_registration' => '":name" is signed up with :count person(s) for the service ":service".',
     'cancel_registration' => 'Delete reservation',
     'overview_visitors' => 'Current list of visitors per service',
     'settings' => 'Settings',
