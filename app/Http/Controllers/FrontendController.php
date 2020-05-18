@@ -166,10 +166,7 @@ class FrontendController extends Controller
             $url .= '?uuid='.$data['uuid'];
         }
 
-        return redirect($url)->
-            withAlert(__('messages.success_participant_added', 
-                ['name' => $service->description,
-                 'count' => $data['count_children'] + $data['count_adults']]));
+        return redirect($url);
     }
 
     public function cancelregistration(Request $request)
