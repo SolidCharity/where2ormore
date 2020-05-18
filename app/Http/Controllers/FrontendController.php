@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Auth;
 
 class FrontendController extends Controller
@@ -69,10 +70,33 @@ class FrontendController extends Controller
             return redirect('https://wo2odermehr.de');
         }
 
-        $services = \App\Service::where('tenant_id', $tenant_id)->get();
-        return view('frontend', ['services' => $services, 'uuid' => $uuid,
-             'churchname' => $churchname,
-             'hidechurchname' => strlen($churchname)==0?'hidden':'']);
+        $display = array();
+        $display['uuid'] = $uuid;
+        $display['services'] = \App\Service::where('tenant_id', $tenant_id)->get();
+        $display['churchname'] = $churchname;
+        $display['hidechurchname'] = empty($churchname)?'hidden':'';
+        $display['registered'] = array();
+
+        $registered_service = "";
+        if (isset($_COOKIE['where2ormore_registration']) && !empty($_COOKIE['where2ormore_registration']))
+        {
+            // get all registrations of this visitor
+            $participants = \DB::table('participants')->where([['tenant_id',$tenant_id],
+                ['cookieid', $_COOKIE['where2ormore_registration']]])->get();
+
+            foreach ($participants as $participant)
+            {
+                $service = \App\Service::where([['id',$participant->service_id], ['tenant_id',$tenant_id]])->first();
+                $display['registered'][] = array(
+                    'name' => $participant->name,
+                    'participant_id' => $participant->id,
+                    'service' => $service->description,
+                    'count' => $participant->count_children + $participant->count_adults,
+                );
+            }
+        }
+
+        return view('frontend', $display);
     }
 
     /**
@@ -101,6 +125,16 @@ class FrontendController extends Controller
             'count_children' => 'integer',
         ]);
 
+        if (isset($_COOKIE['where2ormore_registration']) && !empty($_COOKIE['where2ormore_registration']))
+        {
+            // reuse existing cookie
+            $data['cookieid'] = $_COOKIE['where2ormore_registration'];
+        }
+        else
+        {
+            $data['cookieid'] = (string) Str::uuid();
+        }
+
         $tenant_id = \DB::table('tenants')->where('uuid', $data['uuid'])->first()->id;
         $data['tenant_id'] = $tenant_id;
         $count = \DB::table('participants')
@@ -123,6 +157,9 @@ class FrontendController extends Controller
 
         $participant = tap(new \App\Participant($data))->save();
 
+        // keep the cookie for a week
+        setcookie ( 'where2ormore_registration', $participant->cookieid, array('expires'=>time()+60*60*24*7, 'samesite'=>'strict', 'httponly'=>true));
+
         $url = '/';
         if ($tenant_id != 1)
         {
@@ -133,6 +170,34 @@ class FrontendController extends Controller
             withAlert(__('messages.success_participant_added', 
                 ['name' => $service->description,
                  'count' => $data['count_children'] + $data['count_adults']]));
+    }
+
+    public function cancelregistration(Request $request)
+    {
+        $data = $request->validate([
+            'uuid' => 'required|uuid',
+            'participant_id' => 'required|integer',
+        ]);
+
+        $tenant_id = \DB::table('tenants')->where('uuid', $data['uuid'])->first()->id;
+
+        if (isset($_COOKIE['where2ormore_registration']) && !empty($_COOKIE['where2ormore_registration']))
+        {
+            // find the participant
+            $participant = \DB::table('participants')->where(
+                [['cookieid', $_COOKIE['where2ormore_registration']],
+                 ['id', $data['participant_id']],
+                 ['tenant_id', $tenant_id]]
+                )->delete();
+        }
+
+        $url = '/';
+        if ($tenant_id != 1)
+        {
+            $url .= '?uuid='.$data['uuid'];
+        }
+
+        return redirect($url);
     }
 
     /**

@@ -27,6 +27,19 @@
     <div class="alert alert-success">
         {{ session('alert') }}
     </div>
+@else
+@foreach($registered as $reg)
+    <div class="alert alert-success">
+       @lang('messages.current_registration', ['name' => $reg['name'], 'service' => $reg['service'], 'count' => $reg['count']])
+       <form action="{{ route('cancelregistration', [], false) }}" method="post">
+        @csrf
+        @method('DELETE')
+          <input type="hidden" name="uuid" value="{{$uuid}}"/>
+          <input type="hidden" name="participant_id" value="{{ $reg['participant_id'] }}"/>
+          <input class="submit-btn btn-big" type="submit" value="@lang('messages.cancel_registration')">
+       </form>
+    </div>
+@endforeach
 @endif
 
     <form class="form" action="{{ route('frontend.store', [], false) }}" method="post">
