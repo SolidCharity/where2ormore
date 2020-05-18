@@ -10,6 +10,8 @@ return [
     'submit' => 'Bestätigen',
     'error_service_full' => 'Leider ist in dem Gottesdienst ":name" nicht mehr genug Platz!',
     'success_participant_added' => 'Du wurdest mit :count Person(en) erfolgreich für den Gottesdienst ":name" angemeldet!',
+    'current_registration' => 'Du bist als ":name" mit :count Person(en) für den Gottesdienst ":service" angemeldet.',
+    'cancel_registration' => 'Anmeldung löschen',
     'overview_visitors' => 'Aktuelle Besucherliste',
     'settings' => 'Einstellungen',
     'add' => 'Hinzufügen',

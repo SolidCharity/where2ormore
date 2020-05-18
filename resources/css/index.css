@@ -168,6 +168,9 @@ body {
     .submit-btn {
         font-size: 18px;
     }
+    .btn-big {
+        width: 70%;
+    }
 }
 
 

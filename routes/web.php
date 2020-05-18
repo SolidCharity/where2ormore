@@ -21,6 +21,7 @@ Route::apiResource('participants', 'ParticipantController');
 
 Route::delete('participants', 'AdminController@dropAllParticipants')->name('dropAllParticipants');
 Route::patch('tenants', 'AdminController@updateChurchName')->name('updateChurchName');
+Route::delete('participants2', 'FrontendController@cancelregistration')->name('cancelregistration');
 
 # only allow register if there is no user yet
 $allow_register = false;
