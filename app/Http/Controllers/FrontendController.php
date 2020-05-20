@@ -109,6 +109,25 @@ class FrontendController extends Controller
         //
     }
 
+    function redirect_url($uuid, $tenant_id)
+    {
+        $url = '/';
+        if ($tenant_id != 1)
+        {
+            $tenant = \DB::table('tenants')->where('uuid', $uuid)->first();
+            if (!empty($tenant->external_url))
+            {
+                $url = $tenant->external_url.'/';
+            }
+            else
+            {
+                $url .= '?uuid='.$uuid;
+            }
+        }
+
+        return redirect($url);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -160,13 +179,7 @@ class FrontendController extends Controller
         // keep the cookie for a week
         setcookie ( 'where2ormore_registration', $participant->cookieid, array('expires'=>time()+60*60*24*7, 'samesite'=>'strict', 'httponly'=>true));
 
-        $url = '/';
-        if ($tenant_id != 1)
-        {
-            $url .= '?uuid='.$data['uuid'];
-        }
-
-        return redirect($url);
+        return $this->redirect_url($data['uuid'], $tenant_id);
     }
 
     public function cancelregistration(Request $request)
@@ -188,13 +201,7 @@ class FrontendController extends Controller
                 )->delete();
         }
 
-        $url = '/';
-        if ($tenant_id != 1)
-        {
-            $url .= '?uuid='.$data['uuid'];
-        }
-
-        return redirect($url);
+        return $this->redirect_url($data['uuid'], $tenant_id);
     }
 
     /**
