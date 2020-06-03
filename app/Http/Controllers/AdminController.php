@@ -45,21 +45,40 @@ class AdminController extends Controller
     }
 
     /// print a report with the visitors for each service
-    public function report()
+    static public function report($service_id)
     {
+        if (empty(Auth::user())) {
+            return redirect('/login');
+        }
+
         $tenant_id = Auth::user()->tenant_id;
-        $services = \App\Service::where('tenant_id', $tenant_id)->get();
-        $participants = \App\Participant::where('tenant_id', $tenant_id)->get();
+
+        if (empty($service_id)) {
+            $participants = \App\Participant::where('tenant_id', $tenant_id)->get();
+            $services = \App\Service::where('tenant_id', $tenant_id)->get();
+        } else {
+            $participants = \App\Participant::where([['tenant_id', $tenant_id],['service_id',$service_id]])->get();
+            $services = \App\Service::where([['tenant_id', $tenant_id],['id',$service_id]])->get();
+        }
 
         return view('report', ['services' => $services,
             'participants' => $participants]);
     }
 
     /// drop all participants, as preparation for next week's Sunday!
-    public function dropAllParticipants()
+    static public function dropAllParticipants($service_id)
     {
+        if (empty(Auth::user())) {
+            return redirect('/login');
+        }
+
         $tenant_id = Auth::user()->tenant_id;
-        $participants = \App\Participant::where('tenant_id', $tenant_id)->get();
+
+        if (empty($service_id)) {
+            $participants = \App\Participant::where('tenant_id', $tenant_id)->get();
+        } else {
+            $participants = \App\Participant::where([['tenant_id', $tenant_id],['service_id',$service_id]])->get();
+        }
 
         foreach ($participants as $participant)
         {

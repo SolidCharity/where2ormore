@@ -17,6 +17,7 @@ return [
     'addservice' => 'Weiterer Gottesdienst',
     'delete' => 'Löschen',
     'delete_all_participants' => 'Alle Besucher löschen',
+    'for_all_services' => 'Für alle Gottesdienste',
     'confirm_delete' => 'Wollen Sie wirklich löschen?',
     'save' => 'Ändern',
     'error_service_delete_failed' => 'Gottesdienst kann nicht gelöscht werden, weil es noch Besucher gibt',
