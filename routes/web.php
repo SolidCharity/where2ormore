@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,15 @@ Route::apiResource('frontend', 'FrontendController');
 Route::apiResource('services', 'ServiceController');
 Route::apiResource('participants', 'ParticipantController');
 
-Route::delete('participants', 'AdminController@dropAllParticipants')->name('dropAllParticipants');
+Route::delete('participants1/{service_id?}',
+    function ($service_id = null) {
+        return AdminController::dropAllParticipants($service_id);
+    })->name('dropAllParticipants');
+Route::get('/report/{service_id?}',
+   function ($service_id=null) {
+       return AdminController::report($service_id);
+   })->name('report');
+
 Route::patch('tenants', 'AdminController@updateChurchName')->name('updateChurchName');
 Route::delete('participants2', 'FrontendController@cancelregistration')->name('cancelregistration');
 
@@ -39,4 +48,3 @@ Auth::routes(['register' => $allow_register]);
 Route::get('/', 'FrontendController@index')->name('frontend');
 Route::get('/home', 'AdminController@index')->name('home');
 Route::get('/admin', 'AdminController@index')->name('admin');
-Route::get('/report', 'AdminController@report')->name('report');

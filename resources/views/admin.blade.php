@@ -58,10 +58,22 @@
          </div>
      </div>
    </div>
-   </div>
 
+<div class="btn-group">
+<form method="post" action="{{ route('dropAllParticipants', $service->id) }}">
+            @method('DELETE')
+            @csrf
+                 <button type="submit" class="btn btn-danger" onclick="return confirm('@lang('messages.confirm_delete')')">@lang('messages.delete_all_participants')</button>
+</form>
+
+<a href="/report/{{$service->id}}" target="_blank"><button class="btn btn-primary">@lang('messages.print_report')</button></a>
+</div>
+   </div>
 @endforeach
 
+<br/>
+@lang('messages.for_all_services'):
+<div class="btn-group">
 <form method="post" action="{{ route('dropAllParticipants') }}">
             @method('DELETE')
             @csrf
@@ -69,7 +81,8 @@
 </form>
 
 <a href="/report" target="_blank"><button class="btn btn-primary">@lang('messages.print_report')</button></a>
-                </div>
+</div>
+</div>
             </div>
             <div class="card">
                 <div class="card-header">@lang('messages.settings')</div>

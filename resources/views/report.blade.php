@@ -29,7 +29,7 @@
      <div class="row">
          <div class="col-md-4"></div>
          <div class="col-md-4">
-             @lang('messages.currently_visitors', ['value' => $service->count_adults + $service->count_children])
+             @lang('messages.currently_visitors', ['value' => $service->count_adults + $service->count_children, 'max' => $service->max_visitors])
          </div>
      </div>
    </div>

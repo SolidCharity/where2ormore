@@ -117,9 +117,13 @@ class ServiceController extends Controller
                 ->where([['tenant_id', $tenant_id],
                          ['service_id', $id]])
                 ->sum('count_adults');
+
         if ($count > 0) {
-            return redirect('/admin')
-                ->withAlert(__('messages.error_service_delete_failed'));
+            $participants = \App\Participant::where([['tenant_id', $tenant_id],['service_id', $id]])->get();
+            foreach ($participants as $participant)
+            {
+                $participant->delete();
+            }
         }
 
         $service = \App\Service::
