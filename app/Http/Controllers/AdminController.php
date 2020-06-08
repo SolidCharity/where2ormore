@@ -31,11 +31,18 @@ class AdminController extends Controller
         $participants = \App\Participant::where('tenant_id', $tenant_id)->get();
         $tenant = \DB::table('tenants')->where('id', $tenant_id)->first();
 
-        $visitor_link = $request->getSchemeAndHttpHost();
-        // this is not a single instance installation
-        if (\DB::table('users')->where('tenant_id', "=", 1)->count() == 0)
+        if (!empty($tenant->external_url))
         {
-            $visitor_link .= "/?uuid=".$tenant->uuid;
+            $visitor_link = $tenant->external_url;
+        }
+        else
+        {
+            $visitor_link = $request->getSchemeAndHttpHost();
+            // this is not a single instance installation
+            if (\DB::table('users')->where('tenant_id', "=", 1)->count() == 0)
+            {
+                $visitor_link .= "/?uuid=".$tenant->uuid;
+            }
         }
 
         $churchname = $tenant->name;
