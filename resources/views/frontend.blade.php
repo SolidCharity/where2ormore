@@ -54,12 +54,12 @@
             <input class="name-input" type="text" id="name" name="name" required value="{{old('name')}}"><br/>
         </fieldset>
         <fieldset class="field" class="main-field">
-            <p>@lang('messages.select_service'):
+            <p class="label{{$hideselectservice}}">@lang('messages.select_service'):
                 </><br/>
 @foreach ($services as $service)
                     <div class="row">
                         <div class="col">
-                            <input class="selectservice" type="radio" id="service-{{ $service->id }}" name="service_id" value="{{$service->id}}" required>
+                            <input class="selectservice" type="radio" id="service-{{ $service->id }}" name="service_id" value="{{$service->id}}" required {{$checkedservice}}>
                             <label class="servicename" for="service-{{ $service->id }}">{{$service->description}}</label>
                         </div>
                         <div class="countparticipants">

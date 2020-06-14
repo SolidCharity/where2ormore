@@ -60,6 +60,10 @@ body {
     visibility: hidden;
 }
 
+.labelhidden {
+    display: none;
+}
+
 .persons-num-label {
     font-size: 22px;
 }
