@@ -75,6 +75,8 @@ class FrontendController extends Controller
         $display['services'] = \App\Service::where('tenant_id', $tenant_id)->get();
         $display['churchname'] = $churchname;
         $display['hidechurchname'] = empty($churchname)?'hidden':'';
+        $display['hideselectservice'] = (count($display['services']) == 1)?'hidden':'';
+        $display['checkedservice'] = (count($display['services']) == 1)?'checked':'';
         $display['registered'] = array();
 
         $registered_service = "";
