@@ -127,6 +127,22 @@
                        </td>
 </form>
 
+<form method="post" action="{{ route('serviceToggleActivation', $service->id) }}">
+            @method('PATCH')
+            @csrf
+                       <td>
+@if ($service->registration_open)
+                           <button type="submit" class="btn btn-warning">
+                               @lang('messages.deactivate_service_registration')
+                           </button>
+@else
+                           <button type="submit" class="btn btn-secondary">
+                               @lang('messages.activate_service_registration')
+                           </button>
+@endif
+                       </td>
+
+</form>
 <form method="post" action="{{ route('services.destroy', $service->id) }}">
             @method('DELETE')
             @csrf

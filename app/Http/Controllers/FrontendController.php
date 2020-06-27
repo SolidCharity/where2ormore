@@ -176,6 +176,14 @@ class FrontendController extends Controller
                 ->withAlert(__('messages.error_service_full', ['name' => $service->description]));
         }
 
+        if (!$service->registration_open)
+        {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withAlert(__('messages.error_registration_closed', ['name' => $service->description]));
+        }
+
         $participant = tap(new \App\Participant($data))->save();
 
         // keep the cookie for a week
