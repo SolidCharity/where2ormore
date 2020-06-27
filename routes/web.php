@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,10 @@ Route::get('/report/{service_id?}',
    function ($service_id=null) {
        return AdminController::report($service_id);
    })->name('report');
+Route::patch('serviceToggleActivation/{service_id?}',
+   function ($service_id = null) {
+       return ServiceController::toggleActivation($service_id);
+   })->name('serviceToggleActivation');
 
 Route::patch('tenants', 'AdminController@updateChurchName')->name('updateChurchName');
 Route::delete('participants2', 'FrontendController@cancelregistration')->name('cancelregistration');
