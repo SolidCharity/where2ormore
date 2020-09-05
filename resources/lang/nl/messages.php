@@ -6,6 +6,7 @@ return [
     'service' => 'Dienst',
     'select_service' => 'Kies een dienst',
     'currently_visitors' => 'Huidig aantal bezoekers :value van :max',
+    'currently_visitors_no_max' => 'Huidig aantal bezoekers :value',
     'number_of_visitors' => 'Aantal bezoekers',
     'submit' => 'Verstuur',
     'error_service_full' => 'Helaas is de dienst ":name" al volgeboekt!',

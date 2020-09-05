@@ -64,7 +64,11 @@
                         </div>
                         <div class="countparticipants">
                             <label for="service-{{ $service->id }}">
+@if ($service->max_visitors === 0)
+                                @lang('messages.currently_visitors_no_max', ['value' => $service->count_adults + $service->count_children])
+@else
                                 @lang('messages.currently_visitors', ['value' => $service->count_adults + $service->count_children, 'max' => $service->max_visitors])
+@endif
                             </label>
                         </div>
                     </div>

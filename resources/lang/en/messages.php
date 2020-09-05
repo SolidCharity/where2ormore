@@ -6,6 +6,7 @@ return [
     'service' => 'Service',
     'select_service' => 'Please select a service',
     'currently_visitors' => 'Currently :value of :max visitors',
+    'currently_visitors_no_max' => 'Currently :value visitors',
     'number_of_visitors' => 'Number of visitors',
     'submit' => 'Submit',
     'error_service_full' => 'Unfortunately the service ":name" is already full!',
