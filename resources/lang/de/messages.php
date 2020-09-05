@@ -3,6 +3,8 @@
 return [
     'pagetitle' => 'Gottesdienst Planer',
     'my_name' => 'Mein Name',
+    'my_address' => 'Meine Anschrift',
+    'my_phone' => 'Meine Telefonnummer',
     'collect_contact_details' => 'Adresse und Telefonnummer der Besucher erfassen',
     'service' => 'Gottesdienst',
     'select_service' => 'Bitte Gottesdienst wählen',

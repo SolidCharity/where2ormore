@@ -60,6 +60,8 @@ class AdminController extends Controller
         }
 
         $tenant_id = Auth::user()->tenant_id;
+        $tenant = \App\Tenant::
+            where('id',$tenant_id)->first();
 
         if (empty($service_id)) {
             $participants = \App\Participant::where('tenant_id', $tenant_id)->get();
@@ -70,7 +72,8 @@ class AdminController extends Controller
         }
 
         return view('report', ['services' => $services,
-            'participants' => $participants]);
+            'participants' => $participants,
+            'collect_contact_details' => $tenant->collect_contact_details]);
     }
 
     /// drop all participants, as preparation for next week's Sunday!

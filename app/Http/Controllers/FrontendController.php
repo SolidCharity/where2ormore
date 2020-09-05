@@ -60,7 +60,8 @@ class FrontendController extends Controller
         if (empty($uuid) && (\DB::table('users')->where('tenant_id', "=", 1)->count() == 1))
         {
             $tenant_id = 1;
-            $uuid = \DB::table('tenants')->where('id', 1)->first()->uuid;
+            $tenant = \DB::table('tenants')->where('id', 1)->first();
+            $uuid = $tenant->uuid;
             $churchname = '';
         }
 
@@ -78,6 +79,7 @@ class FrontendController extends Controller
         $display['hideselectservice'] = (count($display['services']) == 1)?'hidden':'';
         $display['checkedservice'] = (count($display['services']) == 1)?'checked':'';
         $display['registered'] = array();
+        $display['collect_contact_details'] = $tenant->collect_contact_details;
 
         $registered_service = "";
         if (isset($_COOKIE['where2ormore_registration']) && !empty($_COOKIE['where2ormore_registration']))
@@ -144,6 +146,8 @@ class FrontendController extends Controller
             'uuid' => 'required|uuid',
             'count_adults' => 'required|integer',
             'count_children' => 'integer',
+            'address' => 'max:100',
+            'phone' => 'max:100',
         ]);
 
         if (isset($_COOKIE['where2ormore_registration']) && !empty($_COOKIE['where2ormore_registration']))
