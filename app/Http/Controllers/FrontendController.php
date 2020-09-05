@@ -168,7 +168,7 @@ class FrontendController extends Controller
 
         $service = \App\Service::where([['id',$data['service_id']], ['tenant_id',$tenant_id]])->first();
 
-        if ($count > $service->max_visitors)
+        if ($count > $service->max_visitors && $service->max_visitors !== 0)
         {
             return redirect()
                 ->back()

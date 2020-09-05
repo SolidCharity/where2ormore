@@ -6,6 +6,7 @@ return [
     'service' => 'Gottesdienst',
     'select_service' => 'Bitte Gottesdienst wählen',
     'currently_visitors' => 'Momentan :value von :max Besuchern',
+    'currently_visitors_no_max' => 'Momentan :value Besucher',
     'number_of_visitors' => 'Anzahl Besucher',
     'submit' => 'Bestätigen',
     'error_service_full' => 'Leider ist in dem Gottesdienst ":name" nicht mehr genug Platz!',
