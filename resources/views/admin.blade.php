@@ -104,6 +104,19 @@
 
                 <table>
                    <tr>
+<form method="post" action="{{ route('updateCollectContactDetails') }}">
+            @method('PATCH')
+            @csrf
+                       <td style="width:70%" colspan="2">
+                <input type="checkbox" name="collect_contact_details" id="collect_contact_details" value="1" {{$collect_contact_details_checked}}>
+                <label for="collect_contact_details">@lang('messages.collect_contact_details')</label>
+                       </td>
+                       <td>
+                           <button type="submit" class="btn btn-primary">@lang('messages.save')</button>
+                       </td>
+</form>
+                   </tr>
+                   <tr>
 <form method="post" action="{{ route('updateChurchName') }}">
             @method('PATCH')
             @csrf

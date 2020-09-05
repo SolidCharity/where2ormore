@@ -17,7 +17,13 @@
     @endphp
          <tr>
            <td style="width: 10%"></td>
+@if ($collect_contact_details)
+           <td>{{$participant->name}}</td>
+           <td>{{$participant->address}}</td>
+           <td>{{$participant->phone}}</td>
+@else
            <td style="width: 60%">{{$participant->name}}</td>
+@endif
            <td>{{$participant->count_adults}}</td>
          </tr>
     @php

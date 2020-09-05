@@ -3,6 +3,9 @@
 return [
     'pagetitle' => 'Service Planner',
     'my_name' => 'My name',
+    'my_address' => 'My address',
+    'my_phone' => 'My phone number',
+    'collect_contact_details' => 'Collect the address and phone number of visitors',
     'service' => 'Service',
     'select_service' => 'Please select a service',
     'currently_visitors' => 'Currently :value of :max visitors',

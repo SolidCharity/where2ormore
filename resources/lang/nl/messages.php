@@ -2,7 +2,10 @@
 
 return [
     'pagetitle' => 'Dienstplanner',
-    'my_name' => 'Mijn planner',
+    'my_name' => 'My name',
+    'my_address' => 'My address',
+    'my_phone' => 'My phone number',
+    'collect_contact_details' => 'Collect the address and phone number of visitors',
     'service' => 'Dienst',
     'select_service' => 'Kies een dienst',
     'currently_visitors' => 'Huidig aantal bezoekers :value van :max',

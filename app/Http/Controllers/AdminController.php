@@ -46,9 +46,10 @@ class AdminController extends Controller
         }
 
         $churchname = $tenant->name;
+        $collect_contact_details_checked = ($tenant->collect_contact_details?"checked":"");
 
         return view('admin', ['services' => $services,
-            'participants' => $participants, 'link_visitors' => $visitor_link, 'churchname' => $churchname]);
+            'participants' => $participants, 'link_visitors' => $visitor_link, 'churchname' => $churchname, 'collect_contact_details_checked' => $collect_contact_details_checked]);
     }
 
     /// print a report with the visitors for each service
@@ -59,6 +60,8 @@ class AdminController extends Controller
         }
 
         $tenant_id = Auth::user()->tenant_id;
+        $tenant = \App\Tenant::
+            where('id',$tenant_id)->first();
 
         if (empty($service_id)) {
             $participants = \App\Participant::where('tenant_id', $tenant_id)->get();
@@ -69,7 +72,8 @@ class AdminController extends Controller
         }
 
         return view('report', ['services' => $services,
-            'participants' => $participants]);
+            'participants' => $participants,
+            'collect_contact_details' => $tenant->collect_contact_details]);
     }
 
     /// drop all participants, as preparation for next week's Sunday!
@@ -111,6 +115,27 @@ class AdminController extends Controller
         $tenant = \App\Tenant::
             where('id',$tenant_id)->first();
         $tenant->name = $data['churchname'];
+        $tenant->save();
+
+        return redirect('/admin');
+    }
+
+    /// update the flag to save contact details for this tenant
+    public function updateCollectContactDetails(Request $request)
+    {
+        $tenant_id = Auth::user()->tenant_id;
+
+        $data = $request->validate([
+            'collect_contact_details' => 'boolean',
+        ]);
+
+        if (empty($data['collect_contact_details'])) {
+		$data = array('collect_contact_details' => '0');
+        }
+
+        $tenant = \App\Tenant::
+            where('id',$tenant_id)->first();
+        $tenant->collect_contact_details = $data['collect_contact_details'];
         $tenant->save();
 
         return redirect('/admin');

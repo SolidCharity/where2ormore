@@ -52,6 +52,13 @@
             <!-- Here i added this Label tag so i can apply the styles to the text also -->
             <label class="name-input" for="name" id="name">@lang('messages.my_name'):</label>
             <input class="name-input" type="text" id="name" name="name" required value="{{old('name')}}"><br/>
+@if ($collect_contact_details)
+            <label class="name-input" for="address">@lang('messages.my_address'):</label>
+            <input class="name-input" type="text" id="address" name="address" required value="{{old('address')}}"><br/>
+            <label class="name-input" for="phone">@lang('messages.my_phone'):</label>
+            <input class="name-input" type="text" id="phone" name="phone" required value="{{old('phone')}}"><br/>
+
+@endif
         </fieldset>
         <fieldset class="field" class="main-field">
             <p class="label{{$hideselectservice}}">@lang('messages.select_service'):
