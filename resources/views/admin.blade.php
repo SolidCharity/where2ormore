@@ -23,7 +23,7 @@
             {{$service->description}}
          </div>
      </div>
-     <table style="width: 100%">
+     <table>
     @foreach ($participants as $participant)
     @php
          if ($participant->service_id == $service->id) {
@@ -32,16 +32,27 @@
 <form method="post" action="{{ route('participants.update', $participant->id) }}">
             @method('PATCH')
             @csrf
-           <td style="width: 10%"></td>
-           <td style="width: 60%"><input type="text" name="name" value="{{$participant->name}}" style="width:100%"></td>
-           <td><input type="number" name="count_adults" value="{{$participant->count_adults}}"></td>
-           <td><button type="submit" class="btn btn-primary">@lang('messages.save')</button></td>
+           <td>&nbsp;</td>
+           <td><input type="text" name="name" value="{{$participant->name}}" length="20"></td>
+           <td><input type="number" name="count_adults" value="{{$participant->count_adults}}" max="9" length="1" style="width:60px"></td>
+           <td><button type="submit" class="btn btn-primary" title="@lang('messages.save')">
+<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+  <path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>
+</svg>
+           </button>
+           </td>
 </form>
            <td>
 <form method="post" action="{{ route('participants.destroy', $participant->id) }}">
             @method('DELETE')
             @csrf
-                         <button class="btn btn-danger" type="submit"  onclick="return confirm('@lang('messages.confirm_delete')')">@lang('messages.delete')</button>
+                         <button class="btn btn-danger" type="submit"  onclick="return confirm('@lang('messages.confirm_delete')')" title="@lang('messages.delete')">
+<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
+  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
+</svg>
+                         </button>
 </form>
            </td>
          </tr>
@@ -100,7 +111,7 @@
                            @lang('messages.churchname'):
                        </td>
                        <td style="width:70%">
-                           <input type="text" name="churchname" value="{{$churchname}}" style="width:100%"/>
+                           <input type="text" name="churchname" value="{{$churchname}}" style="width:100%; min-width:50px"/>
                        </td>
                        <td>
                            <button type="submit" class="btn btn-primary">@lang('messages.save')</button>
@@ -119,9 +130,9 @@
                            @lang('messages.service') {{$loop->index+1}}:
                        </td>
                        <td style="width:70%">
-                           <input type="text" name="description" value="{{$service->description}}" style="width:100%"/>
+                           <input type="text" name="description" value="{{$service->description}}" style="width:100%; min-width:50px"/>
                        </td>
-                       <td style="width:10%"><input type="number" name="max_visitors" value="{{$service->max_visitors}}" style="width:100%"/></td>
+                       <td style="width:10%"><input type="number" name="max_visitors" value="{{$service->max_visitors}}" max="999" length="3" style="width:90px"/></td>
                        <td>
                            <button type="submit" class="btn btn-primary">@lang('messages.save')</button>
                        </td>
@@ -162,7 +173,7 @@
                        @lang('messages.addservice'):
                        </td>
                        <td>
-                            <input type="text" name="description" style="width:100%"/>
+                            <input type="text" name="description" style="width:100%; min-width:50px"/>
                        </td>
                        <td>
                           <button type="submit" class="btn btn-primary">@lang('messages.add')</button>
