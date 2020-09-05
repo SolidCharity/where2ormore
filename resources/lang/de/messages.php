@@ -3,6 +3,7 @@
 return [
     'pagetitle' => 'Gottesdienst Planer',
     'my_name' => 'Mein Name',
+    'collect_contact_details' => 'Adresse und Telefonnummer der Besucher erfassen',
     'service' => 'Gottesdienst',
     'select_service' => 'Bitte Gottesdienst wählen',
     'currently_visitors' => 'Momentan :value von :max Besuchern',
