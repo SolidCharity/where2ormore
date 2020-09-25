@@ -47,9 +47,13 @@ class AdminController extends Controller
 
         $churchname = $tenant->name;
         $collect_contact_details_checked = ($tenant->collect_contact_details?"checked":"");
+        $option_to_report_contact_details_checked = ($tenant->option_to_report_contact_details?"checked":"");
 
         return view('admin', ['services' => $services,
-            'participants' => $participants, 'link_visitors' => $visitor_link, 'churchname' => $churchname, 'collect_contact_details_checked' => $collect_contact_details_checked]);
+            'participants' => $participants, 'link_visitors' => $visitor_link, 'churchname' => $churchname,
+            'collect_contact_details_checked' => $collect_contact_details_checked,
+            'option_to_report_contact_details_checked' => $option_to_report_contact_details_checked,
+            ]);
     }
 
     /// print a report with the visitors for each service
@@ -136,6 +140,27 @@ class AdminController extends Controller
         $tenant = \App\Tenant::
             where('id',$tenant_id)->first();
         $tenant->collect_contact_details = $data['collect_contact_details'];
+        $tenant->save();
+
+        return redirect('/admin');
+    }
+
+    /// update the flag to allow the option to include contact details on the report for this tenant
+    public function updateOptionToReportContactDetails(Request $request)
+    {
+        $tenant_id = Auth::user()->tenant_id;
+
+        $data = $request->validate([
+            'option_to_report_contact_details' => 'boolean',
+        ]);
+
+        if (empty($data['option_to_report_contact_details'])) {
+		$data = array('option_to_report_contact_details' => '0');
+        }
+
+        $tenant = \App\Tenant::
+            where('id',$tenant_id)->first();
+        $tenant->option_to_report_contact_details = $data['option_to_report_contact_details'];
         $tenant->save();
 
         return redirect('/admin');

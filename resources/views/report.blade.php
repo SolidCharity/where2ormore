@@ -22,7 +22,11 @@
            <td>{{$participant->address}}</td>
            <td>{{$participant->phone}}</td>
 @else
+@if ($participant->report_details)
            <td style="width: 60%">{{$participant->name}}</td>
+@else
+           <td style="width: 60%">Anonymous</td>
+@endif
 @endif
            <td>{{$participant->count_adults}}</td>
          </tr>
