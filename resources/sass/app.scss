@@ -6,3 +6,17 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+.participant_name {
+    min-width: 500px;
+}
+@media (max-width: 480px) {
+  .participant_name {
+    min-width: 150px;
+  }
+}
+@media (max-width: 640px) and (min-width: 481px) {
+  .participant_name {
+    min-width: 300px;
+  }
+}
