@@ -80,6 +80,7 @@ class FrontendController extends Controller
         $display['checkedservice'] = (count($display['services']) == 1)?'checked':'';
         $display['registered'] = array();
         $display['collect_contact_details'] = $tenant->collect_contact_details;
+        $display['option_to_report_contact_details'] = $tenant->option_to_report_contact_details;
 
         $registered_service = "";
         if (isset($_COOKIE['where2ormore_registration']) && !empty($_COOKIE['where2ormore_registration']))
@@ -148,6 +149,7 @@ class FrontendController extends Controller
             'count_children' => 'integer',
             'address' => 'max:100',
             'phone' => 'max:100',
+            'report_details' => 'integer',
         ]);
 
         if (isset($_COOKIE['where2ormore_registration']) && !empty($_COOKIE['where2ormore_registration']))
@@ -160,7 +162,8 @@ class FrontendController extends Controller
             $data['cookieid'] = (string) Str::uuid();
         }
 
-        $tenant_id = \DB::table('tenants')->where('uuid', $data['uuid'])->first()->id;
+        $tenant = \DB::table('tenants')->where('uuid', $data['uuid'])->first();
+        $tenant_id = $tenant->id;
         $data['tenant_id'] = $tenant_id;
         $count = \DB::table('participants')
                 ->where([['service_id', $data['service_id']], ['tenant_id',$tenant_id]])
@@ -187,6 +190,15 @@ class FrontendController extends Controller
                 ->withInput()
                 ->withAlert(__('messages.error_registration_closed', ['name' => $service->description]));
         }
+
+        if (!array_key_exists('report_details', $data)) {
+            if ($tenant->option_to_report_contact_details) {
+                $data['report_details'] = 0;
+            } else {
+                $data['report_details'] = 1;
+            }
+        }
+              
 
         $participant = tap(new \App\Participant($data))->save();
 

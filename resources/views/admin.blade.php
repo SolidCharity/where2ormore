@@ -117,6 +117,19 @@
 </form>
                    </tr>
                    <tr>
+<form method="post" action="{{ route('updateOptionToReportContactDetails') }}">
+            @method('PATCH')
+            @csrf
+                       <td style="width:70%" colspan="2">
+                <input type="checkbox" name="option_to_report_contact_details" id="option_to_report_contact_details" value="1" {{$option_to_report_contact_details_checked}}>
+                <label for="option_to_report_contact_details">@lang('messages.option_to_report_contact_details')</label>
+                       </td>
+                       <td>
+                           <button type="submit" class="btn btn-primary">@lang('messages.save')</button>
+                       </td>
+</form>
+                   </tr>
+                   <tr>
 <form method="post" action="{{ route('updateChurchName') }}">
             @method('PATCH')
             @csrf
