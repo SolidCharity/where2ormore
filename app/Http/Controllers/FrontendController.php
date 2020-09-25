@@ -198,7 +198,6 @@ class FrontendController extends Controller
                 $data['report_details'] = 1;
             }
         }
-              
 
         $participant = tap(new \App\Participant($data))->save();
 

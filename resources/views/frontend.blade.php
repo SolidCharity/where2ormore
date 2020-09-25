@@ -60,7 +60,7 @@
 
 @endif
 @if ($option_to_report_contact_details)
-            <input class="name-input" type="checkbox" id="report_details" name="report_details" value="1" {{old('report_details')}}>
+            <input class="name-input" type="checkbox" id="report_details" name="report_details" value="1" checked>
             <label class="name-input" for="report_details">@lang('messages.report_details')</label>
             <br/>
 
