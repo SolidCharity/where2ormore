@@ -33,7 +33,7 @@
             @method('PATCH')
             @csrf
            <td>&nbsp;</td>
-           <td><input type="text" name="name" value="{{$participant->name}}" length="20"></td>
+           <td><input type="text" name="name" value="{{$participant->name}}" length="20" class="participant_name"></td>
            <td><input type="number" name="count_adults" value="{{$participant->count_adults}}" max="9" length="1" style="width:60px"></td>
            <td><button type="submit" class="btn btn-primary" title="@lang('messages.save')">
 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
