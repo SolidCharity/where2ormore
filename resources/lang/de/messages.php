@@ -8,6 +8,7 @@ return [
     'report_details' => 'Meine Daten dürfen auf der gedruckten Teilnehmerliste erscheinen',
     'collect_contact_details' => 'Adresse und Telefonnummer der Besucher erfassen',
     'option_to_report_contact_details' => 'Besucher dürfen entscheiden, ob sie nicht auf dem Bericht enthalten sein wollen',
+    'text_for_signup_for_closed_event' => 'Zeige diesen Text, falls die Anmeldung bereits geschlossen ist',
     'service' => 'Gottesdienst',
     'select_service' => 'Bitte Gottesdienst wählen',
     'currently_visitors' => 'Momentan :value von :max Besuchern',

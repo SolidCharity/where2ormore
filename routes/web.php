@@ -37,6 +37,7 @@ Route::patch('serviceToggleActivation/{service_id?}',
 Route::patch('tenants', 'AdminController@updateChurchName')->name('updateChurchName');
 Route::patch('tenants2', 'AdminController@updateCollectContactDetails')->name('updateCollectContactDetails');
 Route::patch('tenants3', 'AdminController@updateOptionToReportContactDetails')->name('updateOptionToReportContactDetails');
+Route::patch('tenants4', 'AdminController@updateTextForSignupForClosedEvent')->name('updateTextForSignupForClosedEvent');
 Route::delete('participants2', 'FrontendController@cancelregistration')->name('cancelregistration');
 
 # only allow register if there is no user yet

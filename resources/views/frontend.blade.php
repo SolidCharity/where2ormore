@@ -25,7 +25,7 @@
 
 @if (session('alert'))
     <div class="alert alert-success">
-        {{ session('alert') }}
+        {!! session('alert') !!}
     </div>
 @else
 @foreach($registered as $reg)

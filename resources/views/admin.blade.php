@@ -6,6 +6,18 @@
     </div>
 @endif
 
+@if(count($errors))
+	<div class="alert alert-danger">
+		<strong>Whoops!</strong> There were some problems with your input.
+		<br/>
+		<ul>
+			@foreach($errors->all() as $error)
+			<li>{{ $error }}</li>
+			@endforeach
+		</ul>
+	</div>
+@endif
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -123,6 +135,20 @@
                        <td style="width:70%" colspan="2">
                 <input type="checkbox" name="option_to_report_contact_details" id="option_to_report_contact_details" value="1" {{$option_to_report_contact_details_checked}}>
                 <label for="option_to_report_contact_details">@lang('messages.option_to_report_contact_details')</label>
+                       </td>
+                       <td>
+                           <button type="submit" class="btn btn-primary">@lang('messages.save')</button>
+                       </td>
+</form>
+                   </tr>
+                   <tr>
+<form method="post" action="{{ route('updateTextForSignupForClosedEvent') }}">
+            @method('PATCH')
+            @csrf
+                       <td style="width:70%" colspan="2">
+                <label for="text_for_signup_for_closed_event">@lang('messages.text_for_signup_for_closed_event'):</label><br/>
+                <textarea name="text_for_signup_for_closed_event" id="text_for_signup_for_closed_event"
+                       style="width:100%; min-width:50px">{{$text_for_signup_for_closed_event}}</textarea>
                        </td>
                        <td>
                            <button type="submit" class="btn btn-primary">@lang('messages.save')</button>

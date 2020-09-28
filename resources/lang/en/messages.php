@@ -8,6 +8,7 @@ return [
     'report_details' => 'Include my details on the official participants list',
     'collect_contact_details' => 'Collect the address and phone number of visitors',
     'option_to_report_contact_details' => 'Give visitors the option to opt-out of being included on the report',
+    'text_for_signup_for_closed_event' => 'Show this message if the application is closed already',
     'service' => 'Service',
     'select_service' => 'Please select a service',
     'currently_visitors' => 'Currently :value of :max visitors',
