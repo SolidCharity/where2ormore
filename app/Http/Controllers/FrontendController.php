@@ -185,10 +185,16 @@ class FrontendController extends Controller
 
         if (!$service->registration_open)
         {
+            if ($tenant->text_for_signup_for_closed_event == 'error_registration_closed') {
+                $alert = __('messages.error_registration_closed', ['name' => $service->description]);
+            } else {
+                $alert = str_replace("\n","<br/>",$tenant->text_for_signup_for_closed_event);
+            }
+
             return redirect()
                 ->back()
                 ->withInput()
-                ->withAlert(__('messages.error_registration_closed', ['name' => $service->description]));
+                ->withAlert($alert);
         }
 
         if (!array_key_exists('report_details', $data)) {
