@@ -12,6 +12,21 @@ body {
     background-position: right;
 }
 
+.alert {
+    font-size: 25px;
+    margin: auto;
+    margin-top: 60px;
+    margin-left: 50px;
+    padding: 40px;
+    width: 70%;
+    text-align: center;
+    background-color: rgba(10, 10, 10, 0.575);
+    color: snow;
+    border-radius: 50px;
+    border: none;
+    z-index: 6;
+}
+
 .form {
     margin: auto;
     margin-top: 60px;
@@ -39,6 +54,14 @@ body {
     border: solid rgb(112, 111, 111) 2px;
     border-radius: 40px;
     font-size: 24px;
+}
+
+.fieldhidden {
+    visibility: hidden;
+}
+
+.labelhidden {
+    display: none;
 }
 
 .persons-num-label {
@@ -76,10 +99,9 @@ body {
 }
 
 .servicename {
-    margin: 10px 0px 0px 0px;
-    width: 80%;
+    margin: 10px 0px 0px 40px;
     text-align: left;
-    float: right;
+    float: left;
 }
 
 .countparticipants {
@@ -87,6 +109,13 @@ body {
     float: right;
 }
 
+.upstream {
+    margin: auto;
+    margin-left: 50px;
+    padding: 40px;
+    width: 70%;
+    text-align: center;
+}
 
 /* Here i am adding The Media Querieres */
 
@@ -97,7 +126,16 @@ body {
     body {
         width: 80%;
     }
+    .alert {
+        margin: auto;
+        width: 80%;
+        font-size: 18px;
+    }
     .form {
+        margin: auto;
+        width: 80%;
+    }
+    .upstream {
         margin: auto;
         width: 80%;
     }
@@ -133,6 +171,9 @@ body {
     }
     .submit-btn {
         font-size: 18px;
+    }
+    .btn-big {
+        width: 70%;
     }
 }
 

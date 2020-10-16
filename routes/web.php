@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +21,24 @@ Route::apiResource('frontend', 'FrontendController');
 Route::apiResource('services', 'ServiceController');
 Route::apiResource('participants', 'ParticipantController');
 
-Route::delete('participants', 'AdminController@dropAllParticipants')->name('dropAllParticipants');
+Route::delete('participants1/{service_id?}',
+    function ($service_id = null) {
+        return AdminController::dropAllParticipants($service_id);
+    })->name('dropAllParticipants');
+Route::get('/report/{service_id?}',
+   function ($service_id=null) {
+       return AdminController::report($service_id);
+   })->name('report');
+Route::patch('serviceToggleActivation/{service_id?}',
+   function ($service_id = null) {
+       return ServiceController::toggleActivation($service_id);
+   })->name('serviceToggleActivation');
+
+Route::patch('tenants', 'AdminController@updateChurchName')->name('updateChurchName');
+Route::patch('tenants2', 'AdminController@updateCollectContactDetails')->name('updateCollectContactDetails');
+Route::patch('tenants3', 'AdminController@updateOptionToReportContactDetails')->name('updateOptionToReportContactDetails');
+Route::patch('tenants4', 'AdminController@updateTextForSignupForClosedEvent')->name('updateTextForSignupForClosedEvent');
+Route::delete('participants2', 'FrontendController@cancelregistration')->name('cancelregistration');
 
 # only allow register if there is no user yet
 $allow_register = false;
@@ -37,4 +56,3 @@ Auth::routes(['register' => $allow_register]);
 Route::get('/', 'FrontendController@index')->name('frontend');
 Route::get('/home', 'AdminController@index')->name('home');
 Route::get('/admin', 'AdminController@index')->name('admin');
-Route::get('/report', 'AdminController@report')->name('report');

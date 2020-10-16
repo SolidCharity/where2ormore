@@ -103,6 +103,18 @@ class ServiceController extends Controller
         return redirect('/admin');
     }
 
+    // toggle the activation of the service, if people can register or not
+    static public function toggleActivation($id)
+    {
+        $tenant_id = Auth::user()->tenant_id;
+        $service = \App\Service::
+            where([['id',$id],['tenant_id', $tenant_id]])->first();
+        $service->registration_open = !$service->registration_open;
+        $service->save();
+
+        return redirect('/admin');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -117,9 +129,13 @@ class ServiceController extends Controller
                 ->where([['tenant_id', $tenant_id],
                          ['service_id', $id]])
                 ->sum('count_adults');
+
         if ($count > 0) {
-            return redirect('/admin')
-                ->withAlert(__('messages.error_service_delete_failed'));
+            $participants = \App\Participant::where([['tenant_id', $tenant_id],['service_id', $id]])->get();
+            foreach ($participants as $participant)
+            {
+                $participant->delete();
+            }
         }
 
         $service = \App\Service::

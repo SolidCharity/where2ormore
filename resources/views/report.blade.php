@@ -17,7 +17,17 @@
     @endphp
          <tr>
            <td style="width: 10%"></td>
+@if ($collect_contact_details)
+           <td>{{$participant->name}}</td>
+           <td>{{$participant->address}}</td>
+           <td>{{$participant->phone}}</td>
+@else
+@if ($participant->report_details)
            <td style="width: 60%">{{$participant->name}}</td>
+@else
+           <td style="width: 60%">Anonymous</td>
+@endif
+@endif
            <td>{{$participant->count_adults}}</td>
          </tr>
     @php
@@ -29,7 +39,7 @@
      <div class="row">
          <div class="col-md-4"></div>
          <div class="col-md-4">
-             @lang('messages.currently_visitors', ['value' => $service->count_adults + $service->count_children])
+             @lang('messages.currently_visitors', ['value' => $service->count_adults + $service->count_children, 'max' => $service->max_visitors])
          </div>
      </div>
    </div>

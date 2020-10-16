@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Auth;
 
 class FrontendController extends Controller
@@ -21,8 +22,18 @@ class FrontendController extends Controller
         // uuid is passed as GET parameter
         if (!empty($data['uuid']))
         {
-            $tenant_id = \DB::table('tenants')->where('uuid', $data['uuid'])->first()->id;
-            $uuid = $data['uuid'];
+            $tenant = \DB::table('tenants')->where('uuid', $data['uuid'])->first();
+            if ($tenant)
+            {
+                $tenant_id = $tenant->id;
+                $churchname = $tenant->name;
+                $uuid = $data['uuid'];
+
+                if (!empty($tenant->external_url))
+                {
+                    return redirect($tenant->external_url);
+                }
+            }
         }
 
         if (empty($uuid))
@@ -32,6 +43,7 @@ class FrontendController extends Controller
             {
                 $uuid = $tenant->uuid;
                 $tenant_id = $tenant->id;
+                $churchname = $tenant->name;
             }
         }
 
@@ -48,7 +60,9 @@ class FrontendController extends Controller
         if (empty($uuid) && (\DB::table('users')->where('tenant_id', "=", 1)->count() == 1))
         {
             $tenant_id = 1;
-            $uuid = \DB::table('tenants')->where('id', 1)->first()->uuid;
+            $tenant = \DB::table('tenants')->where('id', 1)->first();
+            $uuid = $tenant->uuid;
+            $churchname = '';
         }
 
         if (empty($uuid))
@@ -57,8 +71,37 @@ class FrontendController extends Controller
             return redirect('https://wo2odermehr.de');
         }
 
-        $services = \App\Service::where('tenant_id', $tenant_id)->get();
-        return view('frontend', ['services' => $services, 'uuid' => $uuid]);
+        $display = array();
+        $display['uuid'] = $uuid;
+        $display['services'] = \App\Service::where('tenant_id', $tenant_id)->get();
+        $display['churchname'] = $churchname;
+        $display['hidechurchname'] = empty($churchname)?'hidden':'';
+        $display['hideselectservice'] = (count($display['services']) == 1)?'hidden':'';
+        $display['checkedservice'] = (count($display['services']) == 1)?'checked':'';
+        $display['registered'] = array();
+        $display['collect_contact_details'] = $tenant->collect_contact_details;
+        $display['option_to_report_contact_details'] = $tenant->option_to_report_contact_details;
+
+        $registered_service = "";
+        if (isset($_COOKIE['where2ormore_registration']) && !empty($_COOKIE['where2ormore_registration']))
+        {
+            // get all registrations of this visitor
+            $participants = \DB::table('participants')->where([['tenant_id',$tenant_id],
+                ['cookieid', $_COOKIE['where2ormore_registration']]])->get();
+
+            foreach ($participants as $participant)
+            {
+                $service = \App\Service::where([['id',$participant->service_id], ['tenant_id',$tenant_id]])->first();
+                $display['registered'][] = array(
+                    'name' => $participant->name,
+                    'participant_id' => $participant->id,
+                    'service' => $service->description,
+                    'count' => $participant->count_children + $participant->count_adults,
+                );
+            }
+        }
+
+        return view('frontend', $display);
     }
 
     /**
@@ -69,6 +112,25 @@ class FrontendController extends Controller
     public function create()
     {
         //
+    }
+
+    function redirect_url($uuid, $tenant_id)
+    {
+        $url = '/';
+        if ($tenant_id != 1)
+        {
+            $tenant = \DB::table('tenants')->where('uuid', $uuid)->first();
+            if (!empty($tenant->external_url))
+            {
+                $url = $tenant->external_url.'/';
+            }
+            else
+            {
+                $url .= '?uuid='.$uuid;
+            }
+        }
+
+        return redirect($url);
     }
 
     /**
@@ -85,9 +147,23 @@ class FrontendController extends Controller
             'uuid' => 'required|uuid',
             'count_adults' => 'required|integer',
             'count_children' => 'integer',
+            'address' => 'max:100',
+            'phone' => 'max:100',
+            'report_details' => 'integer',
         ]);
 
-        $tenant_id = \DB::table('tenants')->where('uuid', $data['uuid'])->first()->id;
+        if (isset($_COOKIE['where2ormore_registration']) && !empty($_COOKIE['where2ormore_registration']))
+        {
+            // reuse existing cookie
+            $data['cookieid'] = $_COOKIE['where2ormore_registration'];
+        }
+        else
+        {
+            $data['cookieid'] = (string) Str::uuid();
+        }
+
+        $tenant = \DB::table('tenants')->where('uuid', $data['uuid'])->first();
+        $tenant_id = $tenant->id;
         $data['tenant_id'] = $tenant_id;
         $count = \DB::table('participants')
                 ->where([['service_id', $data['service_id']], ['tenant_id',$tenant_id]])
@@ -99,7 +175,7 @@ class FrontendController extends Controller
 
         $service = \App\Service::where([['id',$data['service_id']], ['tenant_id',$tenant_id]])->first();
 
-        if ($count > $service->max_visitors)
+        if ($count > $service->max_visitors && $service->max_visitors !== 0)
         {
             return redirect()
                 ->back()
@@ -107,18 +183,56 @@ class FrontendController extends Controller
                 ->withAlert(__('messages.error_service_full', ['name' => $service->description]));
         }
 
-        $participant = tap(new \App\Participant($data))->save();
-
-        $url = '/';
-        if ($tenant_id != 1)
+        if (!$service->registration_open)
         {
-            $url .= '?uuid='.$data['uuid'];
+            if ($tenant->text_for_signup_for_closed_event == 'error_registration_closed') {
+                $alert = __('messages.error_registration_closed', ['name' => $service->description]);
+            } else {
+                $alert = str_replace("\n","<br/>",$tenant->text_for_signup_for_closed_event);
+            }
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withAlert($alert);
         }
 
-        return redirect($url)->
-            withAlert(__('messages.success_participant_added', 
-                ['name' => $service->description,
-                 'count' => $data['count_children'] + $data['count_adults']]));
+        if (!array_key_exists('report_details', $data)) {
+            if ($tenant->option_to_report_contact_details) {
+                $data['report_details'] = 0;
+            } else {
+                $data['report_details'] = 1;
+            }
+        }
+
+        $participant = tap(new \App\Participant($data))->save();
+
+        // keep the cookie for a week
+        setcookie ( 'where2ormore_registration', $participant->cookieid, array('expires'=>time()+60*60*24*7, 'samesite'=>'strict', 'httponly'=>true));
+
+        return $this->redirect_url($data['uuid'], $tenant_id);
+    }
+
+    public function cancelregistration(Request $request)
+    {
+        $data = $request->validate([
+            'uuid' => 'required|uuid',
+            'participant_id' => 'required|integer',
+        ]);
+
+        $tenant_id = \DB::table('tenants')->where('uuid', $data['uuid'])->first()->id;
+
+        if (isset($_COOKIE['where2ormore_registration']) && !empty($_COOKIE['where2ormore_registration']))
+        {
+            // find the participant
+            $participant = \DB::table('participants')->where(
+                [['cookieid', $_COOKIE['where2ormore_registration']],
+                 ['id', $data['participant_id']],
+                 ['tenant_id', $tenant_id]]
+                )->delete();
+        }
+
+        return $this->redirect_url($data['uuid'], $tenant_id);
     }
 
     /**
