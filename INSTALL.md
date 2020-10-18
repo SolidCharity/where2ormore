@@ -88,3 +88,9 @@ npm install && npm run dev
   touch /home/Dani/DEV/where2ormore/database.sqlite
 ```
 
+----------------
+
+# Default user credentials
+
+user email : demo@example.org
+user password : demo1234
