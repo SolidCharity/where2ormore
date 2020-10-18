@@ -80,17 +80,32 @@ npm install && npm run dev
 
 # Setup for Development enviroment :
 
-```
-  dnf install sqlite
-  dnf install php php-common
+* Install sqlite database
+  ```
+    dnf install sqlite
+  ```
+* Install PHP
+  ```
+    dnf install php php-common
+  ```
+* Install composer + npm + git
+  ```
   dnf install composer npm git
+  ```
+* Clone the Repo :
+  For this command it is better to run it in the location that you like to save the project files
+  ```
   git clone https://github.com/SolidCharity/where2ormore.git
-  touch /home/Dani/DEV/where2ormore/database.sqlite
-```
-
+  ```
+* create a **sqlite** database
+  for this command you should navigate to the location where the you saved the project and then create the **Database file inside there**
+  ```
+  touch /home/User/file-name/where2ormore/database.sqlite
+  ```
 ----------------
 
-# Default user credentials
+When you start the application the database file is empty . In order for the application to run you need a default user.
+Automatically a default user will be created with these credentials as default values **We recommend to change them!**
 
-user email : demo@example.org
-user password : demo1234
+**user email : demo@example.org**
+**user password : demo1234**
