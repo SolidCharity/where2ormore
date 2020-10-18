@@ -14,10 +14,10 @@ class HostedWithSeparateDomain extends Migration
     public function up()
     {
       Schema::table('tenants', function ($table) {
-            $table->string('subdomain');
+            $table->string('subdomain')-> nullable();
         });
       Schema::table('tenants', function ($table) {
-            $table->string('external_url');
+            $table->string('external_url')-> nullable();
         });
     }
 

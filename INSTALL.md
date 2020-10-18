@@ -1,12 +1,15 @@
+# The codes here are more for Fedora 
+
 Prepare your system
 ===================
 
 Make sure you have PHP >= 7, and you have npm, composer and MySQL/MariaDB installed.
 
 for example on Fedora 31:
-
+```
   dnf install mariadb-server nginx php php-fpm php-common
   dnf install composer unzip npm git
+```
 
 There are tutorials on the web how to configure nginx and php-fpm and MariaDB.
 
@@ -73,5 +76,15 @@ php7.2 artisan migrate
 php7.2 artisan key:generate
 npm install && npm run dev
 ```
+------------------------------
 
+# Setup for Development enviroment :
+
+```
+  dnf install sqlite
+  dnf install php php-common
+  dnf install composer npm git
+  git clone https://github.com/SolidCharity/where2ormore.git
+  touch /home/Dani/DEV/where2ormore/database.sqlite
+```
 
