@@ -50,8 +50,15 @@
         </div>
         <fieldset class="field">
             <!-- Here i added this Label tag so i can apply the styles to the text also -->
+@if ($option_for_separate_firstname)
+            <label class="name-input" for="firstname" id="firstname">@lang('messages.my_firstname'):</label>
+            <input class="name-input" type="text" id="firstname" name="firstname" required value="{{old('firstname')}}"><br/>
+            <label class="name-input" for="name" id="name">@lang('messages.my_surname'):</label>
+            <input class="name-input" type="text" id="name" name="name" required value="{{old('name')}}"><br/>
+@else
             <label class="name-input" for="name" id="name">@lang('messages.my_name'):</label>
             <input class="name-input" type="text" id="name" name="name" required value="{{old('name')}}"><br/>
+@endif
 @if ($collect_contact_details)
             <label class="name-input" for="address">@lang('messages.my_address'):</label>
             <input class="name-input" type="text" id="address" name="address" required value="{{old('address')}}"><br/>
