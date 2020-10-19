@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class MultiTenant extends Migration
@@ -35,6 +36,15 @@ class MultiTenant extends Migration
 
         $tenant = \App\Tenant::create([
             'name' => 'default',
+        ]);
+
+
+        $user = \App\User::create([
+            'name' => 'demo',
+            'password' => Hash::make('demo1234') ,
+            'email' => 'demo@example.org',
+            'tenant_id' => 1
+
         ]);
 
         $participants = \App\Participant::where('tenant_id', 0)->get();

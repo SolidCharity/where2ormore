@@ -1,12 +1,15 @@
+# The codes here are more for Fedora 
+
 Prepare your system
 ===================
 
 Make sure you have PHP >= 7, and you have npm, composer and MySQL/MariaDB installed.
 
 for example on Fedora 31:
-
+```
   dnf install mariadb-server nginx php php-fpm php-common
   dnf install composer unzip npm git
+```
 
 There are tutorials on the web how to configure nginx and php-fpm and MariaDB.
 
@@ -73,5 +76,36 @@ php7.2 artisan migrate
 php7.2 artisan key:generate
 npm install && npm run dev
 ```
+------------------------------
 
+# Setup for Development enviroment :
 
+* Install sqlite database
+  ```
+    dnf install sqlite
+  ```
+* Install PHP
+  ```
+    dnf install php php-common
+  ```
+* Install composer + npm + git
+  ```
+  dnf install composer npm git
+  ```
+* Clone the Repo :
+  For this command it is better to run it in the location that you like to save the project files
+  ```
+  git clone https://github.com/SolidCharity/where2ormore.git
+  ```
+* create a **sqlite** database
+  for this command you should navigate to the location where the you saved the project and then create the **Database file inside there**
+  ```
+  touch /home/User/file-name/where2ormore/database.sqlite
+  ```
+----------------
+
+When you start the application the database file is empty . In order for the application to run you need a default user.
+Automatically a default user will be created with these credentials as default values **We recommend to change them!**
+
+**user email : demo@example.org**
+**user password : demo1234**
