@@ -48,6 +48,7 @@ class AdminController extends Controller
         $churchname = $tenant->name;
         $collect_contact_details_checked = ($tenant->collect_contact_details?"checked":"");
         $option_to_report_contact_details_checked = ($tenant->option_to_report_contact_details?"checked":"");
+        $option_for_separate_firstname_checked = ($tenant->option_for_separate_firstname?"checked":"");
         $text_for_signup_for_closed_event = $tenant->text_for_signup_for_closed_event;
         if ($text_for_signup_for_closed_event == 'error_registration_closed') {
             $text_for_signup_for_closed_event = __('messages.error_registration_closed');
@@ -56,6 +57,7 @@ class AdminController extends Controller
         return view('admin', ['services' => $services,
             'participants' => $participants, 'link_visitors' => $visitor_link, 'churchname' => $churchname,
             'collect_contact_details_checked' => $collect_contact_details_checked,
+            'option_for_separate_firstname_checked' => $option_for_separate_firstname_checked,
             'option_to_report_contact_details_checked' => $option_to_report_contact_details_checked,
             'text_for_signup_for_closed_event' => $text_for_signup_for_closed_event,
             ]);
@@ -166,6 +168,27 @@ class AdminController extends Controller
         $tenant = \App\Tenant::
             where('id',$tenant_id)->first();
         $tenant->option_to_report_contact_details = $data['option_to_report_contact_details'];
+        $tenant->save();
+
+        return redirect('/admin');
+    }
+
+    /// update the flag to allow the option for a separate firstname for this tenant
+    public function updateOptionForSeparateFirstname(Request $request)
+    {
+        $tenant_id = Auth::user()->tenant_id;
+
+        $data = $request->validate([
+            'option_for_separate_firstname' => 'boolean',
+        ]);
+
+        if (empty($data['option_for_separate_firstname'])) {
+		$data = array('option_for_separate_firstname' => '0');
+        }
+
+        $tenant = \App\Tenant::
+            where('id',$tenant_id)->first();
+        $tenant->option_for_separate_firstname = $data['option_for_separate_firstname'];
         $tenant->save();
 
         return redirect('/admin');

@@ -81,6 +81,7 @@ class FrontendController extends Controller
         $display['registered'] = array();
         $display['collect_contact_details'] = $tenant->collect_contact_details;
         $display['option_to_report_contact_details'] = $tenant->option_to_report_contact_details;
+        $display['option_for_separate_firstname'] = $tenant->option_for_separate_firstname;
 
         $registered_service = "";
         if (isset($_COOKIE['where2ormore_registration']) && !empty($_COOKIE['where2ormore_registration']))
@@ -143,6 +144,7 @@ class FrontendController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|max:255',
+            'firstname' => 'max:255',
             'service_id' => 'required|integer',
             'uuid' => 'required|uuid',
             'count_adults' => 'required|integer',
@@ -151,6 +153,11 @@ class FrontendController extends Controller
             'phone' => 'max:100',
             'report_details' => 'integer',
         ]);
+
+        if (array_key_exists('firstname', $data))
+        {
+            $data['name'] = $data['firstname']." ".$data['name'];
+        }
 
         if (isset($_COOKIE['where2ormore_registration']) && !empty($_COOKIE['where2ormore_registration']))
         {

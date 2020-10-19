@@ -3,10 +3,13 @@
 return [
     'pagetitle' => 'Dienstplanner',
     'my_name' => 'My name',
+    'my_firstname' => 'My first name',
+    'my_surname' => 'My surname',
     'my_address' => 'My address',
     'my_phone' => 'My phone number',
     'report_details' => 'Include my details on the official participants list',
     'collect_contact_details' => 'Collect the address and phone number of visitors',
+    'option_for_separate_firstname' => 'Firstname and Surname must be entered separately',
     'option_to_report_contact_details' => 'Give visitors the option to opt-out of being included on the report',
     'text_for_signup_for_closed_event' => 'Show this message if the application is closed already',
     'service' => 'Dienst',

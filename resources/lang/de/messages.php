@@ -3,10 +3,13 @@
 return [
     'pagetitle' => 'Gottesdienst Planer',
     'my_name' => 'Mein Name',
+    'my_firstname' => 'Mein Vorname',
+    'my_surname' => 'Mein Nachname',
     'my_address' => 'Meine Anschrift',
     'my_phone' => 'Meine Telefonnummer',
     'report_details' => 'Meine Daten dürfen auf der gedruckten Teilnehmerliste erscheinen',
     'collect_contact_details' => 'Adresse und Telefonnummer der Besucher erfassen',
+    'option_for_separate_firstname' => 'Vorname und Nachname getrennt erfassen',
     'option_to_report_contact_details' => 'Besucher dürfen entscheiden, ob sie nicht auf dem Bericht enthalten sein wollen',
     'text_for_signup_for_closed_event' => 'Zeige diesen Text, falls die Anmeldung bereits geschlossen ist',
     'service' => 'Gottesdienst',

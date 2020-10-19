@@ -129,6 +129,19 @@
 </form>
                    </tr>
                    <tr>
+<form method="post" action="{{ route('updateOptionForSeparateFirstname') }}">
+            @method('PATCH')
+            @csrf
+                       <td style="width:70%" colspan="2">
+                <input type="checkbox" name="option_for_separate_firstname" id="option_for_separate_firstname" value="1" {{$option_for_separate_firstname_checked}}>
+                <label for="option_for_separate_firstname">@lang('messages.option_for_separate_firstname')</label>
+                       </td>
+                       <td>
+                           <button type="submit" class="btn btn-primary">@lang('messages.save')</button>
+                       </td>
+</form>
+                   </tr>
+                   <tr>
 <form method="post" action="{{ route('updateOptionToReportContactDetails') }}">
             @method('PATCH')
             @csrf
