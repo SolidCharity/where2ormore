@@ -200,7 +200,7 @@ class AdminController extends Controller
         $tenant_id = Auth::user()->tenant_id;
 
         $data = $request->validate([
-            'text_for_signup_for_closed_event' => 'nullable|string|max:190',
+            'text_for_signup_for_closed_event' => 'nullable|string|max:250',
         ],[
             'text_for_signup_for_closed_event:max' => 'The text must not be longer than 190 characters',
         ]);
