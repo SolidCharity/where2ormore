@@ -182,14 +182,6 @@ class FrontendController extends Controller
 
         $service = \App\Service::where([['id',$data['service_id']], ['tenant_id',$tenant_id]])->first();
 
-        if ($count > $service->max_visitors && $service->max_visitors !== 0)
-        {
-            return redirect()
-                ->back()
-                ->withInput()
-                ->withAlert(__('messages.error_service_full', ['name' => $service->description]));
-        }
-
         if (!$service->registration_open)
         {
             if ($tenant->text_for_signup_for_closed_event == 'error_registration_closed') {
@@ -202,6 +194,14 @@ class FrontendController extends Controller
                 ->back()
                 ->withInput()
                 ->withAlert($alert);
+        }
+
+        if ($count > $service->max_visitors && $service->max_visitors !== 0)
+        {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withAlert(__('messages.error_service_full', ['name' => $service->description]));
         }
 
         if (!array_key_exists('report_details', $data)) {
