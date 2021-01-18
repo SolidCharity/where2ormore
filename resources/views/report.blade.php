@@ -16,7 +16,8 @@
          if ($participant->service_id == $service->id) {
     @endphp
          <tr>
-           <td style="width: 10%"></td>
+           <td style="width: 5%"></td>
+           <td style="width: 5%">{{$participant->count_adults}}</td>
 @if ($collect_contact_details)
            <td>{{$participant->name}}</td>
            <td>{{$participant->address}}</td>
@@ -28,7 +29,6 @@
            <td style="width: 60%">Anonymous</td>
 @endif
 @endif
-           <td>{{$participant->count_adults}}</td>
          </tr>
     @php
          }
