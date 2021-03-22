@@ -215,7 +215,7 @@ class FrontendController extends Controller
         $participant = tap(new \App\Participant($data))->save();
 
         // keep the cookie for a week
-        setcookie ( 'where2ormore_registration', $participant->cookieid, array('expires'=>time()+60*60*24*7, 'samesite'=>'strict', 'httponly'=>true));
+        setcookie ( 'where2ormore_registration', $participant->cookieid, array('expires'=>time()+60*60*24*7, 'samesite'=>'lax', 'httponly'=>true, 'secure'=>true));
 
         return $this->redirect_url($data['uuid'], $tenant_id);
     }
