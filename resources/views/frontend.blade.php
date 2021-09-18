@@ -72,6 +72,11 @@
             <br/>
 
 @endif
+@if ($option_to_declare_2g)
+            <input class="name-input" type="checkbox" id="all_have_2g" name="all_have_2g" value="1">
+            <label class="name-input" for="all_have_2g">@lang('messages.we_are_all_2g')</label>
+            <br/>
+@endif
         </fieldset>
         <fieldset class="field" class="main-field">
             <p class="label{{$hideselectservice}}">@lang('messages.select_service'):

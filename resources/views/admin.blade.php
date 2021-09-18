@@ -47,6 +47,7 @@
            <td>&nbsp;</td>
            <td><input type="text" name="name" value="{{$participant->name}}" length="20" class="participant_name"></td>
            <td><input type="number" name="count_adults" value="{{$participant->count_adults}}" max="9" length="1" style="width:60px"></td>
+           <td>{{$participant->have_all_2g_msg}}</td>
            <td><button type="submit" class="btn btn-primary" title="@lang('messages.save')">
 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-check-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
   <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
@@ -77,7 +78,8 @@
      <div class="row">
          <div class="col-md-4"></div>
          <div class="col-md-4">
-             @lang('messages.currently_visitors', ['value' => $service->count_adults + $service->count_children, 'max' => $service->max_visitors])
+             @lang('messages.currently_visitors_with2g', ['value' => $service->count_adults + $service->count_children, 'max' => $service->max_visitors,
+                'have_2g' => $service->have_2g, 'have_no_2g' => $service->have_no_2g])
          </div>
      </div>
    </div>
@@ -148,6 +150,19 @@
                        <td style="width:70%" colspan="2">
                 <input type="checkbox" name="option_to_report_contact_details" id="option_to_report_contact_details" value="1" {{$option_to_report_contact_details_checked}}>
                 <label for="option_to_report_contact_details">@lang('messages.option_to_report_contact_details')</label>
+                       </td>
+                       <td>
+                           <button type="submit" class="btn btn-primary">@lang('messages.save')</button>
+                       </td>
+</form>
+                   </tr>
+                   <tr>
+<form method="post" action="{{ route('updateOptionToDeclare2g') }}">
+            @method('PATCH')
+            @csrf
+                       <td style="width:70%" colspan="2">
+                <input type="checkbox" name="option_to_declare_2g" id="option_to_declare_2g" value="1" {{$option_to_declare_2g_checked}}>
+                <label for="option_to_declare_2g">@lang('messages.option_to_declare_2g')</label>
                        </td>
                        <td>
                            <button type="submit" class="btn btn-primary">@lang('messages.save')</button>
