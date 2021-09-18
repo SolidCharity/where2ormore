@@ -82,6 +82,7 @@ class FrontendController extends Controller
         $display['collect_contact_details'] = $tenant->collect_contact_details;
         $display['option_to_report_contact_details'] = $tenant->option_to_report_contact_details;
         $display['option_for_separate_firstname'] = $tenant->option_for_separate_firstname;
+        $display['option_to_declare_2g'] = $tenant->option_to_declare_2g;
 
         $registered_service = "";
         if (isset($_COOKIE['where2ormore_registration']) && !empty($_COOKIE['where2ormore_registration']))
@@ -149,6 +150,7 @@ class FrontendController extends Controller
             'uuid' => 'required|uuid',
             'count_adults' => 'required|integer',
             'count_children' => 'integer',
+            'all_have_2g' => 'integer',
             'address' => 'max:100',
             'phone' => 'max:100',
             'report_details' => 'integer',
@@ -210,6 +212,10 @@ class FrontendController extends Controller
             } else {
                 $data['report_details'] = 1;
             }
+        }
+
+        if (!array_key_exists('all_have_2g', $data)) {
+            $data['all_have_2g'] = 0;
         }
 
         $participant = tap(new \App\Participant($data))->save();

@@ -39,6 +39,7 @@ Route::patch('tenants2', 'AdminController@updateCollectContactDetails')->name('u
 Route::patch('tenants3', 'AdminController@updateOptionToReportContactDetails')->name('updateOptionToReportContactDetails');
 Route::patch('tenants4', 'AdminController@updateTextForSignupForClosedEvent')->name('updateTextForSignupForClosedEvent');
 Route::patch('tenants5', 'AdminController@updateOptionForSeparateFirstname')->name('updateOptionForSeparateFirstname');
+Route::patch('tenants6', 'AdminController@updateOptionToDeclare2g')->name('updateOptionToDeclare2g');
 Route::delete('participants2', 'FrontendController@cancelregistration')->name('cancelregistration');
 
 # only allow register if there is no user yet
