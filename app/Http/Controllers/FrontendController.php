@@ -158,7 +158,7 @@ class FrontendController extends Controller
 
         if (array_key_exists('firstname', $data))
         {
-            $data['name'] = $data['firstname']." ".$data['name'];
+            $data['name'] = $data['name'].", ".$data['firstname'];
         }
 
         if (isset($_COOKIE['where2ormore_registration']) && !empty($_COOKIE['where2ormore_registration']))
