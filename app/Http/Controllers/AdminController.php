@@ -98,10 +98,10 @@ class AdminController extends Controller
             where('id',$tenant_id)->first();
 
         if (empty($service_id)) {
-            $participants = \App\Participant::where('tenant_id', $tenant_id)->orderBy('name')->get();
+            $participants = \App\Participant::where('tenant_id', $tenant_id)->orderBy('name')->get()->sortBy('firstname', SORT_NATURAL|SORT_FLAG_CASE)->sortBy('name', SORT_NATURAL|SORT_FLAG_CASE);
             $services = \App\Service::where('tenant_id', $tenant_id)->get();
         } else {
-            $participants = \App\Participant::where([['tenant_id', $tenant_id],['service_id',$service_id]])->orderBy('name')->get();
+            $participants = \App\Participant::where([['tenant_id', $tenant_id],['service_id',$service_id]])->orderBy('name')->get()->sortBy('firstname', SORT_NATURAL|SORT_FLAG_CASE)->sortBy('name', SORT_NATURAL|SORT_FLAG_CASE);
             $services = \App\Service::where([['tenant_id', $tenant_id],['id',$service_id]])->get();
         }
 
