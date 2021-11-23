@@ -6,8 +6,10 @@
    <div class="row border">
      <div class="container">
      <div class="row">
-         <div class="col-md-8">
+         <div class="col-md-12">
+            <p style="text-align: center; width: 100%">
             {{$service->description}}
+            </p>
          </div>
      </div>
      <table style="width: 100%">
@@ -15,20 +17,20 @@
 @if ($display_3g_signatures)
          <tr>
 @if ($display_2g)
-            <th style="width: 5%">2G Status</td>
+            <th style="width: 5%">@lang('messages.2GStatus')</td>
 @endif
 @if ($collect_contact_details)
            <th>Name</td>
            <th>Adresse</th>
            <th>Telefon</th>
 @else
-           <th style="width: 20%">Name</th>
+           <th style="width: 20%">@lang('messages.name')</th>
 @endif
-           <th style="width: 5%">Geimpft</th>
-           <th style="width: 5%">Genesen</th>
-           <th style="width: 5%">Getestet</th>
-           <th style="width: 20%">Unterschrift</th>
-           <th style="width: 20%">Telefon oder E-Mail</th>
+           <th style="width: 5%">@lang('messages.vaccinated')</th>
+           <th style="width: 5%">@lang('messages.recovered')</th>
+           <th style="width: 5%">@lang('messages.tested')</th>
+           <th style="width: 20%">@lang('messages.signature')</th>
+           <th style="width: 20%">@lang('messages.phone_or_email')</th>
          </tr>
 @endif
 
@@ -90,22 +92,22 @@
          <div class="col-md-4"></div>
          <div class="col-md-8">
             <br/><br/>
-            Eingangskontrolle durch: ___________________________
+            {{$tenant->text_for_report_welcome_person}}: ___________________________
          </div>
       </div>
 
      <div class="row">
-         <div class="col-md-4"></div>
-         <div class="col-md-8">
-            <br/><br/>
-            Diese Liste wird nach 4 Wochen vernichtet
+        <div class="col-md-12">
+            <p style="text-align: center; width: 100%">
+            {{$tenant->text_for_report_destroy_list}}
+            </p>
          </div>
       </div>
 
      <div class="row">
          <div class="col-md-12">
             <p style="text-align: center; width: 100%">
-            TODO $tenant->ChurchDetailsForReport
+            {{$tenant->text_for_report_church_details}}
             </p>
          </div>
       </div>
