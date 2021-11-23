@@ -62,7 +62,7 @@ class FrontendController extends Controller
             $tenant_id = 1;
             $tenant = \DB::table('tenants')->where('id', 1)->first();
             $uuid = $tenant->uuid;
-            $churchname = '';
+            $churchname = $tenant->name;
         }
 
         if (empty($uuid))
@@ -76,6 +76,8 @@ class FrontendController extends Controller
         $display['services'] = \App\Service::where('tenant_id', $tenant_id)->get();
         $display['churchname'] = $churchname;
         $display['hidechurchname'] = empty($churchname)?'hidden':'';
+        $display['current3gRules'] = $tenant->text_for_3g_rules_description;
+        $display['hiderules'] = empty($tenant->text_for_3g_rules_description)?'hidden':'';
         $display['hideselectservice'] = (count($display['services']) == 1)?'hidden':'';
         $display['checkedservice'] = (count($display['services']) == 1)?'checked':'';
         $display['registered'] = array();
@@ -83,6 +85,7 @@ class FrontendController extends Controller
         $display['option_to_report_contact_details'] = $tenant->option_to_report_contact_details;
         $display['option_for_separate_firstname'] = $tenant->option_for_separate_firstname;
         $display['option_to_declare_2g'] = $tenant->option_to_declare_2g;
+        $display['option_for_3g_signatures'] = $tenant->option_for_3g_signatures;
 
         $registered_service = "";
         if (isset($_COOKIE['where2ormore_registration']) && !empty($_COOKIE['where2ormore_registration']))

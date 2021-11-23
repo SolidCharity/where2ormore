@@ -54,7 +54,7 @@ class ServiceController extends Controller
 
         $service = tap(new \App\Service($data))->save();
 
-        return redirect('/admin');
+        return redirect('/admin#services');
     }
 
     /**
@@ -100,7 +100,7 @@ class ServiceController extends Controller
         $service->max_visitors = $data['max_visitors'];
         $service->save();
 
-        return redirect('/admin');
+        return redirect('/admin#services');
     }
 
     // toggle the activation of the service, if people can register or not
@@ -112,7 +112,7 @@ class ServiceController extends Controller
         $service->registration_open = !$service->registration_open;
         $service->save();
 
-        return redirect('/admin');
+        return redirect('/admin#services');
     }
 
     /**
@@ -142,6 +142,6 @@ class ServiceController extends Controller
             where([['id', $id],['tenant_id', $tenant_id]])->first();
         $service->delete();
 
-        return redirect('/admin');
+        return redirect('/admin#services');
     }
 }

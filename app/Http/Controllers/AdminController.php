@@ -69,10 +69,15 @@ class AdminController extends Controller
         $option_to_report_contact_details_checked = ($tenant->option_to_report_contact_details?"checked":"");
         $option_for_separate_firstname_checked = ($tenant->option_for_separate_firstname?"checked":"");
         $option_to_declare_2g_checked = ($tenant->option_to_declare_2g?"checked":"");
+        $option_for_3g_signatures_checked = ($tenant->option_for_3g_signatures?"checked":"");
         $text_for_signup_for_closed_event = $tenant->text_for_signup_for_closed_event;
         if ($text_for_signup_for_closed_event == 'error_registration_closed') {
             $text_for_signup_for_closed_event = __('messages.error_registration_closed');
         }
+        $text_for_3g_rules_description = $tenant->text_for_3g_rules_description;
+        $text_for_report_church_details = $tenant->text_for_report_church_details;
+        $text_for_report_welcome_person = $tenant->text_for_report_welcome_person;
+        $text_for_report_destroy_list = $tenant->text_for_report_destroy_list;
 
         self::calc2GforServices($services, $participants);
 
@@ -81,8 +86,13 @@ class AdminController extends Controller
             'collect_contact_details_checked' => $collect_contact_details_checked,
             'option_for_separate_firstname_checked' => $option_for_separate_firstname_checked,
             'option_to_declare_2g_checked' => $option_to_declare_2g_checked,
+            'option_for_3g_signatures_checked' => $option_for_3g_signatures_checked,
             'option_to_report_contact_details_checked' => $option_to_report_contact_details_checked,
             'text_for_signup_for_closed_event' => $text_for_signup_for_closed_event,
+            'text_for_3g_rules_description' => $text_for_3g_rules_description,
+            'text_for_report_church_details' => $text_for_report_church_details,
+            'text_for_report_welcome_person' => $text_for_report_welcome_person,
+            'text_for_report_destroy_list' => $text_for_report_destroy_list,
             ]);
     }
 
@@ -109,8 +119,10 @@ class AdminController extends Controller
 
         return view('report', ['services' => $services,
             'participants' => $participants,
+            'tenant' => $tenant,
             'collect_contact_details' => $tenant->collect_contact_details,
-            'display_2g' => $tenant->option_to_declare_2g]);
+            'display_2g' => $tenant->option_to_declare_2g,
+            'display_3g_signatures' => $tenant->option_for_3g_signatures]);
     }
 
     /// drop all participants, as preparation for next week's Sunday!
@@ -136,122 +148,49 @@ class AdminController extends Controller
         return redirect('/admin');
     }
 
-    /// update the name of the current tenant
-    public function updateChurchname(Request $request)
+    /// update the details of the current tenant
+    public function updateTenantDetails(Request $request)
     {
         $tenant_id = Auth::user()->tenant_id;
 
         $data = $request->validate([
             'churchname' => 'nullable|string',
+            'collect_contact_details' => 'boolean',
+            'option_to_report_contact_details' => 'boolean',
+            'option_for_separate_firstname' => 'boolean',
+            'option_to_declare_2g' => 'boolean',
+            'option_for_3g_signatures' => 'boolean',
+            'text_for_signup_for_closed_event' => 'nullable|string|max:250',
+            'text_for_3g_rules_description' => 'nullable|string|max:250',
+            'text_for_report_welcome_person' => 'nullable|string|max:250',
+            'text_for_report_destroy_list' => 'nullable|string|max:250',
+            'text_for_report_church_details' => 'nullable|string|max:250',
+            ],[
+            'text_for_signup_for_closed_event:max' => 'The text must not be longer than 190 characters',
+            'text_for_3g_rules_description:max' => 'The text must not be longer than 190 characters',
+            'text_for_report_welcome_person:max' => 'The text must not be longer than 190 characters',
+            'text_for_report_destroy_list:max' => 'The text must not be longer than 190 characters',
+            'text_for_report_church_details:max' => 'The text must not be longer than 190 characters',
         ]);
 
         if (empty($data['churchname'])) {
-            $data = array('churchname' => '');
+            $data['churchname'] = '';
         }
-
-        $tenant = \App\Tenant::
-            where('id',$tenant_id)->first();
-        $tenant->name = $data['churchname'];
-        $tenant->save();
-
-        return redirect('/admin');
-    }
-
-    /// update the flag to save contact details for this tenant
-    public function updateCollectContactDetails(Request $request)
-    {
-        $tenant_id = Auth::user()->tenant_id;
-
-        $data = $request->validate([
-            'collect_contact_details' => 'boolean',
-        ]);
-
         if (empty($data['collect_contact_details'])) {
-            $data = array('collect_contact_details' => '0');
+            $data['collect_contact_details'] = '0';
         }
-
-        $tenant = \App\Tenant::
-            where('id',$tenant_id)->first();
-        $tenant->collect_contact_details = $data['collect_contact_details'];
-        $tenant->save();
-
-        return redirect('/admin');
-    }
-
-    /// update the flag to allow the option to include contact details on the report for this tenant
-    public function updateOptionToReportContactDetails(Request $request)
-    {
-        $tenant_id = Auth::user()->tenant_id;
-
-        $data = $request->validate([
-            'option_to_report_contact_details' => 'boolean',
-        ]);
-
         if (empty($data['option_to_report_contact_details'])) {
-            $data = array('option_to_report_contact_details' => '0');
+            $data['option_to_report_contact_details'] = '0';
         }
-
-        $tenant = \App\Tenant::
-            where('id',$tenant_id)->first();
-        $tenant->option_to_report_contact_details = $data['option_to_report_contact_details'];
-        $tenant->save();
-
-        return redirect('/admin');
-    }
-
-    /// update the flag to allow the option for a separate firstname for this tenant
-    public function updateOptionForSeparateFirstname(Request $request)
-    {
-        $tenant_id = Auth::user()->tenant_id;
-
-        $data = $request->validate([
-            'option_for_separate_firstname' => 'boolean',
-        ]);
-
         if (empty($data['option_for_separate_firstname'])) {
-            $data = array('option_for_separate_firstname' => '0');
+            $data['option_for_separate_firstname'] = '0';
         }
-
-        $tenant = \App\Tenant::
-            where('id',$tenant_id)->first();
-        $tenant->option_for_separate_firstname = $data['option_for_separate_firstname'];
-        $tenant->save();
-
-        return redirect('/admin');
-    }
-
-    /// update the flag to allow the option for declaring that all participants are 2G
-    public function updateOptionToDeclare2g(Request $request)
-    {
-        $tenant_id = Auth::user()->tenant_id;
-
-        $data = $request->validate([
-            'option_to_declare_2g' => 'boolean',
-        ]);
-
         if (empty($data['option_to_declare_2g'])) {
-            $data = array('option_to_declare_2g' => '0');
+            $data['option_to_declare_2g'] = '0';
         }
-
-        $tenant = \App\Tenant::
-            where('id',$tenant_id)->first();
-        $tenant->option_to_declare_2g = $data['option_to_declare_2g'];
-        $tenant->save();
-
-        return redirect('/admin');
-    }
-
-    /// update the text that is displayed if someone tries to signup for an event with closed registration
-    public function updateTextForSignupForClosedEvent(Request $request)
-    {
-        $tenant_id = Auth::user()->tenant_id;
-
-        $data = $request->validate([
-            'text_for_signup_for_closed_event' => 'nullable|string|max:250',
-        ],[
-            'text_for_signup_for_closed_event:max' => 'The text must not be longer than 190 characters',
-        ]);
-
+        if (empty($data['option_for_3g_signatures'])) {
+            $data['option_for_3g_signatures'] = '0';
+        }
         if ($data['text_for_signup_for_closed_event'] == '' ||
             $data['text_for_signup_for_closed_event'] == __('messages.error_registration_closed')) {
             $data['text_for_signup_for_closed_event'] = 'error_registration_closed';
@@ -259,13 +198,24 @@ class AdminController extends Controller
             // strip any html tags
             $data['text_for_signup_for_closed_event'] = str_replace('<','&lt;',$data['text_for_signup_for_closed_event']);
         }
+        $data['text_for_3g_rules_description'] = str_replace('<','&lt;',$data['text_for_3g_rules_description']);
 
         $tenant = \App\Tenant::
             where('id',$tenant_id)->first();
+        $tenant->name = $data['churchname'];
+        $tenant->collect_contact_details = $data['collect_contact_details'];
+        $tenant->option_to_report_contact_details = $data['option_to_report_contact_details'];
+        $tenant->option_for_separate_firstname = $data['option_for_separate_firstname'];
+        $tenant->option_to_declare_2g = $data['option_to_declare_2g'];
+        $tenant->option_for_3g_signatures = $data['option_for_3g_signatures'];
         $tenant->text_for_signup_for_closed_event = $data['text_for_signup_for_closed_event'];
+        $tenant->text_for_3g_rules_description = $data['text_for_3g_rules_description'];
+        $tenant->text_for_report_welcome_person = $data['text_for_report_welcome_person'];
+        $tenant->text_for_report_destroy_list = $data['text_for_report_destroy_list'];
+        $tenant->text_for_report_church_details = $data['text_for_report_church_details'];
         $tenant->save();
 
-        return redirect('/admin');
+        return redirect('/admin#settings');
     }
 
     /**

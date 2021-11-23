@@ -48,6 +48,9 @@
         <div class="field{{$hidechurchname}}">
            {{ $churchname }}
         </div>
+        <div class="field{{$hiderules}}">
+           {{ $current3gRules }}
+        </div>
         <fieldset class="field">
             <!-- Here i added this Label tag so i can apply the styles to the text also -->
 @if ($option_for_separate_firstname)
@@ -101,7 +104,11 @@
         </fieldset>
 
         <fieldset class="field">
+            @if ($option_for_3g_signatures)
+            <input class="persons-num-input" type="number" id="quantityAdults" name="count_adults" min="1" max="1" value="1" required readonly>
+            @else
             <input class="persons-num-input" type="number" id="quantityAdults" name="count_adults" min="1" max="9" value="{{old('count_adults', 1)}}" required>
+            @endif
             <label class="persons-num-label" for="quantityAdults">@lang('messages.number_of_visitors')</label>
             <input type="hidden" id="quantityChildren" name="count_children" value="0" />
         </fieldset>

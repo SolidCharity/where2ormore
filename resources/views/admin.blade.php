@@ -22,11 +22,23 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">@lang('messages.overview_visitors')</div>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="visitors-tab" data-bs-toggle="tab" data-bs-target="#visitors" type="button" role="tab" aria-controls="visitors" aria-selected="true">@lang('messages.overview_visitors')</button>
+                </li>
+                <li class="nav-item" role="services">
+                    <button class="nav-link" id="services-tab" data-bs-toggle="tab" data-bs-target="#services" type="button" role="tab" aria-controls="services" aria-selected="false">@lang('messages.admin_services')</button>
+                </li>
+                <li class="nav-item" role="settings">
+                    <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">@lang('messages.settings')</button>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
 
-                <div class="card-body">
-
+<!----------------------------------------------------------------------------------------->
+<!--                   Begin of Visitors                                                 -->
+<!----------------------------------------------------------------------------------------->
+<div class="tab-pane fade show active" id="visitors" role="tabpanel" aria-labelledby="visitors-tab">
 @foreach ($services as $service)
    <div class="row border">
      <div class="container">
@@ -84,121 +96,41 @@
      </div>
    </div>
 
-<div class="btn-group">
-<form method="post" action="{{ route('dropAllParticipants', $service->id) }}">
-            @method('DELETE')
-            @csrf
-                 <button type="submit" class="btn btn-danger" onclick="return confirm('@lang('messages.confirm_delete')')">@lang('messages.delete_all_participants')</button>
-</form>
+   <div class="btn-group">
+      <form method="post" action="{{ route('dropAllParticipants', $service->id) }}">
+                @method('DELETE')
+                @csrf
+                     <button type="submit" class="btn btn-danger" onclick="return confirm('@lang('messages.confirm_delete')')">@lang('messages.delete_all_participants')</button>
+      </form>
 
-<a href="/report/{{$service->id}}" target="_blank"><button class="btn btn-primary">@lang('messages.print_report')</button></a>
-</div>
+     <a href="/report/{{$service->id}}" target="_blank"><button class="btn btn-primary">@lang('messages.print_report')</button></a>
+   </div>
+   </div>
+   <div class="row">
+       &nbsp;
    </div>
 @endforeach
 
-<br/>
-@lang('messages.for_all_services'):
-<div class="btn-group">
-<form method="post" action="{{ route('dropAllParticipants') }}">
-            @method('DELETE')
-            @csrf
-                 <button type="submit" class="btn btn-danger" onclick="return confirm('@lang('messages.confirm_delete')')">@lang('messages.delete_all_participants')</button>
-</form>
+    <br/>
+    @lang('messages.for_all_services'):
+    <div class="btn-group">
+      <form method="post" action="{{ route('dropAllParticipants') }}">
+                @method('DELETE')
+                @csrf
+                     <button type="submit" class="btn btn-danger" onclick="return confirm('@lang('messages.confirm_delete')')">@lang('messages.delete_all_participants')</button>
+      </form>
 
-<a href="/report" target="_blank"><button class="btn btn-primary">@lang('messages.print_report')</button></a>
+      <a href="/report" target="_blank"><button class="btn btn-primary">@lang('messages.print_report')</button></a>
+    </div>
 </div>
-</div>
-            </div>
-            <div class="card">
-                <div class="card-header">@lang('messages.settings')</div>
+<!----------------------------------------------------------------------------------------->
+<!--                   End of Visitors                                                   -->
+<!----------------------------------------------------------------------------------------->
 
-                <div class="card-body">
-
-                @lang('messages.link_for_visitors'): <a href="{{$link_visitors}}">{{$link_visitors}}</a><br/>
-
-                <table>
-                   <tr>
-<form method="post" action="{{ route('updateCollectContactDetails') }}">
-            @method('PATCH')
-            @csrf
-                       <td style="width:70%" colspan="2">
-                <input type="checkbox" name="collect_contact_details" id="collect_contact_details" value="1" {{$collect_contact_details_checked}}>
-                <label for="collect_contact_details">@lang('messages.collect_contact_details')</label>
-                       </td>
-                       <td>
-                           <button type="submit" class="btn btn-primary">@lang('messages.save')</button>
-                       </td>
-</form>
-                   </tr>
-                   <tr>
-<form method="post" action="{{ route('updateOptionForSeparateFirstname') }}">
-            @method('PATCH')
-            @csrf
-                       <td style="width:70%" colspan="2">
-                <input type="checkbox" name="option_for_separate_firstname" id="option_for_separate_firstname" value="1" {{$option_for_separate_firstname_checked}}>
-                <label for="option_for_separate_firstname">@lang('messages.option_for_separate_firstname')</label>
-                       </td>
-                       <td>
-                           <button type="submit" class="btn btn-primary">@lang('messages.save')</button>
-                       </td>
-</form>
-                   </tr>
-                   <tr>
-<form method="post" action="{{ route('updateOptionToReportContactDetails') }}">
-            @method('PATCH')
-            @csrf
-                       <td style="width:70%" colspan="2">
-                <input type="checkbox" name="option_to_report_contact_details" id="option_to_report_contact_details" value="1" {{$option_to_report_contact_details_checked}}>
-                <label for="option_to_report_contact_details">@lang('messages.option_to_report_contact_details')</label>
-                       </td>
-                       <td>
-                           <button type="submit" class="btn btn-primary">@lang('messages.save')</button>
-                       </td>
-</form>
-                   </tr>
-                   <tr>
-<form method="post" action="{{ route('updateOptionToDeclare2g') }}">
-            @method('PATCH')
-            @csrf
-                       <td style="width:70%" colspan="2">
-                <input type="checkbox" name="option_to_declare_2g" id="option_to_declare_2g" value="1" {{$option_to_declare_2g_checked}}>
-                <label for="option_to_declare_2g">@lang('messages.option_to_declare_2g')</label>
-                       </td>
-                       <td>
-                           <button type="submit" class="btn btn-primary">@lang('messages.save')</button>
-                       </td>
-</form>
-                   </tr>
-                   <tr>
-<form method="post" action="{{ route('updateTextForSignupForClosedEvent') }}">
-            @method('PATCH')
-            @csrf
-                       <td style="width:70%" colspan="2">
-                <label for="text_for_signup_for_closed_event">@lang('messages.text_for_signup_for_closed_event'):</label><br/>
-                <textarea name="text_for_signup_for_closed_event" id="text_for_signup_for_closed_event"
-                       style="width:100%; min-width:50px">{{$text_for_signup_for_closed_event}}</textarea>
-                       </td>
-                       <td>
-                           <button type="submit" class="btn btn-primary">@lang('messages.save')</button>
-                       </td>
-</form>
-                   </tr>
-                   <tr>
-<form method="post" action="{{ route('updateChurchName') }}">
-            @method('PATCH')
-            @csrf
-                       <td style="width:10%">
-                           @lang('messages.churchname'):
-                       </td>
-                       <td style="width:70%">
-                           <input type="text" name="churchname" value="{{$churchname}}" style="width:100%; min-width:50px"/>
-                       </td>
-                       <td>
-                           <button type="submit" class="btn btn-primary">@lang('messages.save')</button>
-                       </td>
-</form>
-                    </tr>
-                </table>
+<!----------------------------------------------------------------------------------------->
+<!--                   Begin of Services                                                 -->
+<!----------------------------------------------------------------------------------------->
+<div class="tab-pane fade" id="services" role="tabpanel" aria-labelledby="services-tab">
 
                 <table>
 @foreach ($services as $service)
@@ -247,8 +179,8 @@
                    </tr>
 @endforeach
                    <tr>
-		   <form action="{{ route('services.store') }}" method="post">
-@csrf
+                    <form action="{{ route('services.store') }}" method="post">
+                    @csrf
                        <td>
                        @lang('messages.addservice'):
                        </td>
@@ -258,12 +190,151 @@
                        <td>
                           <button type="submit" class="btn btn-primary">@lang('messages.add')</button>
                        </td>
-                   </form>
+                    </form>
                    </tr>
                 </table>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </div>
+
+<!----------------------------------------------------------------------------------------->
+<!--                   End of Services                                                   -->
+<!----------------------------------------------------------------------------------------->
+
+
+<!----------------------------------------------------------------------------------------->
+<!--                   Begin of Settings                                                 -->
+<!----------------------------------------------------------------------------------------->
+<div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+
+            @lang('messages.link_for_visitors'): <a href="{{$link_visitors}}">{{$link_visitors}}</a><br/>
+
+            <form method="post" action="{{ route('updateTenantDetails') }}">
+            @method('PATCH')
+            @csrf
+                <table>
+                   <tr>
+                       <td style="width:70%" colspan="2">
+                <input type="checkbox" name="collect_contact_details" id="collect_contact_details" value="1" {{$collect_contact_details_checked}}>
+                <label for="collect_contact_details">@lang('messages.collect_contact_details')</label>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td style="width:70%" colspan="2">
+                <input type="checkbox" name="option_for_separate_firstname" id="option_for_separate_firstname" value="1" {{$option_for_separate_firstname_checked}}>
+                <label for="option_for_separate_firstname">@lang('messages.option_for_separate_firstname')</label>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td style="width:70%" colspan="2">
+                <input type="checkbox" name="option_to_report_contact_details" id="option_to_report_contact_details" value="1" {{$option_to_report_contact_details_checked}}>
+                <label for="option_to_report_contact_details">@lang('messages.option_to_report_contact_details')</label>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td style="width:70%" colspan="2">
+                <input type="checkbox" name="option_to_declare_2g" id="option_to_declare_2g" value="1" {{$option_to_declare_2g_checked}}>
+                <label for="option_to_declare_2g">@lang('messages.option_to_declare_2g')</label>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td style="width:70%" colspan="2">
+                <input type="checkbox" name="option_for_3g_signatures" id="option_for_3g_signatures" value="1" {{$option_for_3g_signatures_checked}}>
+                <label for="option_for_3g_signatures">@lang('messages.option_for_3g_signatures')</label>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td style="width:70%" colspan="2">
+                <label for="text_for_signup_for_closed_event">@lang('messages.text_for_signup_for_closed_event'):</label><br/>
+                <textarea name="text_for_signup_for_closed_event" id="text_for_signup_for_closed_event"
+                       style="width:100%; min-width:50px">{{$text_for_signup_for_closed_event}}</textarea>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td style="width:10%">
+                           @lang('messages.churchname'):
+                       </td>
+                       <td style="width:70%">
+                           <input type="text" name="churchname" value="{{$churchname}}" style="width:100%; min-width:50px"/>
+                       </td>
+                    </tr>
+                   <tr>
+                       <td style="width:70%" colspan="2">
+                <label for="text_for_3g_rules_description">@lang('messages.text_for_3g_rules_description'):</label><br/>
+                <textarea name="text_for_3g_rules_description" id="text_for_3g_rules_description"
+                       style="width:100%; min-width:50px">{{$text_for_3g_rules_description}}</textarea>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td style="width:30%">
+                           @lang('messages.report_personatdoor'):
+                       </td>
+                       <td style="width:80%">
+                           <input type="text" name="text_for_report_welcome_person" value="{{$text_for_report_welcome_person}}" style="width:100%; min-width:50px"/>
+                       </td>
+                    </tr>
+                   <tr>
+                       <td style="width:30%">
+                           @lang('messages.report_destroy_text'):
+                       </td>
+                       <td style="width:70%">
+                           <input type="text" name="text_for_report_destroy_list" value="{{$text_for_report_destroy_list}}" style="width:100%; min-width:50px"/>
+                       </td>
+                    </tr>
+                   <tr>
+                       <td style="width:30%">
+                           @lang('messages.report_churchname'):
+                       </td>
+                       <td style="width:70%">
+                           <input type="text" name="text_for_report_church_details" value="{{$text_for_report_church_details}}" style="width:100%; min-width:50px"/>
+                       </td>
+                    </tr>
+
+
+                    <tr>
+                       <td>
+                           <button type="submit" class="btn btn-primary">@lang('messages.save')</button>
+                       </td>
+                    </tr>
+                </table>
+            </form>
+</div>
+<!----------------------------------------------------------------------------------------->
+<!--                   End of Settings                                                   -->
+<!----------------------------------------------------------------------------------------->
+
+</div>
+
+<script type="text/javascript">
+
+function activatePage(currentpage) {
+    const pages = ['visitors', 'services', 'settings'];
+    pages.forEach(function(page){
+        if (page == currentpage) {
+            document.getElementById(page+'-tab').className = 'nav-link active';
+            document.getElementById(page).className = 'tab-pane fade show active';
+        } else {
+            document.getElementById(page+'-tab').className = 'nav-link';
+            document.getElementById(page).className = 'tab-pane fade';
+        }
+    });
+    window.location.href='/admin#' + currentpage
+}
+
+var triggerEl = document.getElementById('visitors-tab')
+triggerEl.addEventListener( 'click', function() {
+    activatePage('visitors');
+});
+if (window.location.href.indexOf("#visitors") > -1) { triggerEl.click(); }
+var triggerEl = document.getElementById('services-tab')
+triggerEl.addEventListener( 'click', function() {
+    activatePage('services');
+});
+if (window.location.href.indexOf("#services") > -1) { triggerEl.click(); }
+var triggerEl = document.getElementById('settings-tab')
+triggerEl.addEventListener( 'click', function() {
+    activatePage('settings');
+});
+if (window.location.href.indexOf("#settings") > -1) { triggerEl.click(); }
+</script>
+
 @endsection
