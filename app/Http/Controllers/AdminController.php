@@ -69,10 +69,12 @@ class AdminController extends Controller
         $option_to_report_contact_details_checked = ($tenant->option_to_report_contact_details?"checked":"");
         $option_for_separate_firstname_checked = ($tenant->option_for_separate_firstname?"checked":"");
         $option_to_declare_2g_checked = ($tenant->option_to_declare_2g?"checked":"");
+        $option_for_3g_signatures_checked = ($tenant->option_for_3g_signatures?"checked":"");
         $text_for_signup_for_closed_event = $tenant->text_for_signup_for_closed_event;
         if ($text_for_signup_for_closed_event == 'error_registration_closed') {
             $text_for_signup_for_closed_event = __('messages.error_registration_closed');
         }
+        $text_for_3g_rules_description = $tenant->text_for_3g_rules_description;
 
         self::calc2GforServices($services, $participants);
 
@@ -81,8 +83,10 @@ class AdminController extends Controller
             'collect_contact_details_checked' => $collect_contact_details_checked,
             'option_for_separate_firstname_checked' => $option_for_separate_firstname_checked,
             'option_to_declare_2g_checked' => $option_to_declare_2g_checked,
+            'option_for_3g_signatures_checked' => $option_for_3g_signatures_checked,
             'option_to_report_contact_details_checked' => $option_to_report_contact_details_checked,
             'text_for_signup_for_closed_event' => $text_for_signup_for_closed_event,
+            'text_for_3g_rules_description' => $text_for_3g_rules_description,
             ]);
     }
 
@@ -110,7 +114,8 @@ class AdminController extends Controller
         return view('report', ['services' => $services,
             'participants' => $participants,
             'collect_contact_details' => $tenant->collect_contact_details,
-            'display_2g' => $tenant->option_to_declare_2g]);
+            'display_2g' => $tenant->option_to_declare_2g,
+            'display_3g_signatures' => $tenant->option_for_3g_signatures]);
     }
 
     /// drop all participants, as preparation for next week's Sunday!
@@ -241,6 +246,27 @@ class AdminController extends Controller
         return redirect('/admin');
     }
 
+    /// update the flag to allow the option for printing columns for 3g signatures on the report
+    public function updateOptionFor3GSignatures(Request $request)
+    {
+        $tenant_id = Auth::user()->tenant_id;
+
+        $data = $request->validate([
+            'option_for_3g_signatures' => 'boolean',
+        ]);
+
+        if (empty($data['option_for_3g_signatures'])) {
+            $data = array('option_for_3g_signatures' => '0');
+        }
+
+        $tenant = \App\Tenant::
+            where('id',$tenant_id)->first();
+        $tenant->option_for_3g_signatures = $data['option_for_3g_signatures'];
+        $tenant->save();
+
+        return redirect('/admin');
+    }
+
     /// update the text that is displayed if someone tries to signup for an event with closed registration
     public function updateTextForSignupForClosedEvent(Request $request)
     {
@@ -263,6 +289,27 @@ class AdminController extends Controller
         $tenant = \App\Tenant::
             where('id',$tenant_id)->first();
         $tenant->text_for_signup_for_closed_event = $data['text_for_signup_for_closed_event'];
+        $tenant->save();
+
+        return redirect('/admin');
+    }
+
+    /// update the text that is displayed to describe the current 3g rules in our church
+    public function updateTextFor3GRulesDescription(Request $request)
+    {
+        $tenant_id = Auth::user()->tenant_id;
+
+        $data = $request->validate([
+            'text_for_3g_rules_description' => 'nullable|string|max:250',
+        ],[
+            'text_for_3g_rules_description:max' => 'The text must not be longer than 190 characters',
+        ]);
+
+        $data['text_for_3g_rules_description'] = str_replace('<','&lt;',$data['text_for_3g_rules_description']);
+
+        $tenant = \App\Tenant::
+            where('id',$tenant_id)->first();
+        $tenant->text_for_3g_rules_description = $data['text_for_3g_rules_description'];
         $tenant->save();
 
         return redirect('/admin');

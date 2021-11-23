@@ -48,6 +48,9 @@
         <div class="field{{$hidechurchname}}">
            {{ $churchname }}
         </div>
+        <div class="field{{$hiderules}}">
+           {{ $current3gRules }}
+        </div>
         <fieldset class="field">
             <!-- Here i added this Label tag so i can apply the styles to the text also -->
 @if ($option_for_separate_firstname)

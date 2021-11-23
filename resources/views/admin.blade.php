@@ -170,6 +170,19 @@
 </form>
                    </tr>
                    <tr>
+<form method="post" action="{{ route('updateOptionFor3GSignatures') }}">
+            @method('PATCH')
+            @csrf
+                       <td style="width:70%" colspan="2">
+                <input type="checkbox" name="option_for_3g_signatures" id="option_for_3g_signatures" value="1" {{$option_for_3g_signatures_checked}}>
+                <label for="option_for_3g_signatures">@lang('messages.option_for_3g_signatures')</label>
+                       </td>
+                       <td>
+                           <button type="submit" class="btn btn-primary">@lang('messages.save')</button>
+                       </td>
+</form>
+                   </tr>
+                   <tr>
 <form method="post" action="{{ route('updateTextForSignupForClosedEvent') }}">
             @method('PATCH')
             @csrf
@@ -177,6 +190,35 @@
                 <label for="text_for_signup_for_closed_event">@lang('messages.text_for_signup_for_closed_event'):</label><br/>
                 <textarea name="text_for_signup_for_closed_event" id="text_for_signup_for_closed_event"
                        style="width:100%; min-width:50px">{{$text_for_signup_for_closed_event}}</textarea>
+                       </td>
+                       <td>
+                           <button type="submit" class="btn btn-primary">@lang('messages.save')</button>
+                       </td>
+</form>
+                   </tr>
+                   <tr>
+<form method="post" action="{{ route('updateChurchName') }}">
+            @method('PATCH')
+            @csrf
+                       <td style="width:10%">
+                           @lang('messages.churchname'):
+                       </td>
+                       <td style="width:70%">
+                           <input type="text" name="churchname" value="{{$churchname}}" style="width:100%; min-width:50px"/>
+                       </td>
+                       <td>
+                           <button type="submit" class="btn btn-primary">@lang('messages.save')</button>
+                       </td>
+</form>
+                    </tr>
+                   <tr>
+<form method="post" action="{{ route('updateTextFor3GRulesDescription') }}">
+            @method('PATCH')
+            @csrf
+                       <td style="width:70%" colspan="2">
+                <label for="text_for_3g_rules_description">@lang('messages.text_for_3g_rules_description'):</label><br/>
+                <textarea name="text_for_3g_rules_description" id="text_for_3g_rules_description"
+                       style="width:100%; min-width:50px">{{$text_for_3g_rules_description}}</textarea>
                        </td>
                        <td>
                            <button type="submit" class="btn btn-primary">@lang('messages.save')</button>

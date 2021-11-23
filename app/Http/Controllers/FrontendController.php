@@ -62,7 +62,7 @@ class FrontendController extends Controller
             $tenant_id = 1;
             $tenant = \DB::table('tenants')->where('id', 1)->first();
             $uuid = $tenant->uuid;
-            $churchname = '';
+            $churchname = $tenant->name;
         }
 
         if (empty($uuid))
@@ -76,6 +76,8 @@ class FrontendController extends Controller
         $display['services'] = \App\Service::where('tenant_id', $tenant_id)->get();
         $display['churchname'] = $churchname;
         $display['hidechurchname'] = empty($churchname)?'hidden':'';
+        $display['current3gRules'] = $tenant->text_for_3g_rules_description;
+        $display['hiderules'] = empty($tenant->text_for_3g_rules_description)?'hidden':'';
         $display['hideselectservice'] = (count($display['services']) == 1)?'hidden':'';
         $display['checkedservice'] = (count($display['services']) == 1)?'checked':'';
         $display['registered'] = array();
