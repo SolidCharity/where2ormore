@@ -85,6 +85,7 @@ class FrontendController extends Controller
         $display['option_to_report_contact_details'] = $tenant->option_to_report_contact_details;
         $display['option_for_separate_firstname'] = $tenant->option_for_separate_firstname;
         $display['option_to_declare_2g'] = $tenant->option_to_declare_2g;
+        $display['option_for_3g_signatures'] = $tenant->option_for_3g_signatures;
 
         $registered_service = "";
         if (isset($_COOKIE['where2ormore_registration']) && !empty($_COOKIE['where2ormore_registration']))
