@@ -1,10 +1,19 @@
 @extends('layouts.report')
 
 @section('content')
+
+<style>
+html { font-size: 100% }
+body {font-size: 1.25em; line-height: 1.25em }
+div.serviceTODO {
+    page-break-after: always;
+}
+</style>
+
 <div class="container">
 @foreach ($services as $service)
    <div class="row border">
-     <div class="container">
+     <div class="container service">
      <div class="row">
          <div class="col-md-12">
             <p style="text-align: center; width: 100%">
@@ -12,7 +21,7 @@
             </p>
          </div>
      </div>
-     <table style="width: 100%">
+     <table style="width: 100%; table-layout: fixed;">
 
 @if ($display_3g_signatures)
          <tr>
@@ -24,11 +33,11 @@
            <th>Adresse</th>
            <th>Telefon</th>
 @else
-           <th style="width: 20%">@lang('messages.name')</th>
+           <th style="width: 17%">@lang('messages.name')</th>
 @endif
-           <th style="width: 5%">@lang('messages.vaccinated')</th>
-           <th style="width: 5%">@lang('messages.recovered')</th>
-           <th style="width: 5%">@lang('messages.tested')</th>
+           <th style="width: 6%">@lang('messages.vaccinated')</th>
+           <th style="width: 6%">@lang('messages.recovered')</th>
+           <th style="width: 6%">@lang('messages.tested')</th>
            <th style="width: 20%">@lang('messages.signature')</th>
            <th style="width: 20%">@lang('messages.phone_or_email')</th>
          </tr>
@@ -52,17 +61,17 @@
            <td>{{$participant->phone}}</td>
 @else
 @if ($participant->report_details)
-           <td style="width: 20%">{{$participant->name}}</td>
+           <td style="width: 17%">{{$participant->name}}</td>
 @else
-           <td style="width: 20%">Anonymous</td>
+           <td style="width: 17%">Anonymous</td>
 @endif
 @endif
 @if ($display_3g_signatures)
-           <td style="width: 5%; border: 2px solid black"></td>
-           <td style="width: 5%; border: 2px solid black"></td>
-           <td style="width: 5%; border: 2px solid black"></td>
-           <td style="width: 20%; height: 4em;"><br/>___________________________________</td>
-           <td style="width: 20%; height: 4em;"><br/>___________________________________</td>
+           <td style="width: 6%; border: 2px solid black"></td>
+           <td style="width: 6%; border: 2px solid black"></td>
+           <td style="width: 6%; border: 2px solid black"></td>
+           <td style="width: 20%"><br/>___________________________</td>
+           <td style="width: 20%"><br/>___________________________</td>
 @endif
          </tr>
     @php
