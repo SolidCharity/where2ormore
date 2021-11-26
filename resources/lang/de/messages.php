@@ -46,7 +46,7 @@ return [
     'vaccinated' => 'Geimpft',
     'recovered' => 'Genesen',
     'tested' => 'Getestet',
-    '3Gapproved' => '3G Nachweis',
+    'approved_3g' => '3G Nachweis',
     'signature' => 'Unterschrift',
     'phone_or_email' => 'Telefon oder E-Mail',
     'report_personatdoor' => 'Eingangskontrolle durch',

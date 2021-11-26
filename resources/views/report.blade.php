@@ -35,7 +35,7 @@ div.serviceTODO {
 @else
            <th style="width: 30%">@lang('messages.name')</th>
 @endif
-           <th style="width: 5%">@lang('messages.3Gapproved')</th>
+           <th style="width: 5%">@lang('messages.approved_3g')</th>
            <th style="width: 20%">@lang('messages.signature')</th>
            <th style="width: 20%">@lang('messages.phone_or_email')</th>
          </tr>
