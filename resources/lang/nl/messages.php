@@ -41,6 +41,7 @@ return [
     'vaccinated' => 'Vaccinated',
     'recovered' => 'Recovered',
     'tested' => 'Tested',
+    'approved_3g' => '3G approved',
     'signature' => 'Signature',
     'phone_or_email' => 'Phone or Email',
     'report_personatdoor' => 'Checked by',
