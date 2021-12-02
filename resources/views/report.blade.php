@@ -23,10 +23,9 @@ div.serviceTODO {
      </div>
      <table style="width: 100%; table-layout: fixed;">
 
-@if ($display_3g_signatures)
          <tr>
-@if ($display_2g)
-            <th style="width: 5%">@lang('messages.2GStatus')</td>
+@if (!$option_for_single_registration)
+           <th style="width: 5%"></th>
 @endif
 @if ($collect_contact_details)
            <th>Name</td>
@@ -35,23 +34,27 @@ div.serviceTODO {
 @else
            <th style="width: 30%">@lang('messages.name')</th>
 @endif
-           <th style="width: 5%">@lang('messages.approved_3g')</th>
-           <th style="width: 20%">@lang('messages.signature')</th>
-           <th style="width: 20%">@lang('messages.phone_or_email')</th>
-         </tr>
+@if ($display_2g)
+            <th style="width: 5%">@lang('messages.2GStatus')</td>
 @endif
+@if ($display_3g_status)
+           <th style="width: 5%">@lang('messages.approved_3g')</th>
+@endif
+@if ($display_signatures)
+           <th style="width: 20%">@lang('messages.signature')</th>
+@endif
+@if (!$collect_contact_details)
+           <th style="width: 20%">@lang('messages.phone_or_email')</th>
+@endif
+         </tr>
 
     @foreach ($participants as $participant)
     @php
          if ($participant->service_id == $service->id) {
     @endphp
          <tr>
-@if (!$display_3g_signatures)
-           <td style="width: 5%"></td>
+@if (!$option_for_single_registration)
            <td style="width: 5%">{{$participant->count_adults}}</td>
-@endif
-@if ($display_2g)
-           <td style="width: 5%">{{$participant->have_all_2g_msg}}</td>
 @endif
 @if ($collect_contact_details)
            <td>{{$participant->name}}</td>
@@ -64,8 +67,13 @@ div.serviceTODO {
            <td style="width: 30%">Anonymous</td>
 @endif
 @endif
-@if ($display_3g_signatures)
+@if ($display_2g)
+           <td style="width: 5%">{{$participant->have_all_2g_msg}}</td>
+@endif
+@if ($display_3g_status)
            <td style="width: 5%; border: 2px solid black"></td>
+@endif
+@if ($display_signatures)
            <td style="width: 20%"><br/>___________________________</td>
            <td style="width: 20%"><br/>___________________________</td>
 @endif
@@ -77,8 +85,8 @@ div.serviceTODO {
      </table>
 
      <div class="row">
-         <div class="col-md-4"></div>
-         <div class="col-md-4">
+         <div class="col-md-2"></div>
+         <div class="col-md-8">
 @if ($display_2g)
              @lang('messages.currently_visitors_with2g',
                ['value' => $service->count_adults + $service->count_children,
@@ -94,7 +102,7 @@ div.serviceTODO {
       </div>
 
      <div class="row">
-         <div class="col-md-4"></div>
+         <div class="col-md-2"></div>
          <div class="col-md-8">
             <br/><br/>
             {{$tenant->text_for_report_welcome_person}}: ___________________________

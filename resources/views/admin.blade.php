@@ -232,6 +232,12 @@
                    </tr>
                    <tr>
                        <td style="width:70%" colspan="2">
+                <input type="checkbox" name="option_for_single_registration" id="option_for_single_registration" value="1" {{$option_for_single_registration_checked}}>
+                <label for="option_for_single_registration">@lang('messages.option_for_single_registration')</label><br/>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td style="width:70%" colspan="2">
                 <input type="checkbox" name="option_to_declare_2g" id="option_to_declare_2g" value="1" {{$option_to_declare_2g_checked}}>
                 <label for="option_to_declare_2g">@lang('messages.option_to_declare_2g')</label>
                        </td>
