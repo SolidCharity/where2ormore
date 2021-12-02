@@ -77,7 +77,11 @@
 @endif
 @if ($option_to_declare_2g)
             <input class="name-input" type="checkbox" id="all_have_2g" name="all_have_2g" value="1">
+@if ($option_for_single_registration)
+            <label class="name-input" for="all_have_2g">@lang('messages.i_am_2g')</label>
+@else
             <label class="name-input" for="all_have_2g">@lang('messages.we_are_all_2g')</label>
+@endif
             <br/>
 @endif
         </fieldset>
@@ -104,7 +108,7 @@
         </fieldset>
 
         <fieldset class="field">
-            @if ($option_for_3g_signatures)
+            @if ($option_for_single_registration)
             <input class="persons-num-input" type="number" id="quantityAdults" name="count_adults" min="1" max="1" value="1" required readonly>
             @else
             <input class="persons-num-input" type="number" id="quantityAdults" name="count_adults" min="1" max="9" value="{{old('count_adults', 1)}}" required>
