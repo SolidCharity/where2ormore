@@ -32,15 +32,13 @@ div.serviceTODO {
            <th>Adresse</th>
            <th>Telefon</th>
 @else
-           <th style="width: 17%">@lang('messages.name')</th>
+           <th style="width: 30%">@lang('messages.name')</th>
 @endif
 @if ($display_2g)
             <th style="width: 5%">@lang('messages.2GStatus')</td>
 @endif
 @if ($display_3g_status)
-           <th style="width: 6%">@lang('messages.vaccinated')</th>
-           <th style="width: 6%">@lang('messages.recovered')</th>
-           <th style="width: 6%">@lang('messages.tested')</th>
+           <th style="width: 5%">@lang('messages.approved_3g')</th>
 @endif
 @if ($display_signatures)
            <th style="width: 20%">@lang('messages.signature')</th>
@@ -64,18 +62,16 @@ div.serviceTODO {
            <td>{{$participant->phone}}</td>
 @else
 @if ($participant->report_details)
-           <td style="width: 17%">{{$participant->name}}</td>
+           <td style="width: 30%">{{$participant->name}}</td>
 @else
-           <td style="width: 17%">Anonymous</td>
+           <td style="width: 30%">Anonymous</td>
 @endif
 @endif
 @if ($display_2g)
            <td style="width: 5%">{{$participant->have_all_2g_msg}}</td>
 @endif
 @if ($display_3g_status)
-           <td style="width: 6%; border: 2px solid black"></td>
-           <td style="width: 6%; border: 2px solid black"></td>
-           <td style="width: 6%; border: 2px solid black"></td>
+           <td style="width: 5%; border: 2px solid black"></td>
 @endif
 @if ($display_signatures)
            <td style="width: 20%"><br/>___________________________</td>
