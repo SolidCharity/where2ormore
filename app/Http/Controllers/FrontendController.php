@@ -184,6 +184,16 @@ class FrontendController extends Controller
         $count += \DB::table('participants')
                 ->where([['service_id', $data['service_id']], ['tenant_id',$tenant_id]])
                 ->sum('count_children');
+
+        if (($data['count_adults'] <= 0) || ($data['count_adults'] > 10)) {
+            $data['count_adults'] = 0;
+        }
+
+        if ($tenant->option_for_single_registration || $tenant->option_for_3g_signatures) {
+            $data['count_children'] = 0;
+            $data['count_adults'] = 1;
+        }
+
         $count += $data['count_children'] + $data['count_adults'];
 
         $service = \App\Service::where([['id',$data['service_id']], ['tenant_id',$tenant_id]])->first();
