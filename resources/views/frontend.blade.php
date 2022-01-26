@@ -42,15 +42,21 @@
 @endforeach
 @endif
 
-    <form class="form" action="{{ route('frontend.store', [], false) }}" method="post">
-        @csrf
-        <input type="hidden" name="uuid" value="{{$uuid}}"/>
+    <div class="form">
         <div class="field{{$hidechurchname}}">
            {{ $churchname }}
+        </div>
+        <div class="field{{$hidelivestream}}">
+            <form action="{{ $livestream_link_url }}" method="get" target="_blank">
+                <button type="submit" class="submit-btn">{{ $livestream_link_description }}</button>
+            </form>
         </div>
         <div class="field{{$hiderules}}">
            {{ $current3gRules }}
         </div>
+        <form  action="{{ route('frontend.store', [], false) }}" method="post">
+        @csrf
+        <input type="hidden" name="uuid" value="{{$uuid}}"/>
         <fieldset class="field">
             <!-- Here i added this Label tag so i can apply the styles to the text also -->
 @if ($option_for_separate_firstname)
@@ -119,6 +125,7 @@
 
         <input class="submit-btn" type="submit" value="@lang('messages.submit')">
     </form>
+    </div>
 
     <div class="upstream">
         <a href="https://www.wo2odermehr.de" target="_blank">wo2odermehr.de</a>

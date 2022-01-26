@@ -79,6 +79,8 @@ class AdminController extends Controller
         $text_for_report_church_details = $tenant->text_for_report_church_details;
         $text_for_report_welcome_person = $tenant->text_for_report_welcome_person;
         $text_for_report_destroy_list = $tenant->text_for_report_destroy_list;
+        $livestream_descr = $tenant->livestream_link_description;
+        $livestream_url = $tenant->livestream_link_url;
 
         self::calc2GforServices($services, $participants);
 
@@ -95,6 +97,8 @@ class AdminController extends Controller
             'text_for_report_church_details' => $text_for_report_church_details,
             'text_for_report_welcome_person' => $text_for_report_welcome_person,
             'text_for_report_destroy_list' => $text_for_report_destroy_list,
+            'livestream_descr' => $livestream_descr,
+            'livestream_url' => $livestream_url,
             ]);
     }
 
@@ -159,6 +163,8 @@ class AdminController extends Controller
 
         $data = $request->validate([
             'churchname' => 'nullable|string',
+            'livestream_url' => 'nullable|string',
+            'livestream_descr' => 'nullable|string',
             'collect_contact_details' => 'boolean',
             'option_to_report_contact_details' => 'boolean',
             'option_for_separate_firstname' => 'boolean',
@@ -180,6 +186,12 @@ class AdminController extends Controller
 
         if (empty($data['churchname'])) {
             $data['churchname'] = '';
+        }
+        if (empty($data['livestream_url'])) {
+            $data['livestream_url'] = '';
+        }
+        if (empty($data['livestream_descr'])) {
+            $data['livestream_descr'] = '';
         }
         if (empty($data['collect_contact_details'])) {
             $data['collect_contact_details'] = '0';
@@ -211,6 +223,8 @@ class AdminController extends Controller
         $tenant = \App\Tenant::
             where('id',$tenant_id)->first();
         $tenant->name = $data['churchname'];
+        $tenant->livestream_link_url = $data['livestream_url'];
+        $tenant->livestream_link_description = $data['livestream_descr'];
         $tenant->collect_contact_details = $data['collect_contact_details'];
         $tenant->option_to_report_contact_details = $data['option_to_report_contact_details'];
         $tenant->option_for_separate_firstname = $data['option_for_separate_firstname'];

@@ -87,6 +87,9 @@ class FrontendController extends Controller
         $display['option_to_declare_2g'] = $tenant->option_to_declare_2g;
         $display['option_for_3g_signatures'] = $tenant->option_for_3g_signatures;
         $display['option_for_single_registration'] = $tenant->option_for_single_registration || $tenant->option_for_3g_signatures;
+        $display['livestream_link_description'] = $tenant->livestream_link_description;
+        $display['livestream_link_url'] = $tenant->livestream_link_url;
+        $display['hidelivestream'] = empty($tenant->livestream_link_url)?'hidden':'';
 
         $registered_service = "";
         if (isset($_COOKIE['where2ormore_registration']) && !empty($_COOKIE['where2ormore_registration']))
