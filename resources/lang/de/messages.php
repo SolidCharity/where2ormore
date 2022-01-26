@@ -56,4 +56,6 @@ return [
     'report_churchname' => 'Name und Anschrift der Gemeinde',
     'link_for_visitors' => 'Der Link für die Besucher dieser Gemeinde',
     'churchname' => 'Name der Gemeinde',
+    'livestream_descr' => 'Text für den Livestream auf der Anmeldeseite',
+    'livestream_url' => 'Link für den Livestream (leer lassen um keinen Link zu zeigen)',
 ];

@@ -58,6 +58,7 @@ body {
 
 .fieldhidden {
     visibility: hidden;
+    height: 0px;
 }
 
 .labelhidden {

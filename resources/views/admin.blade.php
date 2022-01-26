@@ -263,6 +263,22 @@
                            <input type="text" name="churchname" value="{{$churchname}}" style="width:100%; min-width:50px"/>
                        </td>
                     </tr>
+                    <tr>
+                       <td style="width:10%">
+                           @lang('messages.livestream_descr'):
+                       </td>
+                       <td style="width:70%">
+                           <input type="text" name="livestream_descr" value="{{$livestream_descr}}" style="width:100%; min-width:50px"/>
+                       </td>
+                    </tr>
+                    <tr>
+                       <td style="width:10%">
+                           @lang('messages.livestream_url'):
+                       </td>
+                       <td style="width:70%">
+                           <input type="text" name="livestream_url" value="{{$livestream_url}}" style="width:100%; min-width:50px"/>
+                       </td>
+                    </tr>
                    <tr>
                        <td style="width:70%" colspan="2">
                 <label for="text_for_3g_rules_description">@lang('messages.text_for_3g_rules_description'):</label><br/>

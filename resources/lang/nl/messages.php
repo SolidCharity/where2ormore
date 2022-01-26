@@ -48,7 +48,9 @@ return [
     'phone_or_email' => 'Phone or Email',
     'report_personatdoor' => 'Checked by',
     'report_destroy_text' => 'When will the paper be destroyed',
-    'report_churchname' => 'Name and address o church',
+    'report_churchname' => 'Name and address of church',
     'link_for_visitors' => 'Link voor de bezoekers van de gemeente',
     'churchname' => 'Name van de kerk',
+    'livestream_descr' => 'Text for livestream on the sign up page',
+    'livestream_url' => 'URL for livestream (leave empty for no button to show)',
 ];
