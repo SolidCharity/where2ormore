@@ -244,6 +244,12 @@
                    </tr>
                    <tr>
                        <td style="width:70%" colspan="2">
+                <input type="checkbox" name="option_to_declare_3g" id="option_to_declare_3g" value="1" {{$option_to_declare_3g_checked}}>
+                <label for="option_to_declare_3g">@lang('messages.option_to_declare_3g')</label>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td style="width:70%" colspan="2">
                 <input type="checkbox" name="option_for_3g_signatures" id="option_for_3g_signatures" value="1" {{$option_for_3g_signatures_checked}}>
                 <label for="option_for_3g_signatures">@lang('messages.option_for_3g_signatures')</label>
                        </td>

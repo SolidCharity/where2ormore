@@ -85,6 +85,7 @@ class FrontendController extends Controller
         $display['option_to_report_contact_details'] = $tenant->option_to_report_contact_details;
         $display['option_for_separate_firstname'] = $tenant->option_for_separate_firstname;
         $display['option_to_declare_2g'] = $tenant->option_to_declare_2g;
+        $display['option_to_declare_3g'] = $tenant->option_to_declare_3g;
         $display['option_for_3g_signatures'] = $tenant->option_for_3g_signatures;
         $display['option_for_single_registration'] = $tenant->option_for_single_registration || $tenant->option_for_3g_signatures;
         $display['livestream_link_description'] = $tenant->livestream_link_description;
@@ -158,6 +159,7 @@ class FrontendController extends Controller
             'count_adults' => 'required|integer',
             'count_children' => 'integer',
             'all_have_2g' => 'integer',
+            'all_have_3g' => 'integer',
             'address' => 'max:100',
             'phone' => 'max:100',
             'report_details' => 'integer',
@@ -233,6 +235,9 @@ class FrontendController extends Controller
 
         if (!array_key_exists('all_have_2g', $data)) {
             $data['all_have_2g'] = 0;
+        }
+        if (!array_key_exists('all_have_3g', $data)) {
+            $data['all_have_3g'] = 0;
         }
 
         $participant = tap(new \App\Participant($data))->save();
