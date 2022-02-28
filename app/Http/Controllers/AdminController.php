@@ -36,6 +36,25 @@ class AdminController extends Controller
         }
     }
 
+    // count how many participants have declared 3G
+    static private function calc3GforServices(&$services, &$participants)
+    {
+        foreach ($services as $service)
+        {
+            $service->have_no_3g = $service->count_adults;
+            $service->have_3g = 0;
+            foreach($participants as $participant)
+            {
+                if ($participant->service_id == $service->id and $participant->all_have_3g)
+                {
+                    $service->have_3g += $participant->count_adults;
+                    $service->have_no_3g -= $participant->count_adults;
+                    $participant->have_all_3g_msg = "3G";
+                }
+            }
+        }
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -84,6 +103,7 @@ class AdminController extends Controller
         $livestream_url = $tenant->livestream_link_url;
 
         self::calc2GforServices($services, $participants);
+        self::calc3GforServices($services, $participants);
 
         return view('admin', ['services' => $services,
             'participants' => $participants, 'link_visitors' => $visitor_link, 'churchname' => $churchname,
@@ -91,6 +111,8 @@ class AdminController extends Controller
             'option_for_separate_firstname_checked' => $option_for_separate_firstname_checked,
             'option_to_declare_2g_checked' => $option_to_declare_2g_checked,
             'option_to_declare_3g_checked' => $option_to_declare_3g_checked,
+            'display_2g' => $tenant->option_to_declare_2g,
+            'display_3g' => $tenant->option_to_declare_3g,
             'option_for_3g_signatures_checked' => $option_for_3g_signatures_checked,
             'option_for_single_registration_checked' => $option_for_single_registration_checked,
             'option_to_report_contact_details_checked' => $option_to_report_contact_details_checked,
@@ -124,6 +146,7 @@ class AdminController extends Controller
         }
 
         self::calc2GforServices($services, $participants);
+        self::calc3GforServices($services, $participants);
 
         return view('report', ['services' => $services,
             'participants' => $participants,

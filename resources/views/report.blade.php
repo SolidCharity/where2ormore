@@ -36,6 +36,8 @@ div.serviceTODO {
 @endif
 @if ($display_2g)
             <th style="width: 5%">@lang('messages.2GStatus')</td>
+@elseif ($display_3g)
+            <th style="width: 5%">@lang('messages.3GStatus')</td>
 @endif
 @if ($display_3g_status)
            <th style="width: 5%">@lang('messages.approved_3g')</th>
@@ -67,8 +69,8 @@ div.serviceTODO {
            <td style="width: 30%">Anonymous</td>
 @endif
 @endif
-@if ($display_2g)
-           <td style="width: 5%">{{$participant->have_all_2g_msg}}</td>
+@if ($display_2g || $display_3g)
+           <td style="width: 5%">{{$participant->have_all_2g_msg}}{{$participant->have_all_3g_msg}}</td>
 @endif
 @if ($display_3g_status)
            <td style="width: 5%; border: 2px solid black"></td>
@@ -93,7 +95,15 @@ div.serviceTODO {
                'max' => $service->max_visitors,
                'have_2g' => $service->have_2g,
                'have_no_2g' => $service->have_no_2g])
-@else
+@endif
+@if ($display_3g)
+             @lang('messages.currently_visitors_with3g',
+               ['value' => $service->count_adults + $service->count_children,
+               'max' => $service->max_visitors,
+               'have_3g' => $service->have_3g,
+               'have_no_3g' => $service->have_no_3g])
+@endif
+@if (!$display_2g && !$display_3g)
              @lang('messages.currently_visitors',
                ['value' => $service->count_adults + $service->count_children,
                'max' => $service->max_visitors])
