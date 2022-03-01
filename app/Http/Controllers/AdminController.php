@@ -36,6 +36,25 @@ class AdminController extends Controller
         }
     }
 
+    // count how many participants have declared 3G
+    static private function calc3GforServices(&$services, &$participants)
+    {
+        foreach ($services as $service)
+        {
+            $service->have_no_3g = $service->count_adults;
+            $service->have_3g = 0;
+            foreach($participants as $participant)
+            {
+                if ($participant->service_id == $service->id and $participant->all_have_3g)
+                {
+                    $service->have_3g += $participant->count_adults;
+                    $service->have_no_3g -= $participant->count_adults;
+                    $participant->have_all_3g_msg = "3G";
+                }
+            }
+        }
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -69,6 +88,7 @@ class AdminController extends Controller
         $option_to_report_contact_details_checked = ($tenant->option_to_report_contact_details?"checked":"");
         $option_for_separate_firstname_checked = ($tenant->option_for_separate_firstname?"checked":"");
         $option_to_declare_2g_checked = ($tenant->option_to_declare_2g?"checked":"");
+        $option_to_declare_3g_checked = ($tenant->option_to_declare_3g?"checked":"");
         $option_for_3g_signatures_checked = ($tenant->option_for_3g_signatures?"checked":"");
         $option_for_single_registration_checked = ($tenant->option_for_single_registration?"checked":"");
         $text_for_signup_for_closed_event = $tenant->text_for_signup_for_closed_event;
@@ -83,12 +103,16 @@ class AdminController extends Controller
         $livestream_url = $tenant->livestream_link_url;
 
         self::calc2GforServices($services, $participants);
+        self::calc3GforServices($services, $participants);
 
         return view('admin', ['services' => $services,
             'participants' => $participants, 'link_visitors' => $visitor_link, 'churchname' => $churchname,
             'collect_contact_details_checked' => $collect_contact_details_checked,
             'option_for_separate_firstname_checked' => $option_for_separate_firstname_checked,
             'option_to_declare_2g_checked' => $option_to_declare_2g_checked,
+            'option_to_declare_3g_checked' => $option_to_declare_3g_checked,
+            'display_2g' => $tenant->option_to_declare_2g,
+            'display_3g' => $tenant->option_to_declare_3g,
             'option_for_3g_signatures_checked' => $option_for_3g_signatures_checked,
             'option_for_single_registration_checked' => $option_for_single_registration_checked,
             'option_to_report_contact_details_checked' => $option_to_report_contact_details_checked,
@@ -122,6 +146,7 @@ class AdminController extends Controller
         }
 
         self::calc2GforServices($services, $participants);
+        self::calc3GforServices($services, $participants);
 
         return view('report', ['services' => $services,
             'participants' => $participants,
@@ -129,8 +154,9 @@ class AdminController extends Controller
             'collect_contact_details' => $tenant->collect_contact_details,
             'option_for_single_registration' => $tenant->option_for_single_registration || $tenant->option_for_3g_signatures,
             'display_2g' => $tenant->option_to_declare_2g,
+            'display_3g' => $tenant->option_to_declare_3g,
             'display_3g_status' => $tenant->option_for_3g_signatures,
-            'display_signatures' => $tenant->option_for_3g_signatures || $tenant->option_to_declare_2g]);
+            'display_signatures' => $tenant->option_for_3g_signatures || $tenant->option_to_declare_2g || $tenant->option_to_declare_3g]);
     }
 
     /// drop all participants, as preparation for next week's Sunday!
@@ -169,6 +195,7 @@ class AdminController extends Controller
             'option_to_report_contact_details' => 'boolean',
             'option_for_separate_firstname' => 'boolean',
             'option_to_declare_2g' => 'boolean',
+            'option_to_declare_3g' => 'boolean',
             'option_for_3g_signatures' => 'boolean',
             'option_for_single_registration' => 'boolean',
             'text_for_signup_for_closed_event' => 'nullable|string|max:250',
@@ -205,6 +232,9 @@ class AdminController extends Controller
         if (empty($data['option_to_declare_2g'])) {
             $data['option_to_declare_2g'] = '0';
         }
+        if (empty($data['option_to_declare_3g'])) {
+            $data['option_to_declare_3g'] = '0';
+        }
         if (empty($data['option_for_3g_signatures'])) {
             $data['option_for_3g_signatures'] = '0';
         }
@@ -229,6 +259,7 @@ class AdminController extends Controller
         $tenant->option_to_report_contact_details = $data['option_to_report_contact_details'];
         $tenant->option_for_separate_firstname = $data['option_for_separate_firstname'];
         $tenant->option_to_declare_2g = $data['option_to_declare_2g'];
+        $tenant->option_to_declare_3g = $data['option_to_declare_3g'];
         $tenant->option_for_3g_signatures = $data['option_for_3g_signatures'];
         $tenant->option_for_single_registration = $data['option_for_single_registration'];
         $tenant->text_for_signup_for_closed_event = $data['text_for_signup_for_closed_event'];
