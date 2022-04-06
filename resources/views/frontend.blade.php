@@ -54,6 +54,7 @@
         <div class="field{{$hiderules}}">
            {{ $current3gRules }}
         </div>
+@if (count($services) > 0)
         <form  action="{{ route('frontend.store', [], false) }}" method="post">
         @csrf
         <input type="hidden" name="uuid" value="{{$uuid}}"/>
@@ -134,6 +135,7 @@
 
         <input class="submit-btn" type="submit" value="@lang('messages.submit')">
     </form>
+@endif
     </div>
 
     <div class="upstream">
